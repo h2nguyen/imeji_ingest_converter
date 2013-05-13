@@ -1,6 +1,3 @@
-/**
- * 
- */
 package core.vo;
 
 import javax.xml.bind.annotation.XmlElement;
