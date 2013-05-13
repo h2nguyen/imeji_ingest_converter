@@ -1,7 +1,7 @@
 /**
  * 
  */
-package main.java.core.helper;
+package core.helper;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

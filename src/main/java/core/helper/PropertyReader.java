@@ -1,4 +1,4 @@
-package main.java.core.helper;
+package core.helper;
 
 import java.io.File;
 import java.io.FileInputStream;

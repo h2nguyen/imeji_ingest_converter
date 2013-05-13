@@ -1,7 +1,7 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.helper;
+package core.helper;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import main.java.core.j2j.annotations.j2jModel;
-import main.java.core.j2j.annotations.j2jResource;
-
 import org.apache.log4j.Logger;
+
+import core.j2j.annotations.j2jModel;
+import core.j2j.annotations.j2jResource;
 
 /**
  * Helper for imeji {@link Object}

@@ -1,10 +1,9 @@
 /**
  * 
  */
-package main.java.core.task;
+package core.task;
 
 import java.net.URI;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,14 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import main.java.core.jaxb.JaxbIngestProfile;
-import main.java.core.mapper.StatementIdMapper;
-import main.java.core.mapper.StatementsIdMapper;
-import main.java.core.vo.Item;
-import main.java.core.vo.Items;
-import main.java.core.vo.Metadata;
-import main.java.core.vo.MetadataProfile;
-import main.java.core.vo.MetadataSet;
+import core.jaxb.JaxbIngestProfile;
+import core.mapper.StatementIdMapper;
+import core.mapper.StatementsIdMapper;
+import core.vo.Item;
+import core.vo.Items;
+import core.vo.Metadata;
+import core.vo.MetadataProfile;
+import core.vo.MetadataSet;
 
 
 /**

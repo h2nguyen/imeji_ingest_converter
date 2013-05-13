@@ -6,7 +6,7 @@
 //
 
 
-package main.java.core.mapper;
+package core.mapper;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

@@ -16,7 +16,7 @@
 		@XmlNs(prefix = "dcam", namespaceURI = "http://purl.org/dc/dcam")
 })
 
-package main.java.core.vo.predefinedMetadata;
+package core.vo.predefinedMetadata;
 
 import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;

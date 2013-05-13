@@ -1,7 +1,7 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.vo;
+package core.vo;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,11 +16,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import main.java.core.j2j.annotations.j2jId;
-import main.java.core.j2j.annotations.j2jList;
-import main.java.core.j2j.annotations.j2jResource;
-
 import com.hp.hpl.jena.ontology.Profile;
+
+import core.j2j.annotations.j2jId;
+import core.j2j.annotations.j2jList;
+import core.j2j.annotations.j2jResource;
 
 /**
  * Container for a {@link List} of {@link Metadata} defined for one {@link Profile}

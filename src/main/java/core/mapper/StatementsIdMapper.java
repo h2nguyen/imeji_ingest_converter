@@ -6,7 +6,7 @@
 //
 
 
-package main.java.core.mapper;
+package core.mapper;
 
 import java.util.ArrayList;
 import java.util.List;

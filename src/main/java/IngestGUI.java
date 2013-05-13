@@ -1,8 +1,6 @@
-package main.java;
+import gui.IngestFrame;
 
 import java.awt.EventQueue;
-
-import main.java.gui.IngestFrame;
 
 public class IngestGUI {
 	/**

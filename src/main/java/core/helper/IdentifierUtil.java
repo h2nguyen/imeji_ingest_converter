@@ -26,14 +26,12 @@
  * Gesellschaft zur Förderung der Wissenschaft e.V.
  * All rights reserved. Use is subject to license terms.
  */
-package main.java.core.helper;
+package core.helper;
 
 import java.net.URI;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import main.java.core.helper.PropertyReader;
 
 /**
  * Provides A utility Method to create identifers in imeji<

@@ -1,24 +1,26 @@
 /**
  * 
  */
-package main.java.core.task;
+package core.task;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.xml.bind.JAXBException;
 
-import main.java.core.jaxb.JaxbIngestProfileZuse;
-import main.java.core.mapper.StatementsIdMapper;
-import main.java.core.vo.Items;
-import main.java.core.vo.MetadataProfile;
+import module.zusearchive.jaxb.JaxbIngestProfileZuse;
+import module.zusearchive.tasks.GenerateZuseItemsTask;
 
 import org.xml.sax.SAXException;
+
+import core.mapper.StatementsIdMapper;
+import core.vo.Items;
+import core.vo.MetadataProfile;
 
 /**
  * @author hnguyen
  *
  */
-public class GenerateItemsWithStatementProfileTask extends GenerateItemsTask {
+public class GenerateItemsWithStatementProfileTask extends GenerateZuseItemsTask {
 
 	private String statementMappingProfileFilename;
 	private String profileFilename;

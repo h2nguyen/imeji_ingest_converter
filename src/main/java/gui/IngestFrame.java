@@ -1,12 +1,9 @@
-package main.java.gui;
+package gui;
 
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -19,36 +16,36 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.concurrent.ExecutionException;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JProgressBar;
-
-import main.java.core.task.GenerateItemAndMetadataProfileTask;
-import main.java.core.task.GenerateItemsTask;
-import main.java.core.task.GenerateItemsWithStatementProfileTask;
-import main.java.core.task.GenerateMergedMetadataProfileTask;
-import main.java.core.task.GenerateMetadataProfileTask;
-import main.java.core.task.GenerateStatementMappingFileTask;
-import main.java.core.task.IngestTask;
-import main.java.core.task.ItemAndMdProfileConverterTask;
-import main.java.core.task.MergeOfflineAndOnlineItemsTask;
-import main.java.core.task.ZuseReplacerTask;
-
-import javax.swing.ImageIcon;
-import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import module.zusearchive.tasks.GenerateItemAndMetadataProfileTask;
+import module.zusearchive.tasks.GenerateMetadataProfileTask;
+import module.zusearchive.tasks.GenerateStatementMappingFileTask;
+import module.zusearchive.tasks.GenerateZuseMergedMetadataProfileTask;
+import module.zusearchive.tasks.GenerateZuseItemsTask;
+import module.zusearchive.tasks.IngestTask;
+import module.zusearchive.tasks.MergeOfflineAndOnlineItemsTask;
+import module.zusearchive.tasks.ZuseReplacerTask;
+
+import com.jgoodies.forms.factories.FormFactory;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
+
 
 public class IngestFrame extends JFrame implements ActionListener, DropTargetListener {
 
@@ -95,10 +92,10 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	
 	private ZuseReplacerTask zrt;
 	private IngestTask it;
-	private GenerateItemsTask git;
+	private GenerateZuseItemsTask git;
 	private GenerateMetadataProfileTask gmdt;
 	private GenerateItemAndMetadataProfileTask gimdt;
-	private GenerateMergedMetadataProfileTask gmmdt;
+	private GenerateZuseMergedMetadataProfileTask gmmdt;
 	private MergeOfflineAndOnlineItemsTask mooit;
 	private GenerateStatementMappingFileTask gsmf;
 	
@@ -686,7 +683,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				}
 			}
 			
-			this.gmmdt = new GenerateMergedMetadataProfileTask(
+			this.gmmdt = new GenerateZuseMergedMetadataProfileTask(
 					this.txtGeneratedMetadataProfile.getText(), this.txtMetadataProfileOnlineInformation.getText(), 
 					progressBar, lblNotification);
 			
@@ -768,7 +765,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				}
 			}
 			
-			this.git = new GenerateItemsTask(this.txtNormalizedData.getText(), progressBar, lblNotification);
+			this.git = new GenerateZuseItemsTask(this.txtNormalizedData.getText(), progressBar, lblNotification);
 			
 			if(this.git != null) {
 				this.notifyMessage("Generating items...");

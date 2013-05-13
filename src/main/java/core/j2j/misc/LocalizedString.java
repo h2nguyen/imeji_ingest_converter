@@ -1,4 +1,4 @@
-package main.java.core.j2j.misc;
+package core.j2j.misc;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;

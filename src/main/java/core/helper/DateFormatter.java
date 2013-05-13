@@ -1,7 +1,7 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.helper;
+package core.helper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
