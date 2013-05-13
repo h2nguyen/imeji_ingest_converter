@@ -44,6 +44,7 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
+import java.awt.GridLayout;
 
 
 public class IngestFrame extends JFrame implements ActionListener, DropTargetListener {
@@ -66,7 +67,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JLabel lblNormalizedData;
 	private JTextField txtNormalizedData;
 	private JButton btnChooseNormalizedData;
-	private JPanel panelStatus;
 	private JLabel lblMetadataProfile;
 	private JTextField txtGeneratedMetadataProfile;
 	private JButton btnChooseMetadataProfile;
@@ -107,10 +107,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JButton btnGetItemsOnline;
 	private JTextField txtItemOnlineInformation;
 	private JTextField txtItemsMerged;
-	private JSeparator separator;
-	private JSeparator separator_1;
-	private JSeparator separator_2;
-	private JSeparator separator_3;
 	private JButton btnChooseItemsOnline;
 	private JButton btnChooseItemsMerged;
 	private JLabel lblStep_3a;
@@ -123,10 +119,13 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JButton btnGetMergedStatementMappingFile;
 	private JTextField txtMergedStatementMappingFile;
 	private JButton btnChooseMergedStatementMappingFile;
-	private JSeparator separator_4;
 	private JLabel lblStatementMapping;
 	private JLabel lblStep_0;
 	private JButton btnGenerateMetadataProfileAndItems;
+	private JSeparator separator;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
+	private JSeparator separator_3;
 	
 	/**
 	 * Create the frame.
@@ -135,130 +134,270 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		System.setProperty("file.encoding", "UTF-8");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 785, 760);
+		setBounds(100, 100, 785, 716);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{265, 0};
-		gbl_contentPane.rowHeights = new int[]{58, 62, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[]{0, 49, 61, 0, 364, 0, 0, 71, 265, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 259, 45, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JPanel panelOpenFile = new JPanel();
-		GridBagConstraints gbc_panelOpenFile = new GridBagConstraints();
-		gbc_panelOpenFile.insets = new Insets(0, 0, 5, 0);
-		gbc_panelOpenFile.fill = GridBagConstraints.BOTH;
-		gbc_panelOpenFile.gridx = 0;
-		gbc_panelOpenFile.gridy = 0;
-		contentPane.add(panelOpenFile, gbc_panelOpenFile);		
-		
 		lblRawData = new JLabel("Raw data");
-		panelOpenFile.add(lblRawData, "2, 2, center, fill");
+		GridBagConstraints gbc_lblRawData = new GridBagConstraints();
+		gbc_lblRawData.gridwidth = 2;
+		gbc_lblRawData.insets = new Insets(0, 0, 5, 5);
+		gbc_lblRawData.gridx = 1;
+		gbc_lblRawData.gridy = 1;
+		contentPane.add(lblRawData, gbc_lblRawData);
 		
 		txtRawData = new JTextField();
-		panelOpenFile.add(txtRawData, "4, 2, fill, fill");
+		GridBagConstraints gbc_txtRawData = new GridBagConstraints();
+		gbc_txtRawData.gridwidth = 4;
+		gbc_txtRawData.fill = GridBagConstraints.BOTH;
+		gbc_txtRawData.insets = new Insets(0, 0, 5, 5);
+		gbc_txtRawData.gridx = 4;
+		gbc_txtRawData.gridy = 1;
+		contentPane.add(txtRawData, gbc_txtRawData);
 		txtRawData.setColumns(10);
 		
 		btnChooseRawData = new JButton("...");
-		panelOpenFile.add(btnChooseRawData, "6, 2, fill, fill");
+		GridBagConstraints gbc_btnChooseRawData = new GridBagConstraints();
+		gbc_btnChooseRawData.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseRawData.gridx = 8;
+		gbc_btnChooseRawData.gridy = 1;
+		contentPane.add(btnChooseRawData, gbc_btnChooseRawData);
 		
-		separator = new JSeparator();
-		panelOpenFile.add(separator, "1, 4, 6, 1");
+		separator_3 = new JSeparator();
+		GridBagConstraints gbc_separator_3 = new GridBagConstraints();
+		gbc_separator_3.fill = GridBagConstraints.BOTH;
+		gbc_separator_3.gridwidth = 10;
+		gbc_separator_3.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_3.gridx = 0;
+		gbc_separator_3.gridy = 2;
+		contentPane.add(separator_3, gbc_separator_3);
 		
 		lblNormalizedData = new JLabel("Normalized data");
-		panelOpenFile.add(lblNormalizedData, "2, 6, center, fill");
+		GridBagConstraints gbc_lblNormalizedData = new GridBagConstraints();
+		gbc_lblNormalizedData.gridwidth = 2;
+		gbc_lblNormalizedData.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNormalizedData.gridx = 1;
+		gbc_lblNormalizedData.gridy = 3;
+		contentPane.add(lblNormalizedData, gbc_lblNormalizedData);
 		
 		txtNormalizedData = new JTextField();
-		panelOpenFile.add(txtNormalizedData, "4, 6, fill, fill");
+		GridBagConstraints gbc_txtNormalizedData = new GridBagConstraints();
+		gbc_txtNormalizedData.fill = GridBagConstraints.BOTH;
+		gbc_txtNormalizedData.gridwidth = 4;
+		gbc_txtNormalizedData.insets = new Insets(0, 0, 5, 5);
+		gbc_txtNormalizedData.gridx = 4;
+		gbc_txtNormalizedData.gridy = 3;
+		contentPane.add(txtNormalizedData, gbc_txtNormalizedData);
 		txtNormalizedData.setColumns(10);
 		
 		btnChooseNormalizedData = new JButton("...");
-		panelOpenFile.add(btnChooseNormalizedData, "6, 6, fill, fill");
+		GridBagConstraints gbc_btnChooseNormalizedData = new GridBagConstraints();
+		gbc_btnChooseNormalizedData.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseNormalizedData.gridx = 8;
+		gbc_btnChooseNormalizedData.gridy = 3;
+		contentPane.add(btnChooseNormalizedData, gbc_btnChooseNormalizedData);
 		
-		separator_1 = new JSeparator();
-		panelOpenFile.add(separator_1, "1, 8, 6, 1");
+		separator_2 = new JSeparator();
+		GridBagConstraints gbc_separator_2 = new GridBagConstraints();
+		gbc_separator_2.fill = GridBagConstraints.BOTH;
+		gbc_separator_2.gridwidth = 10;
+		gbc_separator_2.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_2.gridx = 0;
+		gbc_separator_2.gridy = 4;
+		contentPane.add(separator_2, gbc_separator_2);
 		
-		txtGeneratedMetadataProfile = new JTextField();		
-		panelOpenFile.add(txtGeneratedMetadataProfile, "4, 10, fill, fill");
+		txtGeneratedMetadataProfile = new JTextField();
+		GridBagConstraints gbc_txtGeneratedMetadataProfile = new GridBagConstraints();
+		gbc_txtGeneratedMetadataProfile.gridwidth = 4;
+		gbc_txtGeneratedMetadataProfile.fill = GridBagConstraints.BOTH;
+		gbc_txtGeneratedMetadataProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_txtGeneratedMetadataProfile.gridx = 4;
+		gbc_txtGeneratedMetadataProfile.gridy = 5;
+		contentPane.add(txtGeneratedMetadataProfile, gbc_txtGeneratedMetadataProfile);
 		txtGeneratedMetadataProfile.setColumns(10);
 		
 		btnChooseMetadataProfile = new JButton("...");
-		panelOpenFile.add(btnChooseMetadataProfile, "6, 10, fill, fill");
+		GridBagConstraints gbc_btnChooseMetadataProfile = new GridBagConstraints();
+		gbc_btnChooseMetadataProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseMetadataProfile.gridx = 8;
+		gbc_btnChooseMetadataProfile.gridy = 5;
+		contentPane.add(btnChooseMetadataProfile, gbc_btnChooseMetadataProfile);
 		
 		lblMetadataProfile = new JLabel("Metadata profile");
-		panelOpenFile.add(lblMetadataProfile, "2, 10, 1, 5, center, fill");
+		GridBagConstraints gbc_lblMetadataProfile = new GridBagConstraints();
+		gbc_lblMetadataProfile.gridwidth = 2;
+		gbc_lblMetadataProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMetadataProfile.gridx = 1;
+		gbc_lblMetadataProfile.gridy = 6;
+		contentPane.add(lblMetadataProfile, gbc_lblMetadataProfile);
 		
 		txtMetadataProfileOnlineInformation = new JTextField();
-		panelOpenFile.add(txtMetadataProfileOnlineInformation, "4, 12, fill, fill");
+		GridBagConstraints gbc_txtMetadataProfileOnlineInformation = new GridBagConstraints();
+		gbc_txtMetadataProfileOnlineInformation.fill = GridBagConstraints.BOTH;
+		gbc_txtMetadataProfileOnlineInformation.gridwidth = 4;
+		gbc_txtMetadataProfileOnlineInformation.insets = new Insets(0, 0, 5, 5);
+		gbc_txtMetadataProfileOnlineInformation.gridx = 4;
+		gbc_txtMetadataProfileOnlineInformation.gridy = 6;
+		contentPane.add(txtMetadataProfileOnlineInformation, gbc_txtMetadataProfileOnlineInformation);
 		txtMetadataProfileOnlineInformation.setColumns(10);
 		
 		btnChooseMetadataProfileOnline = new JButton("...");
-		panelOpenFile.add(btnChooseMetadataProfileOnline, "6, 12, fill, fill");
+		GridBagConstraints gbc_btnChooseMetadataProfileOnline = new GridBagConstraints();
+		gbc_btnChooseMetadataProfileOnline.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseMetadataProfileOnline.gridx = 8;
+		gbc_btnChooseMetadataProfileOnline.gridy = 6;
+		contentPane.add(btnChooseMetadataProfileOnline, gbc_btnChooseMetadataProfileOnline);
 		
-		txtMetadataProfileMerged = new JTextField();		
-		panelOpenFile.add(txtMetadataProfileMerged, "4, 14, fill, fill");
+		txtMetadataProfileMerged = new JTextField();
+		GridBagConstraints gbc_txtMetadataProfileMerged = new GridBagConstraints();
+		gbc_txtMetadataProfileMerged.gridwidth = 4;
+		gbc_txtMetadataProfileMerged.fill = GridBagConstraints.BOTH;
+		gbc_txtMetadataProfileMerged.insets = new Insets(0, 0, 5, 5);
+		gbc_txtMetadataProfileMerged.gridx = 4;
+		gbc_txtMetadataProfileMerged.gridy = 7;
+		contentPane.add(txtMetadataProfileMerged, gbc_txtMetadataProfileMerged);
 		txtMetadataProfileMerged.setColumns(10);
 		
 		btnChooseMetadataProfileMerged = new JButton("...");
-		panelOpenFile.add(btnChooseMetadataProfileMerged, "6, 14, fill, fill");
+		GridBagConstraints gbc_btnChooseMetadataProfileMerged = new GridBagConstraints();
+		gbc_btnChooseMetadataProfileMerged.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseMetadataProfileMerged.gridx = 8;
+		gbc_btnChooseMetadataProfileMerged.gridy = 7;
+		contentPane.add(btnChooseMetadataProfileMerged, gbc_btnChooseMetadataProfileMerged);
 		
-		separator_4 = new JSeparator();
-		panelOpenFile.add(separator_4, "1, 16, 6, 1");
+		separator_1 = new JSeparator();
+		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
+		gbc_separator_1.fill = GridBagConstraints.BOTH;
+		gbc_separator_1.gridwidth = 10;
+		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_1.gridx = 0;
+		gbc_separator_1.gridy = 8;
+		contentPane.add(separator_1, gbc_separator_1);
 		
 		lblStatementMapping = new JLabel("Statement mapping");
-		panelOpenFile.add(lblStatementMapping, "2, 18, 1, 3, right, default");
+		GridBagConstraints gbc_lblStatementMapping = new GridBagConstraints();
+		gbc_lblStatementMapping.gridwidth = 2;
+		gbc_lblStatementMapping.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStatementMapping.gridx = 1;
+		gbc_lblStatementMapping.gridy = 9;
+		contentPane.add(lblStatementMapping, gbc_lblStatementMapping);
 		
 		txtStatementMappingFile = new JTextField();
-		panelOpenFile.add(txtStatementMappingFile, "4, 18, fill, fill");
+		GridBagConstraints gbc_txtStatementMappingFile = new GridBagConstraints();
+		gbc_txtStatementMappingFile.fill = GridBagConstraints.BOTH;
+		gbc_txtStatementMappingFile.gridwidth = 4;
+		gbc_txtStatementMappingFile.insets = new Insets(0, 0, 5, 5);
+		gbc_txtStatementMappingFile.gridx = 4;
+		gbc_txtStatementMappingFile.gridy = 9;
+		contentPane.add(txtStatementMappingFile, gbc_txtStatementMappingFile);
 		txtStatementMappingFile.setColumns(10);
 		
 		btnChooseStatementMappingFile = new JButton("...");
-		panelOpenFile.add(btnChooseStatementMappingFile, "6, 18");
+		GridBagConstraints gbc_btnChooseStatementMappingFile = new GridBagConstraints();
+		gbc_btnChooseStatementMappingFile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseStatementMappingFile.gridx = 8;
+		gbc_btnChooseStatementMappingFile.gridy = 9;
+		contentPane.add(btnChooseStatementMappingFile, gbc_btnChooseStatementMappingFile);
 		
 		txtMergedStatementMappingFile = new JTextField();
-		panelOpenFile.add(txtMergedStatementMappingFile, "4, 20, fill, fill");
+		GridBagConstraints gbc_txtMergedStatementMappingFile = new GridBagConstraints();
+		gbc_txtMergedStatementMappingFile.fill = GridBagConstraints.BOTH;
+		gbc_txtMergedStatementMappingFile.gridwidth = 4;
+		gbc_txtMergedStatementMappingFile.insets = new Insets(0, 0, 5, 5);
+		gbc_txtMergedStatementMappingFile.gridx = 4;
+		gbc_txtMergedStatementMappingFile.gridy = 10;
+		contentPane.add(txtMergedStatementMappingFile, gbc_txtMergedStatementMappingFile);
 		txtMergedStatementMappingFile.setColumns(10);
 		
 		btnChooseMergedStatementMappingFile = new JButton("...");
-		panelOpenFile.add(btnChooseMergedStatementMappingFile, "6, 20");
+		GridBagConstraints gbc_btnChooseMergedStatementMappingFile = new GridBagConstraints();
+		gbc_btnChooseMergedStatementMappingFile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseMergedStatementMappingFile.gridx = 8;
+		gbc_btnChooseMergedStatementMappingFile.gridy = 10;
+		contentPane.add(btnChooseMergedStatementMappingFile, gbc_btnChooseMergedStatementMappingFile);
 		
-		separator_2 = new JSeparator();
-		panelOpenFile.add(separator_2, "1, 22, 6, 1");
+		separator = new JSeparator();
+		GridBagConstraints gbc_separator = new GridBagConstraints();
+		gbc_separator.gridwidth = 10;
+		gbc_separator.fill = GridBagConstraints.BOTH;
+		gbc_separator.insets = new Insets(0, 0, 5, 0);
+		gbc_separator.gridx = 0;
+		gbc_separator.gridy = 11;
+		contentPane.add(separator, gbc_separator);
 		
 		txtGeneratedItems = new JTextField();
-		panelOpenFile.add(txtGeneratedItems, "4, 24, fill, fill");
+		GridBagConstraints gbc_txtGeneratedItems = new GridBagConstraints();
+		gbc_txtGeneratedItems.fill = GridBagConstraints.BOTH;
+		gbc_txtGeneratedItems.gridwidth = 4;
+		gbc_txtGeneratedItems.insets = new Insets(0, 0, 5, 5);
+		gbc_txtGeneratedItems.gridx = 4;
+		gbc_txtGeneratedItems.gridy = 12;
+		contentPane.add(txtGeneratedItems, gbc_txtGeneratedItems);
 		txtGeneratedItems.setColumns(10);
 		
 		btnChooseItems = new JButton("...");
-		panelOpenFile.add(btnChooseItems, "6, 24, fill, fill");
+		GridBagConstraints gbc_btnChooseItems = new GridBagConstraints();
+		gbc_btnChooseItems.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseItems.gridx = 8;
+		gbc_btnChooseItems.gridy = 12;
+		contentPane.add(btnChooseItems, gbc_btnChooseItems);
 		
 		lblGeneratedItems = new JLabel("Items");
-		panelOpenFile.add(lblGeneratedItems, "2, 24, 1, 5, center, fill");
+		GridBagConstraints gbc_lblGeneratedItems = new GridBagConstraints();
+		gbc_lblGeneratedItems.gridwidth = 2;
+		gbc_lblGeneratedItems.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGeneratedItems.gridx = 1;
+		gbc_lblGeneratedItems.gridy = 13;
+		contentPane.add(lblGeneratedItems, gbc_lblGeneratedItems);
 		
 		txtItemOnlineInformation = new JTextField();
-		panelOpenFile.add(txtItemOnlineInformation, "4, 26, fill, fill");
+		GridBagConstraints gbc_txtItemOnlineInformation = new GridBagConstraints();
+		gbc_txtItemOnlineInformation.fill = GridBagConstraints.BOTH;
+		gbc_txtItemOnlineInformation.gridwidth = 4;
+		gbc_txtItemOnlineInformation.insets = new Insets(0, 0, 5, 5);
+		gbc_txtItemOnlineInformation.gridx = 4;
+		gbc_txtItemOnlineInformation.gridy = 13;
+		contentPane.add(txtItemOnlineInformation, gbc_txtItemOnlineInformation);
 		txtItemOnlineInformation.setColumns(10);
 		
 		btnChooseItemsOnline = new JButton("...");
-		panelOpenFile.add(btnChooseItemsOnline, "6, 26, fill, fill");
+		GridBagConstraints gbc_btnChooseItemsOnline = new GridBagConstraints();
+		gbc_btnChooseItemsOnline.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseItemsOnline.gridx = 8;
+		gbc_btnChooseItemsOnline.gridy = 13;
+		contentPane.add(btnChooseItemsOnline, gbc_btnChooseItemsOnline);
 		
 		txtItemsMerged = new JTextField();
-		panelOpenFile.add(txtItemsMerged, "4, 28, fill, fill");
+		GridBagConstraints gbc_txtItemsMerged = new GridBagConstraints();
+		gbc_txtItemsMerged.fill = GridBagConstraints.BOTH;
+		gbc_txtItemsMerged.gridwidth = 4;
+		gbc_txtItemsMerged.insets = new Insets(0, 0, 5, 5);
+		gbc_txtItemsMerged.gridx = 4;
+		gbc_txtItemsMerged.gridy = 14;
+		contentPane.add(txtItemsMerged, gbc_txtItemsMerged);
 		txtItemsMerged.setColumns(10);
 		
 		btnChooseItemsMerged = new JButton("...");
-		panelOpenFile.add(btnChooseItemsMerged, "6, 28, fill, fill");
-		
-		separator_3 = new JSeparator();
-		panelOpenFile.add(separator_3, "1, 30, 6, 1");
+		GridBagConstraints gbc_btnChooseItemsMerged = new GridBagConstraints();
+		gbc_btnChooseItemsMerged.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseItemsMerged.gridx = 8;
+		gbc_btnChooseItemsMerged.gridy = 14;
+		contentPane.add(btnChooseItemsMerged, gbc_btnChooseItemsMerged);
 		
 		JPanel panelButtons = new JPanel();
 		GridBagConstraints gbc_panelButtons = new GridBagConstraints();
-		gbc_panelButtons.insets = new Insets(0, 0, 5, 0);
-		gbc_panelButtons.gridx = 0;
-		gbc_panelButtons.gridy = 1;
+		gbc_panelButtons.fill = GridBagConstraints.BOTH;
+		gbc_panelButtons.gridwidth = 7;
+		gbc_panelButtons.insets = new Insets(0, 0, 5, 5);
+		gbc_panelButtons.gridx = 2;
+		gbc_panelButtons.gridy = 15;
 		contentPane.add(panelButtons, gbc_panelButtons);
 		panelButtons.setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
@@ -408,25 +547,34 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		btnConvertToImeji.setEnabled(false);
 		panelButtons.add(btnConvertToImeji, "8, 8, fill, fill");
 		
-		panelStatus = new JPanel();
-		GridBagConstraints gbc_panelStatus = new GridBagConstraints();
-		gbc_panelStatus.fill = GridBagConstraints.BOTH;
-		gbc_panelStatus.gridx = 0;
-		gbc_panelStatus.gridy = 2;
-		contentPane.add(panelStatus, gbc_panelStatus);
-		
 		
 		lblNotification = new JLabel("Notification");
-		panelStatus.add(lblNotification, "2, 2, center, fill");
+		GridBagConstraints gbc_lblNotification = new GridBagConstraints();
+		gbc_lblNotification.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNotification.gridx = 1;
+		gbc_lblNotification.gridy = 16;
+		contentPane.add(lblNotification, gbc_lblNotification);
 		
 		btnCancel = new JButton();
+		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+		gbc_btnCancel.anchor = GridBagConstraints.EAST;
+		gbc_btnCancel.fill = GridBagConstraints.VERTICAL;
+		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
+		gbc_btnCancel.gridx = 4;
+		gbc_btnCancel.gridy = 16;
+		contentPane.add(btnCancel, gbc_btnCancel);
 		btnCancel.setEnabled(false);
 		btnCancel.setToolTipText("Click to cancel the process");
 		btnCancel.setIcon(new ImageIcon(IngestFrame.class.getResource("/com/sun/java/swing/plaf/windows/icons/Error.gif")));
-		panelStatus.add(btnCancel, "4, 2, center, center");
 		
 		progressBar = new JProgressBar();
-		panelStatus.add(progressBar, "6, 2, fill, fill");
+		GridBagConstraints gbc_progressBar = new GridBagConstraints();
+		gbc_progressBar.gridwidth = 4;
+		gbc_progressBar.fill = GridBagConstraints.BOTH;
+		gbc_progressBar.insets = new Insets(0, 0, 0, 5);
+		gbc_progressBar.gridx = 5;
+		gbc_progressBar.gridy = 16;
+		contentPane.add(progressBar, gbc_progressBar);
 		
 		
 		initOtherVariables();
