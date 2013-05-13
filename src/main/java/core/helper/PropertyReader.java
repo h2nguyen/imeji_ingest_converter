@@ -137,7 +137,7 @@ public class PropertyReader
             }
             logger.info("loading properties from " + serverConfDirectory + "/" + filepath);
             instream = new FileInputStream(serverConfDirectory + "/" + filepath);
-            fileLocation = (new File(serverConfDirectory + "/" + filepath)).getAbsolutePath();
+            setFileLocation((new File(serverConfDirectory + "/" + filepath)).getAbsolutePath());
         }
         catch (Exception e)
         {
@@ -146,7 +146,7 @@ public class PropertyReader
             if (url != null)
             {
                 instream = url.openStream();
-                fileLocation = url.getFile();
+                setFileLocation(url.getFile());
             }
         }
         if (instream == null)
@@ -160,4 +160,12 @@ public class PropertyReader
     {
         return version;
     }
+
+	public static String getFileLocation() {
+		return fileLocation;
+	}
+
+	public static void setFileLocation(String fileLocation) {
+		PropertyReader.fileLocation = fileLocation;
+	}
 }

@@ -37,7 +37,6 @@ import module.zusearchive.tasks.GenerateMetadataProfileTask;
 import module.zusearchive.tasks.GenerateStatementMappingFileTask;
 import module.zusearchive.tasks.GenerateZuseMergedMetadataProfileTask;
 import module.zusearchive.tasks.GenerateZuseItemsTask;
-import module.zusearchive.tasks.IngestTask;
 import module.zusearchive.tasks.MergeOfflineAndOnlineItemsTask;
 import module.zusearchive.tasks.ZuseReplacerTask;
 
@@ -91,7 +90,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 
 	
 	private ZuseReplacerTask zrt;
-	private IngestTask it;
 	private GenerateZuseItemsTask git;
 	private GenerateMetadataProfileTask gmdt;
 	private GenerateItemAndMetadataProfileTask gimdt;
