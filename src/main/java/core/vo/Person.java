@@ -1,7 +1,7 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.vo;
+package core.vo;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -14,11 +14,11 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import main.java.core.helper.IdentifierUtil;
-import main.java.core.j2j.annotations.j2jId;
-import main.java.core.j2j.annotations.j2jList;
-import main.java.core.j2j.annotations.j2jLiteral;
-import main.java.core.j2j.annotations.j2jResource;
+import core.helper.IdentifierUtil;
+import core.j2j.annotations.j2jId;
+import core.j2j.annotations.j2jList;
+import core.j2j.annotations.j2jLiteral;
+import core.j2j.annotations.j2jResource;
 
 /**
  * a foaf person

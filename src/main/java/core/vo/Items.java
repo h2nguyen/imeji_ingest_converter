@@ -1,7 +1,7 @@
 /**
  * 
  */
-package main.java.core.vo;
+package core.vo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,8 +9,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import main.java.core.vo.Item;
 
 /**
  * @author hnguyen

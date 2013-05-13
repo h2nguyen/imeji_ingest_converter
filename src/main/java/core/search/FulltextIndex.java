@@ -1,4 +1,4 @@
-package main.java.core.search;
+package core.search;
 
 /**
  * Interface for object implementing fulltext search (i.e searchable via full text)

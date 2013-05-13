@@ -1,7 +1,7 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.vo;
+package core.vo;
 
 import java.lang.reflect.Method;
 import java.net.URI;
@@ -15,12 +15,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.joda.time.chrono.AssembledChronology.Fields;
 
-import main.java.core.search.FulltextIndex;
-import main.java.core.j2j.annotations.j2jId;
-import main.java.core.j2j.annotations.j2jList;
-import main.java.core.j2j.annotations.j2jLiteral;
-import main.java.core.j2j.annotations.j2jModel;
-import main.java.core.j2j.annotations.j2jResource;
+import core.j2j.annotations.j2jId;
+import core.j2j.annotations.j2jList;
+import core.j2j.annotations.j2jLiteral;
+import core.j2j.annotations.j2jModel;
+import core.j2j.annotations.j2jResource;
+import core.search.FulltextIndex;
 
 /**
  * imeji item. Can be an image, a video, a sound, etc.

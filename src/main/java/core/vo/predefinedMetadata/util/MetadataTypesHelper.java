@@ -1,10 +1,10 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.vo.predefinedMetadata.util;
+package core.vo.predefinedMetadata.util;
 
-import main.java.core.vo.Metadata;
-import main.java.core.vo.Metadata.Types;
+import core.vo.Metadata;
+import core.vo.Metadata.Types;
 
 /**
  * Helper to work with {@link Metadata} {@link Types}

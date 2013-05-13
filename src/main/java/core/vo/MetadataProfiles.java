@@ -1,7 +1,7 @@
 /**
  * 
  */
-package main.java.core.vo;
+package core.vo;
 
 import java.util.List;
 

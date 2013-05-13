@@ -1,14 +1,14 @@
 /**
  * 
  */
-package main.java.core.mapper;
+package core.mapper;
 
 import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import main.java.core.vo.Item;
-import main.java.core.vo.MetadataProfile;
+import core.vo.Item;
+import core.vo.MetadataProfile;
 
 /**
  * @author hnguyen
@@ -22,7 +22,23 @@ public class ItemToProfileMapperTask extends SwingWorker<String, Void> {
 	 * 
 	 */
 	public ItemToProfileMapperTask(MetadataProfile mdp, List<Item> items) {
-		this.mdProfile = mdp;
+		this.setMdProfile(mdp);
+		this.setItems(items);
+	}
+
+	public MetadataProfile getMdProfile() {
+		return mdProfile;
+	}
+
+	public void setMdProfile(MetadataProfile mdProfile) {
+		this.mdProfile = mdProfile;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
 		this.items = items;
 	}
 

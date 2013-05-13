@@ -5,4 +5,4 @@
  * @author hnguyen
  *
  */
-package main.java.core.vo.predefinedMetadata.util;
+package core.vo.predefinedMetadata.util;

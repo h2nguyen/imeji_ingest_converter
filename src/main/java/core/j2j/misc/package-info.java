@@ -16,7 +16,7 @@
 		@XmlNs(prefix = "dcam", namespaceURI = "http://purl.org/dc/dcam")
 })
 
-package main.java.core.j2j.misc;
+package core.j2j.misc;
 
 import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;

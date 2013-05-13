@@ -1,7 +1,7 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.vo;
+package core.vo;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,8 +16,8 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import main.java.core.j2j.annotations.j2jLiteral;
-import main.java.core.j2j.annotations.j2jResource;
+import core.j2j.annotations.j2jLiteral;
+import core.j2j.annotations.j2jResource;
 
 /**
  * Common properties to all imeji objects

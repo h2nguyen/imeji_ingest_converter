@@ -1,46 +1,39 @@
 /**
  * 
  */
-package main.java.core.task;
+package core.task;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
-import javax.xml.bind.JAXBException;
 
-import org.xml.sax.SAXException;
+import module.zusearchive.helper.ZuseMdProfile;
+import module.zusearchive.vo.generated.OUnterlagen;
+import module.zusearchive.vo.generated.ZUSE;
 
-import main.java.core.helper.ZuseMdProfile;
-import main.java.core.jaxb.JaxbIngestProfile;
-import main.java.core.vo.Item;
-import main.java.core.vo.Items;
-import main.java.core.vo.Metadata;
-import main.java.core.vo.MetadataProfile;
-import main.java.core.vo.MetadataSet;
-import main.java.core.vo.Item.Visibility;
-import main.java.core.vo.Properties.Status;
-import main.java.core.vo.generated.OUnterlagen;
-import main.java.core.vo.generated.ZUSE;
-import main.java.core.vo.predefinedMetadata.ConePerson;
-import main.java.core.vo.predefinedMetadata.Date;
-import main.java.core.vo.predefinedMetadata.Geolocation;
-import main.java.core.vo.predefinedMetadata.License;
-import main.java.core.vo.predefinedMetadata.Link;
-import main.java.core.vo.predefinedMetadata.Number;
-import main.java.core.vo.predefinedMetadata.Publication;
-import main.java.core.vo.predefinedMetadata.Text;
+import core.jaxb.JaxbIngestProfile;
+import core.vo.Item;
+import core.vo.Items;
+import core.vo.Metadata;
+import core.vo.MetadataSet;
+import core.vo.predefinedMetadata.ConePerson;
+import core.vo.predefinedMetadata.Date;
+import core.vo.predefinedMetadata.Geolocation;
+import core.vo.predefinedMetadata.License;
+import core.vo.predefinedMetadata.Link;
+import core.vo.predefinedMetadata.Publication;
+import core.vo.predefinedMetadata.Text;
+import core.vo.predefinedMetadata.Number;
 
 
 /**

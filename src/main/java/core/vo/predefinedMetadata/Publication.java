@@ -1,7 +1,7 @@
 /**
  * License: src/main/resources/license/escidoc.license
  */
-package main.java.core.vo.predefinedMetadata;
+package core.vo.predefinedMetadata;
 
 import java.net.URI;
 
@@ -10,11 +10,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import main.java.core.j2j.annotations.j2jDataType;
-import main.java.core.j2j.annotations.j2jId;
-import main.java.core.j2j.annotations.j2jLiteral;
-import main.java.core.j2j.annotations.j2jResource;
-import main.java.core.vo.Metadata;
+import core.j2j.annotations.j2jDataType;
+import core.j2j.annotations.j2jId;
+import core.j2j.annotations.j2jLiteral;
+import core.j2j.annotations.j2jResource;
+import core.vo.Metadata;
 
 /**
  * {@link Metadata} for publication
