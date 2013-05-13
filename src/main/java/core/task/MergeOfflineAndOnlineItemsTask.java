@@ -1,0 +1,86 @@
+/**
+ * 
+ */
+package main.java.core.task;
+
+import java.util.Collection;
+import java.util.Hashtable;
+import java.util.Iterator;
+
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingWorker;
+
+import main.java.core.jaxb.JaxbIngestProfileZuse;
+import main.java.core.vo.Item;
+import main.java.core.vo.Items;
+import main.java.core.vo.Metadata;
+
+/**
+ * @author hnguyen
+ *
+ */
+public class MergeOfflineAndOnlineItemsTask extends SwingWorker<String, Void> {
+	protected String offlineItemsFilename;
+	protected String onlineItemsFilename;
+	protected String outputFilename;
+	protected JProgressBar progressBar;
+	protected JLabel lblNotification;
+	
+	public MergeOfflineAndOnlineItemsTask(String offlineItemsFilename, String onlineItemsFilename, JProgressBar progressBar, JLabel lblNotification) {
+		this(offlineItemsFilename, onlineItemsFilename, getOutputFilename(offlineItemsFilename), progressBar, lblNotification);
+	}
+	
+	public MergeOfflineAndOnlineItemsTask(String offlineItemsFilename, String onlineItemsFilename, String outputFilename, JProgressBar progressBar, JLabel lblNotification) {
+		this.offlineItemsFilename = offlineItemsFilename;
+		this.onlineItemsFilename = onlineItemsFilename;
+		this.outputFilename = outputFilename;
+		this.progressBar = progressBar;
+		this.lblNotification = lblNotification;
+	}
+	
+	private static String getOutputFilename(String inputFilename) {
+		int i = inputFilename.lastIndexOf('.');
+		if(i < 0)
+			return inputFilename + "_imejiItemized";
+		return inputFilename.substring(0, i) + "_imejiItemized" + inputFilename.substring(i);		
+	}
+
+	@Override
+	protected String doInBackground() throws Exception {
+		JaxbIngestProfileZuse jipz = new JaxbIngestProfileZuse();
+		Items offlineItems = jipz.unmarshalItems(this.offlineItemsFilename);
+		Items onlineItems = jipz.unmarshalItems(this.onlineItemsFilename);
+		
+		Hashtable<String, Item> offlineItemsHashtable = new Hashtable<String, Item>(offlineItems.getItem().size());
+		
+		for (Item item : offlineItems.getItem()) {
+			offlineItemsHashtable.put(item.getFilename(),item);
+		}
+		
+		for (Item onItem : onlineItems.getItem()) {
+
+			Item offItem = offlineItemsHashtable.get(onItem.getFilename());
+			
+			if(offItem == null) continue;
+			
+			this.mergeStatementContent(offItem, onItem);
+		}
+		
+		jipz.marshalItems(this.outputFilename, onlineItems);
+		
+		return this.outputFilename;
+	}
+	
+	public void done() {
+		
+	}
+	
+	private Item mergeStatementContent(Item offline, Item online) {
+		
+		online.setMetadataSets(offline.getMetadataSets());
+		
+		return online;
+	}
+
+}

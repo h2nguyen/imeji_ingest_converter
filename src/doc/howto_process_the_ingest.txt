@@ -1,0 +1,18 @@
+1. Online procedure
+1a. Goto imeji and create a collection
+1b. Upload the images
+1c. Download the online profile
+1d. Download the online items
+
+2. Offline
+2a. Open the raw data file
+2b. Normalized the raw data file
+2c. Generate the metadata and items file
+2d. Merge the offline and online metadata profile
+2e. Upload the merged offline metadata profile
+2f. Generate the statement mapping file
+[2g. Manual merging of the statement mapping file (but this step can be skipped, since the id of the statements are the same, online and offline)]
+2h. Merge the online and offline item file
+
+3. Online procedure
+3a. Upload the merged item file to the right collection
