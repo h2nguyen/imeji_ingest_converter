@@ -1,5 +1,7 @@
-package test.coreTest;
-import main.java.core.task.ZuseReplacerTask;
+package core;
+
+
+import module.zusearchive.tasks.ZuseReplacerTask;
 
 
 public class XML_CONVERTER {

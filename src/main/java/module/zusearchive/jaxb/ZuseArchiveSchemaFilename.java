@@ -8,6 +8,6 @@ package module.zusearchive.jaxb;
  */
 public class ZuseArchiveSchemaFilename
 { 
-	public static final String ZUSEARCHIVE_XSDFILE = "vo_schema/zusearchive/zusearchive.xsd";
+	public static final String ZUSEARCHIVE_XSDFILE = "vo_schema/zusearchive/zao.xsd";
 	public static final String ZUSE_STATEMENTSIDMAPPING_XSDFILE = "vo_schema/zusearchive/zusearchive.xsd";
 }

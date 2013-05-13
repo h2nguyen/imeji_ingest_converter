@@ -1,4 +1,6 @@
-package test.coreTest;
+package core;
+
+
 
 import static org.junit.Assert.fail;
 
@@ -7,7 +9,6 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -17,35 +18,48 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import module.zusearchive.converter.MetadataProfileConverter;
+import module.zusearchive.helper.ZuseMdProfile;
+import module.zusearchive.jaxb.JaxbIngestProfileZuse;
+import module.zusearchive.jaxb.ZuseArchiveSchemaFilename;
+import module.zusearchive.vo.generated.OUnterlagen;
+import module.zusearchive.vo.generated.ZUSE;
 
-import main.java.core.converter.MetadataProfileConverter;
-import main.java.core.helper.Download;
-import main.java.core.helper.ZuseMdProfile;
-import main.java.core.jaxb.JaxbIngestProfileZuse;
-import main.java.core.jaxb.JaxbUtil;
-import main.java.core.jaxb.SchemaFilename;
-import main.java.core.mapper.StatementIdMapper;
-import main.java.core.mapper.StatementsIdMapper;
-import main.java.core.task.ItemConverterTask;
-import main.java.core.vo.Item;
-import main.java.core.vo.Items;
-import main.java.core.vo.MetadataProfile;
-import main.java.core.vo.generated.OUnterlagen;
-import main.java.core.vo.generated.ZUSE;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import core.helper.Download;
+import core.jaxb.JaxbUtil;
+import core.mapper.StatementIdMapper;
+import core.mapper.StatementsIdMapper;
+import core.task.ItemConverterTask;
+import core.vo.Item;
+import core.vo.Items;
+import core.vo.MetadataProfile;
+
 
 public class ZuseTest {
+	
+	
+	@Test
+	public void ingestConverterProcessTest() throws JAXBException, SAXException {
+		String filenameUnmarshal = "src/test/resources/_10_entries.xml";
+		
+		JaxbIngestProfileZuse jmp = new JaxbIngestProfileZuse();
+		
+		OUnterlagen oul = jmp.unmarshalOUnterlagen(filenameUnmarshal);
+		
+		JaxbUtil.toString(oul);
+		
+		
+	}
+	
 	
 	public void testXMLdownTest() throws IOException, ParserConfigurationException, SAXException, TransformerException {
 		
@@ -64,7 +78,6 @@ public class ZuseTest {
 		xform.transform(new DOMSource(doc), new StreamResult(System.out));
 	}
 	
-	@Test
 	public void anyPropertyDescriptor() {
 		try {
 			for(PropertyDescriptor propertyDescriptor : 
@@ -349,6 +362,6 @@ public class ZuseTest {
 		stsIdMapper.getStatementIdMapper().add(stIdMapper2);		
 		
 		
-		JaxbUtil.marshal(SchemaFilename.ZUSE_STATEMENTSIDMAPPING_XSDFILE, "dump/mapping.xml", stsIdMapper);
+		JaxbUtil.marshal(ZuseArchiveSchemaFilename.ZUSE_STATEMENTSIDMAPPING_XSDFILE, "dump/mapping.xml", stsIdMapper);
 	}
 }

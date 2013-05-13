@@ -44,7 +44,6 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import java.awt.GridLayout;
 
 
 public class IngestFrame extends JFrame implements ActionListener, DropTargetListener {
@@ -80,7 +79,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JButton btnChooseMetadataProfileOnline;
 	private JButton btnChooseMetadataProfileMerged;
 	private JButton btnCancel;
-	private JPanel panelMetadataProfileIssue;
 	private JButton btnGenerateItems;
 	private JLabel lblStep_2a;
 	private JLabel lblStep_2b;
@@ -100,7 +98,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JButton btnGetMetadataProfileOnline;
 	private JLabel lblStep_2c;
 	private JButton btnMergeMetadataProfile;
-	private JPanel panelItemIssue;
 	private JLabel lblStep_4a;
 	private JLabel lblStep_4b;
 	private JLabel lblStep_4c;
@@ -113,7 +110,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JButton btnGetStatementMappingFile;
 	private JTextField txtStatementMappingFile;
 	private JButton btnChooseStatementMappingFile;
-	private JPanel panelStatementIssue;
 	private JLabel lblStep_5;
 	private JLabel lblbStep_3b;
 	private JButton btnGetMergedStatementMappingFile;
@@ -126,6 +122,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JSeparator separator_1;
 	private JSeparator separator_2;
 	private JSeparator separator_3;
+	private JSeparator separator_4;
 	
 	/**
 	 * Create the frame.
@@ -134,15 +131,15 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		System.setProperty("file.encoding", "UTF-8");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 785, 716);
+		setBounds(100, 100, 753, 702);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 49, 61, 0, 364, 0, 0, 71, 265, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 259, 45, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[]{0, 70, 61, 0, 188, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 45, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		lblRawData = new JLabel("Raw data");
@@ -223,20 +220,21 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		contentPane.add(txtGeneratedMetadataProfile, gbc_txtGeneratedMetadataProfile);
 		txtGeneratedMetadataProfile.setColumns(10);
 		
+		lblMetadataProfile = new JLabel("Metadata profile");
+		GridBagConstraints gbc_lblMetadataProfile = new GridBagConstraints();
+		gbc_lblMetadataProfile.gridheight = 3;
+		gbc_lblMetadataProfile.gridwidth = 2;
+		gbc_lblMetadataProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMetadataProfile.gridx = 1;
+		gbc_lblMetadataProfile.gridy = 5;
+		contentPane.add(lblMetadataProfile, gbc_lblMetadataProfile);
+		
 		btnChooseMetadataProfile = new JButton("...");
 		GridBagConstraints gbc_btnChooseMetadataProfile = new GridBagConstraints();
 		gbc_btnChooseMetadataProfile.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseMetadataProfile.gridx = 8;
 		gbc_btnChooseMetadataProfile.gridy = 5;
 		contentPane.add(btnChooseMetadataProfile, gbc_btnChooseMetadataProfile);
-		
-		lblMetadataProfile = new JLabel("Metadata profile");
-		GridBagConstraints gbc_lblMetadataProfile = new GridBagConstraints();
-		gbc_lblMetadataProfile.gridwidth = 2;
-		gbc_lblMetadataProfile.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMetadataProfile.gridx = 1;
-		gbc_lblMetadataProfile.gridy = 6;
-		contentPane.add(lblMetadataProfile, gbc_lblMetadataProfile);
 		
 		txtMetadataProfileOnlineInformation = new JTextField();
 		GridBagConstraints gbc_txtMetadataProfileOnlineInformation = new GridBagConstraints();
@@ -283,6 +281,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		
 		lblStatementMapping = new JLabel("Statement mapping");
 		GridBagConstraints gbc_lblStatementMapping = new GridBagConstraints();
+		gbc_lblStatementMapping.gridheight = 2;
 		gbc_lblStatementMapping.gridwidth = 2;
 		gbc_lblStatementMapping.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStatementMapping.gridx = 1;
@@ -342,20 +341,21 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		contentPane.add(txtGeneratedItems, gbc_txtGeneratedItems);
 		txtGeneratedItems.setColumns(10);
 		
+		lblGeneratedItems = new JLabel("Items");
+		GridBagConstraints gbc_lblGeneratedItems = new GridBagConstraints();
+		gbc_lblGeneratedItems.gridheight = 3;
+		gbc_lblGeneratedItems.gridwidth = 2;
+		gbc_lblGeneratedItems.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGeneratedItems.gridx = 1;
+		gbc_lblGeneratedItems.gridy = 12;
+		contentPane.add(lblGeneratedItems, gbc_lblGeneratedItems);
+		
 		btnChooseItems = new JButton("...");
 		GridBagConstraints gbc_btnChooseItems = new GridBagConstraints();
 		gbc_btnChooseItems.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseItems.gridx = 8;
 		gbc_btnChooseItems.gridy = 12;
 		contentPane.add(btnChooseItems, gbc_btnChooseItems);
-		
-		lblGeneratedItems = new JLabel("Items");
-		GridBagConstraints gbc_lblGeneratedItems = new GridBagConstraints();
-		gbc_lblGeneratedItems.gridwidth = 2;
-		gbc_lblGeneratedItems.insets = new Insets(0, 0, 5, 5);
-		gbc_lblGeneratedItems.gridx = 1;
-		gbc_lblGeneratedItems.gridy = 13;
-		contentPane.add(lblGeneratedItems, gbc_lblGeneratedItems);
 		
 		txtItemOnlineInformation = new JTextField();
 		GridBagConstraints gbc_txtItemOnlineInformation = new GridBagConstraints();
@@ -391,177 +391,231 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		gbc_btnChooseItemsMerged.gridy = 14;
 		contentPane.add(btnChooseItemsMerged, gbc_btnChooseItemsMerged);
 		
-		JPanel panelButtons = new JPanel();
-		GridBagConstraints gbc_panelButtons = new GridBagConstraints();
-		gbc_panelButtons.fill = GridBagConstraints.BOTH;
-		gbc_panelButtons.gridwidth = 7;
-		gbc_panelButtons.insets = new Insets(0, 0, 5, 5);
-		gbc_panelButtons.gridx = 2;
-		gbc_panelButtons.gridy = 15;
-		contentPane.add(panelButtons, gbc_panelButtons);
-		panelButtons.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.MIN_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+		separator_4 = new JSeparator();
+		GridBagConstraints gbc_separator_4 = new GridBagConstraints();
+		gbc_separator_4.gridwidth = 10;
+		gbc_separator_4.fill = GridBagConstraints.BOTH;
+		gbc_separator_4.insets = new Insets(0, 0, 5, 0);
+		gbc_separator_4.gridx = 0;
+		gbc_separator_4.gridy = 15;
+		contentPane.add(separator_4, gbc_separator_4);
 		
 		lblStep_0 = new JLabel("0. Step");
+		GridBagConstraints gbc_lblStep_0 = new GridBagConstraints();
+		gbc_lblStep_0.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_0.gridx = 1;
+		gbc_lblStep_0.gridy = 16;
+		contentPane.add(lblStep_0, gbc_lblStep_0);
 		lblStep_0.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panelButtons.add(lblStep_0, "2, 2");
 		
 		btnNormalizeForImeji = new JButton("Normalize");
-		panelButtons.add(btnNormalizeForImeji, "4, 2, 5, 1, fill, fill");
+		GridBagConstraints gbc_btnNormalizeForImeji = new GridBagConstraints();
+		gbc_btnNormalizeForImeji.gridwidth = 6;
+		gbc_btnNormalizeForImeji.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNormalizeForImeji.gridx = 3;
+		gbc_btnNormalizeForImeji.gridy = 16;
+		contentPane.add(btnNormalizeForImeji, gbc_btnNormalizeForImeji);
 		
 		lblStep_1 = new JLabel("1. Step");
+		GridBagConstraints gbc_lblStep_1 = new GridBagConstraints();
+		gbc_lblStep_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_1.gridx = 1;
+		gbc_lblStep_1.gridy = 17;
+		contentPane.add(lblStep_1, gbc_lblStep_1);
 		lblStep_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panelButtons.add(lblStep_1, "2, 4, center, fill");
 		
 		btnGenerateMetadataProfileAndItems = new JButton("Generate metadata profile and items");
-		panelButtons.add(btnGenerateMetadataProfileAndItems, "4, 4, 5, 1");
-		
-		lblStep_2 = new JLabel("2. Step");
-		lblStep_2.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panelButtons.add(lblStep_2, "2, 6, center, fill");
-		
-		panelMetadataProfileIssue = new JPanel();
-		panelButtons.add(panelMetadataProfileIssue, "4, 6, fill, fill");
-		panelMetadataProfileIssue.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+		GridBagConstraints gbc_btnGenerateMetadataProfileAndItems = new GridBagConstraints();
+		gbc_btnGenerateMetadataProfileAndItems.gridwidth = 6;
+		gbc_btnGenerateMetadataProfileAndItems.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGenerateMetadataProfileAndItems.gridx = 3;
+		gbc_btnGenerateMetadataProfileAndItems.gridy = 17;
+		contentPane.add(btnGenerateMetadataProfileAndItems, gbc_btnGenerateMetadataProfileAndItems);
 		
 		lblStep_2a = new JLabel("2a. Step");
-		panelMetadataProfileIssue.add(lblStep_2a, "2, 2");
+		GridBagConstraints gbc_lblStep_2a = new GridBagConstraints();
+		gbc_lblStep_2a.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_2a.gridx = 2;
+		gbc_lblStep_2a.gridy = 18;
+		contentPane.add(lblStep_2a, gbc_lblStep_2a);
 		
 		btnGenerateMetadataProfile = new JButton("Generate profile");
+		GridBagConstraints gbc_btnGenerateMetadataProfile = new GridBagConstraints();
+		gbc_btnGenerateMetadataProfile.anchor = GridBagConstraints.WEST;
+		gbc_btnGenerateMetadataProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGenerateMetadataProfile.gridx = 4;
+		gbc_btnGenerateMetadataProfile.gridy = 18;
+		contentPane.add(btnGenerateMetadataProfile, gbc_btnGenerateMetadataProfile);
 		btnGenerateMetadataProfile.setEnabled(false);
-		panelMetadataProfileIssue.add(btnGenerateMetadataProfile, "4, 2");
-		
-		lblStep_2b = new JLabel("2b. Step");
-		panelMetadataProfileIssue.add(lblStep_2b, "2, 4");
-		
-		btnGetMetadataProfileOnline = new JButton("Get online metadata profile");
-		panelMetadataProfileIssue.add(btnGetMetadataProfileOnline, "4, 4");
-		
-		lblStep_2c = new JLabel("2c. Step");
-		panelMetadataProfileIssue.add(lblStep_2c, "2, 6");
-		
-		btnMergeMetadataProfile = new JButton("Merge metadata profile");
-		panelMetadataProfileIssue.add(btnMergeMetadataProfile, "4, 6");
-		
-		lblStep_3 = new JLabel("3. Step");
-		lblStep_3.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panelButtons.add(lblStep_3, "6, 6, fill, fill");
-		
-		panelStatementIssue = new JPanel();
-		panelButtons.add(panelStatementIssue, "8, 6, fill, fill");
-		panelStatementIssue.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
 		
 		lblStep_3a = new JLabel("3a. Step");
-		panelStatementIssue.add(lblStep_3a, "2, 2");
+		GridBagConstraints gbc_lblStep_3a = new GridBagConstraints();
+		gbc_lblStep_3a.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_3a.gridx = 7;
+		gbc_lblStep_3a.gridy = 18;
+		contentPane.add(lblStep_3a, gbc_lblStep_3a);
 		
 		btnGetStatementMappingFile = new JButton("Get statement mapping file");
-		panelStatementIssue.add(btnGetStatementMappingFile, "4, 2");
+		GridBagConstraints gbc_btnGetStatementMappingFile = new GridBagConstraints();
+		gbc_btnGetStatementMappingFile.anchor = GridBagConstraints.WEST;
+		gbc_btnGetStatementMappingFile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetStatementMappingFile.gridx = 8;
+		gbc_btnGetStatementMappingFile.gridy = 18;
+		contentPane.add(btnGetStatementMappingFile, gbc_btnGetStatementMappingFile);
+		
+		lblStep_2 = new JLabel("2. Step");
+		GridBagConstraints gbc_lblStep_2 = new GridBagConstraints();
+		gbc_lblStep_2.gridheight = 3;
+		gbc_lblStep_2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_2.gridx = 1;
+		gbc_lblStep_2.gridy = 18;
+		contentPane.add(lblStep_2, gbc_lblStep_2);
+		lblStep_2.setFont(new Font("Tahoma", Font.BOLD, 16));
+		
+		lblStep_2b = new JLabel("2b. Step");
+		GridBagConstraints gbc_lblStep_2b = new GridBagConstraints();
+		gbc_lblStep_2b.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_2b.gridx = 2;
+		gbc_lblStep_2b.gridy = 19;
+		contentPane.add(lblStep_2b, gbc_lblStep_2b);
+		
+		btnGetMetadataProfileOnline = new JButton("Get online metadata profile");
+		GridBagConstraints gbc_btnGetMetadataProfileOnline = new GridBagConstraints();
+		gbc_btnGetMetadataProfileOnline.anchor = GridBagConstraints.WEST;
+		gbc_btnGetMetadataProfileOnline.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetMetadataProfileOnline.gridx = 4;
+		gbc_btnGetMetadataProfileOnline.gridy = 19;
+		contentPane.add(btnGetMetadataProfileOnline, gbc_btnGetMetadataProfileOnline);
+		
+		lblStep_3 = new JLabel("3. Step");
+		GridBagConstraints gbc_lblStep_3 = new GridBagConstraints();
+		gbc_lblStep_3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_3.gridx = 6;
+		gbc_lblStep_3.gridy = 19;
+		contentPane.add(lblStep_3, gbc_lblStep_3);
+		lblStep_3.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		lblbStep_3b = new JLabel("3b. Step");
-		panelStatementIssue.add(lblbStep_3b, "2, 4");
+		GridBagConstraints gbc_lblbStep_3b = new GridBagConstraints();
+		gbc_lblbStep_3b.gridheight = 2;
+		gbc_lblbStep_3b.insets = new Insets(0, 0, 5, 5);
+		gbc_lblbStep_3b.gridx = 7;
+		gbc_lblbStep_3b.gridy = 19;
+		contentPane.add(lblbStep_3b, gbc_lblbStep_3b);
 		
 		btnGetMergedStatementMappingFile = new JButton("Get merged statment mapping file");
-		panelStatementIssue.add(btnGetMergedStatementMappingFile, "4, 4");
+		GridBagConstraints gbc_btnGetMergedStatementMappingFile = new GridBagConstraints();
+		gbc_btnGetMergedStatementMappingFile.anchor = GridBagConstraints.WEST;
+		gbc_btnGetMergedStatementMappingFile.gridheight = 2;
+		gbc_btnGetMergedStatementMappingFile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetMergedStatementMappingFile.gridx = 8;
+		gbc_btnGetMergedStatementMappingFile.gridy = 19;
+		contentPane.add(btnGetMergedStatementMappingFile, gbc_btnGetMergedStatementMappingFile);
 		
-		lblStep_4 = new JLabel("4. Step");
-		lblStep_4.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panelButtons.add(lblStep_4, "2, 8, center, fill");
+		lblStep_2c = new JLabel("2c. Step");
+		GridBagConstraints gbc_lblStep_2c = new GridBagConstraints();
+		gbc_lblStep_2c.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_2c.gridx = 2;
+		gbc_lblStep_2c.gridy = 20;
+		contentPane.add(lblStep_2c, gbc_lblStep_2c);
 		
-		panelItemIssue = new JPanel();
-		panelButtons.add(panelItemIssue, "4, 8, fill, fill");
-		panelItemIssue.setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,
-				FormFactory.RELATED_GAP_COLSPEC,
-				FormFactory.DEFAULT_COLSPEC,},
-			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,
-				FormFactory.RELATED_GAP_ROWSPEC,
-				FormFactory.DEFAULT_ROWSPEC,}));
+		btnMergeMetadataProfile = new JButton("Merge metadata profile");
+		GridBagConstraints gbc_btnMergeMetadataProfile = new GridBagConstraints();
+		gbc_btnMergeMetadataProfile.anchor = GridBagConstraints.WEST;
+		gbc_btnMergeMetadataProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnMergeMetadataProfile.gridx = 4;
+		gbc_btnMergeMetadataProfile.gridy = 20;
+		contentPane.add(btnMergeMetadataProfile, gbc_btnMergeMetadataProfile);
 		
 		lblStep_4a = new JLabel("4a. Step");
-		panelItemIssue.add(lblStep_4a, "2, 2");
+		GridBagConstraints gbc_lblStep_4a = new GridBagConstraints();
+		gbc_lblStep_4a.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_4a.gridx = 2;
+		gbc_lblStep_4a.gridy = 21;
+		contentPane.add(lblStep_4a, gbc_lblStep_4a);
 		
 		btnGenerateItems = new JButton("Generate items");
+		GridBagConstraints gbc_btnGenerateItems = new GridBagConstraints();
+		gbc_btnGenerateItems.anchor = GridBagConstraints.WEST;
+		gbc_btnGenerateItems.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGenerateItems.gridx = 4;
+		gbc_btnGenerateItems.gridy = 21;
+		contentPane.add(btnGenerateItems, gbc_btnGenerateItems);
 		btnGenerateItems.setEnabled(false);
-		panelItemIssue.add(btnGenerateItems, "4, 2");
+		
+		lblStep_4 = new JLabel("4. Step");
+		GridBagConstraints gbc_lblStep_4 = new GridBagConstraints();
+		gbc_lblStep_4.gridheight = 3;
+		gbc_lblStep_4.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_4.gridx = 1;
+		gbc_lblStep_4.gridy = 21;
+		contentPane.add(lblStep_4, gbc_lblStep_4);
+		lblStep_4.setFont(new Font("Tahoma", Font.BOLD, 16));
 		
 		lblStep_4b = new JLabel("4b. Step");
-		panelItemIssue.add(lblStep_4b, "2, 4");
+		GridBagConstraints gbc_lblStep_4b = new GridBagConstraints();
+		gbc_lblStep_4b.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_4b.gridx = 2;
+		gbc_lblStep_4b.gridy = 22;
+		contentPane.add(lblStep_4b, gbc_lblStep_4b);
 		
 		btnGetItemsOnline = new JButton("Get online items");
-		panelItemIssue.add(btnGetItemsOnline, "4, 4");
-		
-		lblStep_4c = new JLabel("4c. Step");
-		panelItemIssue.add(lblStep_4c, "2, 6");
-		
-		btnMergeItems = new JButton("Merge items with mapping file");
-		panelItemIssue.add(btnMergeItems, "4, 6");
+		GridBagConstraints gbc_btnGetItemsOnline = new GridBagConstraints();
+		gbc_btnGetItemsOnline.anchor = GridBagConstraints.WEST;
+		gbc_btnGetItemsOnline.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetItemsOnline.gridx = 4;
+		gbc_btnGetItemsOnline.gridy = 22;
+		contentPane.add(btnGetItemsOnline, gbc_btnGetItemsOnline);
 		
 		lblStep_5 = new JLabel("5. Step");
+		GridBagConstraints gbc_lblStep_5 = new GridBagConstraints();
+		gbc_lblStep_5.gridheight = 3;
+		gbc_lblStep_5.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_5.gridx = 6;
+		gbc_lblStep_5.gridy = 21;
+		contentPane.add(lblStep_5, gbc_lblStep_5);
 		lblStep_5.setFont(new Font("Tahoma", Font.BOLD, 16));
-		panelButtons.add(lblStep_5, "6, 8");
 		
 		btnConvertToImeji = new JButton("Convert to Imeji");
+		GridBagConstraints gbc_btnConvertToImeji = new GridBagConstraints();
+		gbc_btnConvertToImeji.anchor = GridBagConstraints.WEST;
+		gbc_btnConvertToImeji.gridheight = 3;
+		gbc_btnConvertToImeji.insets = new Insets(0, 0, 5, 5);
+		gbc_btnConvertToImeji.gridx = 8;
+		gbc_btnConvertToImeji.gridy = 21;
+		contentPane.add(btnConvertToImeji, gbc_btnConvertToImeji);
 		btnConvertToImeji.setEnabled(false);
-		panelButtons.add(btnConvertToImeji, "8, 8, fill, fill");
+		
+		lblStep_4c = new JLabel("4c. Step");
+		GridBagConstraints gbc_lblStep_4c = new GridBagConstraints();
+		gbc_lblStep_4c.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStep_4c.gridx = 2;
+		gbc_lblStep_4c.gridy = 23;
+		contentPane.add(lblStep_4c, gbc_lblStep_4c);
+		
+		btnMergeItems = new JButton("Merge items with mapping file");
+		GridBagConstraints gbc_btnMergeItems = new GridBagConstraints();
+		gbc_btnMergeItems.anchor = GridBagConstraints.WEST;
+		gbc_btnMergeItems.insets = new Insets(0, 0, 5, 5);
+		gbc_btnMergeItems.gridx = 4;
+		gbc_btnMergeItems.gridy = 23;
+		contentPane.add(btnMergeItems, gbc_btnMergeItems);
 		
 		
 		lblNotification = new JLabel("Notification");
 		GridBagConstraints gbc_lblNotification = new GridBagConstraints();
-		gbc_lblNotification.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNotification.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNotification.gridx = 1;
-		gbc_lblNotification.gridy = 16;
+		gbc_lblNotification.gridy = 25;
 		contentPane.add(lblNotification, gbc_lblNotification);
 		
 		btnCancel = new JButton();
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
 		gbc_btnCancel.anchor = GridBagConstraints.EAST;
 		gbc_btnCancel.fill = GridBagConstraints.VERTICAL;
-		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
+		gbc_btnCancel.insets = new Insets(0, 0, 5, 5);
 		gbc_btnCancel.gridx = 4;
-		gbc_btnCancel.gridy = 16;
+		gbc_btnCancel.gridy = 25;
 		contentPane.add(btnCancel, gbc_btnCancel);
 		btnCancel.setEnabled(false);
 		btnCancel.setToolTipText("Click to cancel the process");
@@ -569,11 +623,11 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		
 		progressBar = new JProgressBar();
 		GridBagConstraints gbc_progressBar = new GridBagConstraints();
-		gbc_progressBar.gridwidth = 4;
+		gbc_progressBar.gridwidth = 2;
 		gbc_progressBar.fill = GridBagConstraints.BOTH;
-		gbc_progressBar.insets = new Insets(0, 0, 0, 5);
-		gbc_progressBar.gridx = 5;
-		gbc_progressBar.gridy = 16;
+		gbc_progressBar.insets = new Insets(0, 0, 5, 5);
+		gbc_progressBar.gridx = 7;
+		gbc_progressBar.gridy = 25;
 		contentPane.add(progressBar, gbc_progressBar);
 		
 		

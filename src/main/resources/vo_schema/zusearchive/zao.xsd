@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="ZUSE" type="zuse"/>
+
+  <xs:element name="erfassungsdaten" type="erfassungsdaten"/>
+
+  <xs:element name="gmd_daten" type="gmd_daten"/>
+
+  <xs:element name="oUnterlagen" type="oUnterlagen"/>
+
+  <xs:complexType name="zuse">
+    <xs:sequence>
+      <xs:element name="oFoto" type="oUnterlagen" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="oUnterlagen" type="oUnterlagen" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="oUnterlagen">
+    <xs:sequence>
+      <xs:element name="vorl__nr_" type="xs:string" minOccurs="0"/>
+      <xs:element name="seite" type="xs:string" minOccurs="0"/>
+      <xs:element name="rueckseiten_info" type="xs:string" minOccurs="0"/>
+      <xs:element name="prioritaet" type="xs:string" minOccurs="0"/>
+      <xs:element name="stenogramm" type="xs:string" minOccurs="0"/>
+      <xs:element name="steno_seitenumfang" type="xs:string" minOccurs="0"/>
+      <xs:element name="gmd_transkription_seite_n_" type="xs:string" minOccurs="0"/>
+      <xs:element name="dischinger_transkription" type="xs:string" minOccurs="0"/>
+      <xs:element name="datierung" type="xs:string" minOccurs="0"/>
+      <xs:element name="laufzeit" type="xs:string" minOccurs="0"/>
+      <xs:element ref="gmd_daten" minOccurs="0"/>
+      <xs:element name="syo" type="xs:string" minOccurs="0"/>
+      <xs:element name="sys" type="xs:string" minOccurs="0"/>
+      <xs:element name="sys2" type="xs:string" minOccurs="0"/>
+      <xs:element name="sys3" type="xs:string" minOccurs="0"/>
+      <xs:element name="gegenstand" type="xs:string" minOccurs="0"/>
+      <xs:element name="materialklassifikation" type="xs:string" minOccurs="0"/>
+      <xs:element name="verfasser" type="xs:string" minOccurs="0"/>
+      <xs:element name="pnd_nr__verfasser" type="xs:string" minOccurs="0"/>
+      <xs:element name="gkd_nr__verfasser" type="xs:string" minOccurs="0"/>
+      <xs:element name="empfaenger" type="xs:string" minOccurs="0"/>
+      <xs:element name="pnd_nr__empfaenger" type="xs:string" minOccurs="0"/>
+      <xs:element name="gkd_nr__empfaenger" type="xs:string" minOccurs="0"/>
+      <xs:element name="alt_signatur" type="xs:string" minOccurs="0"/>
+      <xs:element name="alt_titel" type="xs:string" minOccurs="0"/>
+      <xs:element name="titel" type="xs:string" minOccurs="0"/>
+      <xs:element name="enthaelt" type="xs:string" minOccurs="0"/>
+      <xs:element name="intus" type="xs:string" minOccurs="0"/>
+      <xs:element name="beilage" type="xs:string" minOccurs="0"/>
+      <xs:element name="person" type="xs:string" minOccurs="0"/>
+      <xs:element name="koerperschaft" type="xs:string" minOccurs="0"/>
+      <xs:element name="vw_von_koerp__zu_pers_" type="xs:string" minOccurs="0"/>
+      <xs:element name="zeichner_hersteller" type="xs:string" minOccurs="0"/>
+      <xs:element name="format__bxh_cm_" type="xs:string" minOccurs="0"/>
+      <xs:element name="bildformat__hxb_cm_" type="xs:string" minOccurs="0"/>
+      <xs:element name="darstellung" type="xs:string" minOccurs="0"/>
+      <xs:element name="technik" type="xs:string" minOccurs="0"/>
+      <xs:element name="beschreibstoff" type="xs:string" minOccurs="0"/>
+      <xs:element name="massstab" type="xs:string" minOccurs="0"/>
+      <xs:element name="bauteil_nr_" type="xs:string" minOccurs="0"/>
+      <xs:element name="block_nr_" type="xs:string" minOccurs="0"/>
+      <xs:element name="schlagwort" type="xs:string" minOccurs="0"/>
+      <xs:element name="ort" type="xs:string" minOccurs="0"/>
+      <xs:element name="umfang" type="xs:string" minOccurs="0"/>
+      <xs:element name="mehrfachexemplar" type="xs:string" minOccurs="0"/>
+      <xs:element name="bemerkung" type="xs:string" minOccurs="0"/>
+      <xs:element name="erhaltungszustand" type="xs:string" minOccurs="0"/>
+      <xs:element name="bildstellen_nr_" type="xs:string" minOccurs="0"/>
+      <xs:element name="bildstellen_negativ" type="xs:string" minOccurs="0"/>
+      <xs:element name="sprache" type="xs:string" minOccurs="0"/>
+      <xs:element name="publiziert_in_" type="xs:string" minOccurs="0"/>
+      <xs:element name="literatur" type="xs:string" minOccurs="0"/>
+      <xs:element name="serie" type="xs:string" minOccurs="0"/>
+      <xs:element name="interna" type="xs:string" minOccurs="0"/>
+      <xs:element name="standort" type="xs:string" minOccurs="0"/>
+      <xs:element name="digitalisat" type="xs:string" minOccurs="0"/>
+      <xs:element name="zaehlfeld" type="xs:string" minOccurs="0"/>
+      <xs:element name="bestand" type="xs:string" minOccurs="0"/>
+      <xs:element name="signatur" type="xs:string" minOccurs="0"/>
+      <xs:element name="sysbem" type="xs:string" minOccurs="0"/>
+      <xs:element name="uebergabeliste_2005" type="xs:string" minOccurs="0"/>
+      <xs:element name="berlin_schlagwort" type="xs:string" minOccurs="0"/>
+      <xs:element name="berlin_beschreibung" type="xs:string" minOccurs="0"/>
+      <xs:element name="berlin_datierung" type="xs:string" minOccurs="0"/>
+      <xs:element name="berlin_bemerkung" type="xs:string" minOccurs="0"/>
+      <xs:element name="internet_freigabe" type="xs:string" minOccurs="0"/>
+      <xs:element name="beschraenkung" type="xs:string" minOccurs="0"/>
+      <xs:element ref="erfassungsdaten" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="gmd_daten">
+    <xs:sequence>
+      <xs:element name="gmd_nr_" type="xs:string" minOccurs="0"/>
+      <xs:element name="mikrofilm_nr_" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="erfassungsdaten">
+    <xs:sequence>
+      <xs:element name="erfasst" type="xs:string" minOccurs="0"/>
+      <xs:element name="korrektur" type="xs:string" minOccurs="0"/>
+      <xs:element name="bearbeiter" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
