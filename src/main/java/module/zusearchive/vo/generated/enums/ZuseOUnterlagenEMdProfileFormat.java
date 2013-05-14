@@ -123,8 +123,7 @@ public enum ZuseOUnterlagenEMdProfileFormat implements IMdProfileFormat {
 		
 	}
 
-	@Override
-	public List<?> enum2list(Class<? extends IMdProfileFormat> cls) {
+	public static List<?> enum2list(Class<? extends IMdProfileFormat> cls) {
 		return (List<?>) Arrays.asList(cls.getEnumConstants());		
 	}
 

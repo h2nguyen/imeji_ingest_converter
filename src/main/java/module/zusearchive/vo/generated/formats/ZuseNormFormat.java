@@ -3,9 +3,9 @@
  */
 package module.zusearchive.vo.generated.formats;
 
+import module.zusearchive.vo.generated.enums.ZuseOUnterlagenEMdProfileFormat;
 import core.vo.generated.formats.NormFormat;
 import core.vo.generated.formats.interfaces.IMdProfileFormat;
-import module.zusearchive.vo.generated.enums.ZuseOUnterlagenEMdProfileFormat;
 
 
 /**
@@ -14,9 +14,9 @@ import module.zusearchive.vo.generated.enums.ZuseOUnterlagenEMdProfileFormat;
  */
 public final class ZuseNormFormat extends NormFormat {
 	
-	private ZuseOUnterlagenEMdProfileFormat zemdpf;
+	static ZuseOUnterlagenEMdProfileFormat zemdpf;
 
-	private String[][] KEYSTOREPLACE_OUL = {
+	static String[][] KEYSTOREPLACE_OUL = {
 			NormFormat.norm("Vorl__Nr_"),
 			NormFormat.norm("Rückseiten-Info"),
 			NormFormat.norm("Priorität"),
@@ -113,10 +113,6 @@ public final class ZuseNormFormat extends NormFormat {
 	@Override
 	public Enum<? extends IMdProfileFormat> geteMdProfileFormat() {
 		return this.zemdpf;
-	}
-	
-	public ZuseOUnterlagenEMdProfileFormat getZEMdProfileFormat() {
-		return (ZuseOUnterlagenEMdProfileFormat) this.zemdpf;
 	}
 
 }

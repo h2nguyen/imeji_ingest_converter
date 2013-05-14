@@ -20,7 +20,5 @@ public interface IMdProfileFormat {
 	/**
 	 * @param attributes the attributes to set
 	 */
-	public abstract void setAttributes(String[] attributes);
-	
-	public abstract List<?> enum2list(Class<? extends IMdProfileFormat> cls);
+	public abstract void setAttributes(String[] attributes);	
 }

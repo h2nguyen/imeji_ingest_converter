@@ -13,5 +13,5 @@ import core.vo.imeji.MetadataProfile;
  *
  */
 public abstract class MdProfileConverter {	
-	public abstract <T> MetadataProfile getMdProfile(Class<T> object, String title, String description, Enum<? extends IMdProfileFormat> enumObject) throws IntrospectionException;
+	public abstract <T> MetadataProfile getMdProfile(Class<T> object, String title, String description, Class<? extends IMdProfileFormat> enumClass) throws IntrospectionException;
 }

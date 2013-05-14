@@ -23,17 +23,11 @@ public class ZuseMdProfileConverter extends MdProfileConverter {
 	public ZuseMdProfileConverter() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public <T> MetadataProfile getMdProfile(OUnterlagen oul,
-			String title, String description, ZuseOUnterlagenEMdProfileFormat zoulemdpf)
-			throws IntrospectionException {
-		return this.getMdProfile(oul,title,description,zoulemdpf);
-	}
 	
 	
 	@Override
 	public <T> MetadataProfile getMdProfile(Class<T> object,
-			String title, String description, Enum<? extends IMdProfileFormat> enumObject)
+			String title, String description, Class<? extends IMdProfileFormat> enumClass)
 			throws IntrospectionException {
 		
 		MetadataProfile mdp = new MetadataProfile();
@@ -41,10 +35,8 @@ public class ZuseMdProfileConverter extends MdProfileConverter {
 		mdp.setTitle(title);
 
 		Collection<Statement> statements = new LinkedList<Statement>();
-
-		ZuseOUnterlagenEMdProfileFormat zemdpf = (ZuseOUnterlagenEMdProfileFormat) enumObject;
 		
-		List<?> z = (List<?>) zemdpf.enum2list(zemdpf.getClass());
+		List<?> z = (List<?>) ZuseOUnterlagenEMdProfileFormat.enum2list(enumClass);
 		int counter = 0;
 		try {
 			for (PropertyDescriptor propertyDescriptor : Introspector
@@ -56,6 +48,9 @@ public class ZuseMdProfileConverter extends MdProfileConverter {
 					String method = ((ZuseOUnterlagenEMdProfileFormat) z.get(i))
 							.getAttributes()[ZuseOUnterlagenEMdProfileFormat.Column.METHOD_NAME
 							.ordinal()];
+					
+					String s = propertyDescriptor.getReadMethod().getName();
+					
 					if (propertyDescriptor.getReadMethod().getName()
 							.contains(method)) {
 

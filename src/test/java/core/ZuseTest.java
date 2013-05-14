@@ -73,7 +73,7 @@ public class ZuseTest {
 		
 		ZuseMdProfileConverter zmdpconv = new ZuseMdProfileConverter();
 		
-		MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name", "profile description",znf.getZEMdProfileFormat());
+		MetadataProfile mdp = zmdpconv.getMdProfile(oul.getClass(), "profile name", "profile description",ZuseOUnterlagenEMdProfileFormat.class);
 		
 		JaxbUtil.toString(mdp);
 		
