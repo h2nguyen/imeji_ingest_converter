@@ -7,14 +7,14 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.JaxbIngestProfileZuse;
+import module.zusearchive.jaxb.JaxbZuseProfile;
 import module.zusearchive.tasks.GenerateZuseItemsTask;
 
 import org.xml.sax.SAXException;
 
 import core.mapper.StatementsIdMapper;
-import core.vo.Items;
-import core.vo.MetadataProfile;
+import core.vo.imeji.Items;
+import core.vo.imeji.MetadataProfile;
 
 /**
  * @author hnguyen
@@ -45,7 +45,7 @@ public class GenerateItemsWithStatementProfileTask extends GenerateZuseItemsTask
 	@Override
 	protected String doInBackground() throws Exception {
 
-		JaxbIngestProfileZuse jmp = new JaxbIngestProfileZuse();
+		JaxbZuseProfile jmp = new JaxbZuseProfile();
 		
 		Items items = null;
 		MetadataProfile mdp = null;

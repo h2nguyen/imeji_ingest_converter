@@ -9,9 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import module.zusearchive.jaxb.JaxbIngestProfileZuse;
+import module.zusearchive.jaxb.JaxbZuseProfile;
 
-import core.vo.MetadataProfile;
+import core.vo.imeji.MetadataProfile;
 
 
 /**
@@ -52,7 +52,7 @@ public class MetadataProfilesMergerTask extends SwingWorker<String, Void> {
 		this.offline.setVersion(this.online.getVersion());
 		this.offline.setVersionDate(this.online.getVersionDate());
 		
-		new JaxbIngestProfileZuse().marshalMdProfile(this.outputFilename, this.offline);
+		new JaxbZuseProfile().marshalMdProfile(this.outputFilename, this.offline);
 		
 		return this.outputFilename;
 	}

@@ -11,7 +11,7 @@ import javax.xml.bind.JAXBException;
 import org.xml.sax.SAXException;
 
 import core.jaxb.ImejiSchemaFilename;
-import core.vo.MetadataProfile;
+import core.vo.imeji.MetadataProfile;
 
 /**
  * @author hnguyen

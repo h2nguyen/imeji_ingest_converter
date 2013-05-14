@@ -9,9 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import module.zusearchive.jaxb.JaxbIngestProfileZuse;
-import core.vo.Item;
-import core.vo.Items;
+import module.zusearchive.jaxb.JaxbZuseProfile;
+import core.vo.imeji.Item;
+import core.vo.imeji.Items;
 
 /**
  * @author hnguyen
@@ -45,7 +45,7 @@ public class MergeOfflineAndOnlineItemsTask extends SwingWorker<String, Void> {
 
 	@Override
 	protected String doInBackground() throws Exception {
-		JaxbIngestProfileZuse jipz = new JaxbIngestProfileZuse();
+		JaxbZuseProfile jipz = new JaxbZuseProfile();
 		Items offlineItems = jipz.unmarshalItems(this.offlineItemsFilename);
 		Items onlineItems = jipz.unmarshalItems(this.onlineItemsFilename);
 		

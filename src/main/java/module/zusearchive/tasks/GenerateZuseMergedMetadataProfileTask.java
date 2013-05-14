@@ -12,11 +12,11 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.JaxbIngestProfileZuse;
+import module.zusearchive.jaxb.JaxbZuseProfile;
 
 import org.xml.sax.SAXException;
 
-import core.vo.MetadataProfile;
+import core.vo.imeji.MetadataProfile;
 
 /**
  * @author hnguyen
@@ -70,7 +70,7 @@ public class GenerateZuseMergedMetadataProfileTask extends SwingWorker<String,Vo
 	@Override
 	protected String doInBackground() throws Exception {
 
-		JaxbIngestProfileZuse jmp = new JaxbIngestProfileZuse();
+		JaxbZuseProfile jmp = new JaxbZuseProfile();
 		
 		MetadataProfile offline = null;
 		MetadataProfile online  = null;

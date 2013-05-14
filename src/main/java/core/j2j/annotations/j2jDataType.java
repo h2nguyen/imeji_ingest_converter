@@ -5,7 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import com.hp.hpl.jena.vocabulary.RDF;
 
-import core.vo.Metadata;
+import core.vo.imeji.Metadata;
 
 /**
  * The {@link RDF}.type of an object. Used to define the {@link Metadata} types

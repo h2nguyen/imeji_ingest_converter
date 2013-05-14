@@ -2,7 +2,7 @@ package module.zusearchive.controller;
 
 import java.io.File;
 
-import core.vo.MetadataProfile;
+import core.vo.imeji.MetadataProfile;
 
 
 public class ZuseXml2ImejiIngestObject {
@@ -19,31 +19,6 @@ public class ZuseXml2ImejiIngestObject {
 		this.zuseXmlFile = zuseXmlFileInput;
 		this.imejiXmlFile = imejiXmlFileOutput;
 	}
-	
-//	public ZUSE createZuseObject(String filename) {
-//
-//		
-//		try {
-//
-//			JaxbIngestProfile jmp = new JaxbIngestProfile();
-//			
-//			ZUSE zo = jmp.unmarshalZuseObject(filename);
-//			
-//			jmp.toString(zo);
-//			
-//		} catch (JAXBException e) {
-//			
-//			e.printStackTrace();
-//			fail("JAXBException");
-//		} catch (SAXException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			fail("SAXException");
-//		}
-//		
-//		
-//		return new ZUSE();
-//	}
 	
 	public MetadataProfile getMetadataProfileFromXmlFile(File inputFile) {
 		return parseXmlFileToMetadataProfile(inputFile);

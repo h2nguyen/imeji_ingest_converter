@@ -16,11 +16,11 @@ import core.jaxb.interfaces.IJaxbItem;
 import core.jaxb.interfaces.IJaxbItems;
 import core.jaxb.interfaces.IJaxbMetadataProfile;
 import core.jaxb.interfaces.IJaxbMetadataProfiles;
-import core.vo.IngestProfile;
-import core.vo.Item;
-import core.vo.Items;
-import core.vo.MetadataProfile;
-import core.vo.MetadataProfiles;
+import core.vo.imeji.IngestProfile;
+import core.vo.imeji.Item;
+import core.vo.imeji.Items;
+import core.vo.imeji.MetadataProfile;
+import core.vo.imeji.MetadataProfiles;
 
 /**
  * @author hnguyen

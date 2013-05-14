@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 /**
- * Utility class to format imeji metadata {@link de.mpg.imeji.logic.vo.predefinedMetadata.Date}
+ * Utility class to format imeji metadata {@link core.vo.imeji.predefinedMetadata.mpg.imeji.logic.vo.predefinedMetadata.Date}
  * 
  * @author saquet (initial creation)
  * @author $Author$ (last modification)

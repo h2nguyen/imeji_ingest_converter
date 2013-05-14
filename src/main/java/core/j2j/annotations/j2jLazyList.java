@@ -10,7 +10,7 @@ import org.opensaml.xml.util.LazyList;
 import com.hp.hpl.jena.Jena;
 import com.hp.hpl.jena.rdf.model.Resource;
 
-import core.vo.Item;
+import core.vo.imeji.Item;
 
 /**
  * For persistence of {@link List} in {@link Jena}. <br/>

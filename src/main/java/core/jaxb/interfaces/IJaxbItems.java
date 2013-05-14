@@ -11,7 +11,7 @@ import javax.xml.bind.JAXBException;
 import org.xml.sax.SAXException;
 
 import core.jaxb.ImejiSchemaFilename;
-import core.vo.Items;
+import core.vo.imeji.Items;
 
 /**
  * @author hnguyen

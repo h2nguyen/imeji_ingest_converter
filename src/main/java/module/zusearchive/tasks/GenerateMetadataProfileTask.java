@@ -9,7 +9,7 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.JaxbIngestProfileZuse;
+import module.zusearchive.jaxb.JaxbZuseProfile;
 import module.zusearchive.vo.generated.ZUSE;
 
 import org.xml.sax.SAXException;
@@ -61,7 +61,7 @@ public class GenerateMetadataProfileTask extends SwingWorker<String, Void> {
 	@Override
 	protected String doInBackground() throws Exception {
 
-		JaxbIngestProfileZuse jmp = new JaxbIngestProfileZuse();
+		JaxbZuseProfile jmp = new JaxbZuseProfile();
 		
 		ZUSE zo = null;
 		try {			

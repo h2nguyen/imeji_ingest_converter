@@ -12,7 +12,6 @@ import module.zusearchive.jaxb.ZuseArchiveSchemaFilename;
 
 import org.xml.sax.SAXException;
 
-import core.jaxb.ImejiSchemaFilename;
 import core.mapper.StatementsIdMapper;
 
 /**

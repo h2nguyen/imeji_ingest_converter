@@ -14,11 +14,11 @@ import javax.swing.SwingWorker;
 import core.jaxb.JaxbIngestProfile;
 import core.mapper.StatementIdMapper;
 import core.mapper.StatementsIdMapper;
-import core.vo.Item;
-import core.vo.Items;
-import core.vo.Metadata;
-import core.vo.MetadataProfile;
-import core.vo.MetadataSet;
+import core.vo.imeji.Item;
+import core.vo.imeji.Items;
+import core.vo.imeji.Metadata;
+import core.vo.imeji.MetadataProfile;
+import core.vo.imeji.MetadataSet;
 
 
 /**

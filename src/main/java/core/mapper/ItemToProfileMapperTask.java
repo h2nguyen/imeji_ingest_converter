@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import core.vo.Item;
-import core.vo.MetadataProfile;
+import core.vo.imeji.Item;
+import core.vo.imeji.MetadataProfile;
 
 /**
  * @author hnguyen
