@@ -1,7 +1,7 @@
 /**
  * 
  */
-package core.task;
+package module.zusearchive.tasks;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;

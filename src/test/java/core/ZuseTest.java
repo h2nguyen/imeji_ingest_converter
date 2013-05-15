@@ -2,45 +2,24 @@ package core;
 
 
 
-import static org.junit.Assert.fail;
 
 import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-import module.zusearchive.converter.ZuseMdProfileConverter;
+import module.zusearchive.converter.ZuseConverter;
 import module.zusearchive.helper.ZuseNormalizer;
 import module.zusearchive.jaxb.JaxbZuseProfile;
-import module.zusearchive.jaxb.ZuseArchiveSchemaFilename;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.ZUSE;
-import module.zusearchive.vo.generated.enums.ZuseOUnterlagenEMdProfileFormat;
-import module.zusearchive.vo.generated.formats.ZuseNormFormat;
+import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseEnumType;
 
 import org.junit.Test;
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import core.helper.Download;
 import core.jaxb.JaxbUtil;
-import core.mapper.StatementIdMapper;
-import core.mapper.StatementsIdMapper;
-import core.task.ItemConverterTask;
 import core.vo.imeji.Item;
 import core.vo.imeji.Items;
 import core.vo.imeji.MetadataProfile;
@@ -50,6 +29,7 @@ public class ZuseTest {
 	
 	
 	
+
 	//@Test
 	public void normalizeProcessTest() {
 		String inputFilename = "src/test/resources/_10_entries.xml";
@@ -59,26 +39,28 @@ public class ZuseTest {
 	}
 	
 	@Test
-	public void ingestConverterProcessTest() throws JAXBException, SAXException, IntrospectionException {
+	public void ingestConverterProcessTest() throws JAXBException, SAXException, IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
 		JaxbZuseProfile jmp = new JaxbZuseProfile();
 		
 		ZUSE zo = jmp.unmarshalZuseObject(filenameUnmarshal);
 		//JaxbUtil.toString(zo);
+
+		ZuseConverter zmdpconv = new ZuseConverter();
+
+//		MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name", "profile description", ZuseEnumType.getEnumList());
+//		JaxbUtil.toString(mdp);		
+//		OUnterlagen oul = zo.getoUnterlagen().get(0);
+//		JaxbUtil.toString(oul);
+//		Item item = zmdpconv.getItem(oul, ZuseEnumType.getEnumList());
+//		JaxbUtil.toString(item);
 		
-		OUnterlagen oul = zo.getoUnterlagen().get(0);
-		//JaxbUtil.toString(oul);
+		Items items = zmdpconv.getItems(zo.getoUnterlagen(), ZuseEnumType.getEnumList());
+		//JaxbUtil.toString(items);
 		
+		String itemsFile = "src/test/resources/_10_items_out.xml";
 		
-		ZuseMdProfileConverter zmdpconv = new ZuseMdProfileConverter();
-		
-		MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name", "profile description",ZuseOUnterlagenEMdProfileFormat.class);
-		
-		
-		
-		JaxbUtil.toString(mdp);
-		
-		
+		jmp.marshalItems(itemsFile, items);
 	}
 	
 	

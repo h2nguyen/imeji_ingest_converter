@@ -5,7 +5,10 @@ Person
 Properties
 Statement
 Item
+Items
+IngestProfile
 MetadataProfile
+MetadataProfiles
 predefinedMetadata.ConePerson
 predefinedMetadata.Date
 predefinedMetadata.Geolocation

@@ -17,7 +17,6 @@ import module.zusearchive.vo.generated.ZUSE;
 
 import org.xml.sax.SAXException;
 
-import core.task.ItemConverterTask;
 
 /**
  * @author hnguyen

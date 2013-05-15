@@ -19,7 +19,6 @@ import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.ZUSE;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
 import core.jaxb.JaxbIngestProfile;
-import core.task.ItemConverterTask;
 import core.vo.imeji.Item;
 import core.vo.imeji.Items;
 import core.vo.imeji.Metadata;

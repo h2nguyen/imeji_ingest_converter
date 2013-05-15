@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import module.zusearchive.converter.ZuseMdProfileConverter;
+import module.zusearchive.converter.ZuseConverter;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.ZUSE;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;

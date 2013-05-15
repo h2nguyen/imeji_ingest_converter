@@ -68,9 +68,7 @@ public class ZuseNormalizer {
 	}
 	
 	private boolean normalizeProcess() {
-		try {			
-			
-			ZuseNormFormat znf = new ZuseNormFormat();
+		try {
 			
 			if(!this.inputFile.exists()) {				
 				return false;
@@ -90,8 +88,9 @@ public class ZuseNormalizer {
 	        
 	        String newString = new String(oldString);
 	        
-	        for (int i = 0; i < znf.getKeyStorePlaces().length; i++) {
-	        	newString = newString.replaceAll(znf.getKeyStorePlaces()[i][0], znf.getKeyStorePlaces()[i][1]);
+	        for (int i = 0; i < ZuseNormFormat.KEYSTOREPLACE_OUL.length; i++) {
+	        	newString = newString.replaceAll(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0],
+	        			ZuseNormFormat.KEYSTOREPLACE_OUL[i][1]);
 	        }
 	        
 	        FileWriter writer = new FileWriter(this.outputFile);

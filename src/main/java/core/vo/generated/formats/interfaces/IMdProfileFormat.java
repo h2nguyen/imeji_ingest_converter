@@ -3,9 +3,6 @@
  */
 package core.vo.generated.formats.interfaces;
 
-import java.util.List;
-
-
 /**
  * @author hnguyen
  *
@@ -20,5 +17,5 @@ public interface IMdProfileFormat {
 	/**
 	 * @param attributes the attributes to set
 	 */
-	public abstract void setAttributes(String[] attributes);	
+	public abstract void setAttributes(String[] attributes);
 }
