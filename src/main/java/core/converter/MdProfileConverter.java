@@ -10,8 +10,9 @@ import core.vo.imeji.MetadataProfile;
 
 /**
  * @author hnguyen
+ * @param <T>
  *
  */
-public abstract class MdProfileConverter {	
-	public abstract <T> MetadataProfile getMdProfile(Class<T> object, String title, String description, Class<? extends IMdProfileFormat> enumClass) throws IntrospectionException;
+public abstract class MdProfileConverter<T> {	
+	public abstract MetadataProfile getMdProfile(T tObject, String title, String description, Class<? extends IMdProfileFormat> enumClass) throws IntrospectionException;
 }

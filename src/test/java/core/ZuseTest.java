@@ -69,11 +69,12 @@ public class ZuseTest {
 		OUnterlagen oul = zo.getoUnterlagen().get(0);
 		//JaxbUtil.toString(oul);
 		
-		ZuseNormFormat znf = new ZuseNormFormat();
 		
 		ZuseMdProfileConverter zmdpconv = new ZuseMdProfileConverter();
 		
-		MetadataProfile mdp = zmdpconv.getMdProfile(oul.getClass(), "profile name", "profile description",ZuseOUnterlagenEMdProfileFormat.class);
+		MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name", "profile description",ZuseOUnterlagenEMdProfileFormat.class);
+		
+		
 		
 		JaxbUtil.toString(mdp);
 		
