@@ -9,10 +9,11 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.JaxbOType;
 import module.zusearchive.vo.generated.OZuse;
 
 import org.xml.sax.SAXException;
+
+import core.jaxb.JaxbGenericObject;
 
 
 public class GenerateItemAndMetadataProfileTask extends SwingWorker<String[], Void> {
@@ -70,7 +71,7 @@ public class GenerateItemAndMetadataProfileTask extends SwingWorker<String[], Vo
 	@Override
 	protected String[] doInBackground() throws Exception {
 
-		JaxbOType<OZuse> jmp = new JaxbOType<OZuse>(OZuse.class);
+		JaxbGenericObject<OZuse> jmp = new JaxbGenericObject<OZuse>(OZuse.class);
 		
 		OZuse zo = null;
 		ItemAndMdProfileConverterTask imdpct = null;

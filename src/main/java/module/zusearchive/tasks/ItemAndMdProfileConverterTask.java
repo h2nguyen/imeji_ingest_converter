@@ -22,7 +22,7 @@ import module.zusearchive.converter.ZuseConverter;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
-import core.jaxb.JaxbIngestProfile;
+import core.jaxb.JaxbGenericObject;
 import core.vo.imeji.Item;
 import core.vo.imeji.Items;
 import core.vo.imeji.Metadata;
@@ -329,8 +329,8 @@ public class ItemAndMdProfileConverterTask extends SwingWorker<String[],Void>{
 //			this.label.setText("Converting items job: "+ val + " % done!" );
 //		}
 		
-		new JaxbIngestProfile().marshalItems(this.itemOutputFilename, new Items(items));
-		new JaxbIngestProfile().marshalMdProfile(this.mdProfileOutputFilename, mdp);
+		new JaxbGenericObject<Items>(Items.class).marshal(this.itemOutputFilename, new Items(items));
+		new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).marshal(this.mdProfileOutputFilename, mdp);
 		
 		this.stop();
 		

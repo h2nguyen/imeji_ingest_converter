@@ -16,7 +16,7 @@ import org.xml.sax.SAXException;
  * @param <T>
  *
  */
-public interface IJaxbObject<T> {
+public interface IJaxbGenericObject<T> {
 	
 	/**
      * This method creates a xml filename from a type object through the given schema file.

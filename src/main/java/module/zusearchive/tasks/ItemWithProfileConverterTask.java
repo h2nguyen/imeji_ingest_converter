@@ -18,7 +18,7 @@ import javax.swing.JProgressBar;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
-import core.jaxb.JaxbIngestProfile;
+import core.jaxb.JaxbGenericObject;
 import core.vo.imeji.Item;
 import core.vo.imeji.Items;
 import core.vo.imeji.Metadata;
@@ -74,7 +74,7 @@ public class ItemWithProfileConverterTask extends ItemConverterTask {
 //			this.label.setText("Converting items job: "+ val + " % done!" );
 //		}
 		
-		new JaxbIngestProfile().marshalItems(this.outputFilename, new Items(items));
+		new JaxbGenericObject<Items>(Items.class).marshal(this.outputFilename, new Items(items));
 		
 		this.stop();
 		return this.outputFilename;

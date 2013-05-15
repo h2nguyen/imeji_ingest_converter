@@ -13,10 +13,10 @@ import javax.swing.Timer;
 import javax.xml.bind.JAXBException;
 
 
-import module.zusearchive.jaxb.JaxbOType;
 
 import org.xml.sax.SAXException;
 
+import core.jaxb.JaxbGenericObject;
 import core.vo.imeji.MetadataProfile;
 
 /**
@@ -71,7 +71,7 @@ public class GenerateZuseMergedMetadataProfileTask extends SwingWorker<String,Vo
 	@Override
 	protected String doInBackground() throws Exception {
 
-		JaxbOType<MetadataProfile> jmp = new JaxbOType<MetadataProfile>(MetadataProfile.class);
+		JaxbGenericObject<MetadataProfile> jmp = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class);
 		
 		MetadataProfile offline = null;
 		MetadataProfile online  = null;

@@ -12,10 +12,11 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.JaxbOType;
 import module.zusearchive.vo.generated.OZuse;
 
 import org.xml.sax.SAXException;
+
+import core.jaxb.JaxbGenericObject;
 
 
 /**
@@ -68,7 +69,7 @@ public class IngestTask extends SwingWorker<String,Void> {
 	@Override
 	protected String doInBackground() throws Exception {
 
-		JaxbOType<OZuse> jmp = new JaxbOType<OZuse>(OZuse.class);
+		JaxbGenericObject<OZuse> jmp = new JaxbGenericObject<OZuse>(OZuse.class);
 		
 		OZuse zo = null;
 		try {			

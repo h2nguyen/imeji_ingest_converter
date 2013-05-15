@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import core.jaxb.JaxbIngestProfile;
+import core.jaxb.JaxbGenericObject;
 import core.mapper.StatementIdMapper;
 import core.mapper.StatementsIdMapper;
 import core.vo.imeji.Item;
@@ -78,7 +78,7 @@ public class ItemWithProfileAndStatementMappingConverterTask extends SwingWorker
 			this.label.setText("Converting items job: "+ val + " % done!" );
 		}
 		
-		new JaxbIngestProfile().marshalItems(this.outputFilename, this.items);
+		(new JaxbGenericObject<Items>(Items.class)).marshal(this.outputFilename, this.items);
 		
 		this.stop();
 		return this.outputFilename;

@@ -6,11 +6,11 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import module.zusearchive.jaxb.JaxbOType;
 import module.zusearchive.jaxb.ZuseArchiveSchemaFilename;
 import module.zusearchive.vo.generated.OZuse;
 import core.j2j.misc.LocalizedString;
 import core.jaxb.ImejiSchemaFilename;
+import core.jaxb.JaxbGenericObject;
 import core.jaxb.JaxbUtil;
 import core.mapper.StatementIdMapper;
 import core.mapper.StatementsIdMapper;
@@ -47,7 +47,7 @@ public class GenerateStatementMappingFileTask extends SwingWorker<String, String
 	@Override
 	protected String doInBackground() throws Exception {
 		
-		JaxbOType<MetadataProfile> jot = new JaxbOType<MetadataProfile>(MetadataProfile.class);
+		JaxbGenericObject<MetadataProfile> jot = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class);
 		
 		MetadataProfile mdp = jot.unmarshal(this.profileFilename);
 		

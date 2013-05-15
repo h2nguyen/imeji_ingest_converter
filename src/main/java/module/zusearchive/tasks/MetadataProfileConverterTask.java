@@ -18,7 +18,7 @@ import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
 import core.j2j.misc.LocalizedString;
-import core.jaxb.JaxbIngestProfile;
+import core.jaxb.JaxbGenericObject;
 import core.vo.imeji.Item;
 import core.vo.imeji.Metadata;
 import core.vo.imeji.MetadataProfile;
@@ -173,7 +173,7 @@ public class MetadataProfileConverterTask extends SwingWorker<String, Void> {
 			return "";
 		}
 		
-		new JaxbIngestProfile().marshalMdProfile(this.outputFilename, mdp);
+		new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).marshal(this.outputFilename, mdp);
 		
 		
 		

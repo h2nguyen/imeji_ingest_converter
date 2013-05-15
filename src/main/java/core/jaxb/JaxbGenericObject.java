@@ -1,31 +1,29 @@
 /**
  * 
  */
-package module.zusearchive.jaxb;
+package core.jaxb;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-
 import org.xml.sax.SAXException;
 
-import core.jaxb.JaxbUtil;
-import core.jaxb.interfaces.IJaxbObject;
+import core.jaxb.interfaces.IJaxbGenericObject;
 
 /**
  * @author hnguyen
  * @param <T>
  *
  */
-public class JaxbOType<T> extends JaxbUtil implements IJaxbObject<T> {
+public class JaxbGenericObject<T> extends JaxbUtil implements IJaxbGenericObject<T> {
 
+	public String xsdFilename = ImejiSchemaFilename.IMEJI_INGEST_PROFILE_XSDFILE;
+
+	protected Class<T> type;	
 	
-	private Class<T> type;
-	
-	
-    public JaxbOType(Class<T> type) {
+    public JaxbGenericObject(Class<T> type) {
          this.type = type;
     }
 
@@ -33,7 +31,6 @@ public class JaxbOType<T> extends JaxbUtil implements IJaxbObject<T> {
         return this.type;
     }
 	
-	public String xsdFilename = ZuseArchiveSchemaFilename.ZUSEARCHIVE_XSDFILE;		
 	@Override
 	public void marshal(String xmlFilename, T t) throws JAXBException,
 			SAXException, FileNotFoundException {

@@ -7,7 +7,7 @@ import javax.xml.bind.JAXBException;
 
 import module.zusearchive.converter.ZuseConverter;
 import module.zusearchive.helper.ZuseNormalizer;
-import module.zusearchive.jaxb.JaxbOType;
+import module.zusearchive.jaxb.JaxbZuseGenericObject;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseEnumType;
@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import core.jaxb.ImejiSchemaFilename;
+import core.jaxb.JaxbGenericObject;
 import core.jaxb.JaxbUtil;
 import core.mapper.StatementIdMapper;
 import core.mapper.StatementsIdMapper;
@@ -38,7 +39,7 @@ public class ZuseTest {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
 		
 
-		OZuse zo = (new JaxbOType<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
+		OZuse zo = (new JaxbGenericObject<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
 		// JaxbUtil.toString(zo);
 
 		ZuseConverter zmdpconv = new ZuseConverter();
@@ -57,7 +58,7 @@ public class ZuseTest {
 
 		String itemsFile = "src/test/resources/_10_items_out.xml";
 
-		(new JaxbOType<Items>(Items.class)).marshal(itemsFile, items);
+		(new JaxbGenericObject<Items>(Items.class)).marshal(itemsFile, items);
 	}
 
 	@Test
@@ -66,7 +67,7 @@ public class ZuseTest {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
 		
 
-		OZuse zo = (new JaxbOType<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
+		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
 
 		ZuseConverter zmdpconv = new ZuseConverter();
 

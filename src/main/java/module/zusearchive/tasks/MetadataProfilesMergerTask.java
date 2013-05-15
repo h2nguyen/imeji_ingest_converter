@@ -9,9 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import module.zusearchive.jaxb.JaxbOType;
 import module.zusearchive.vo.generated.OZuse;
 
+import core.jaxb.JaxbGenericObject;
 import core.vo.imeji.MetadataProfile;
 
 
@@ -53,7 +53,7 @@ public class MetadataProfilesMergerTask extends SwingWorker<String, Void> {
 		this.offline.setVersion(this.online.getVersion());
 		this.offline.setVersionDate(this.online.getVersionDate());
 		
-		JaxbOType<MetadataProfile> jot = new JaxbOType<MetadataProfile>(MetadataProfile.class);
+		JaxbGenericObject<MetadataProfile> jot = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class);
 		
 		jot.marshal(this.outputFilename, this.offline);
 		
