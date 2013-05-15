@@ -18,7 +18,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
 import module.zusearchive.vo.generated.OUnterlagen;
-import module.zusearchive.vo.generated.ZUSE;
+import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
 import core.jaxb.JaxbIngestProfile;
 import core.vo.imeji.Item;
@@ -45,16 +45,16 @@ public class ItemConverterTask extends SwingWorker<String,Void>{
 	protected JLabel label;
 	
 	protected List<Item> items;
-	protected ZUSE zo;
+	protected OZuse zo;
 	protected String inputFilename;
 	protected String outputFilename;
 	protected boolean stopFlag;
 	
-	public ItemConverterTask(String inputFilename, ZUSE zo, JProgressBar progressBar, JLabel label) {
+	public ItemConverterTask(String inputFilename, OZuse zo, JProgressBar progressBar, JLabel label) {
 		this(inputFilename,getOutputFilename(inputFilename),zo,progressBar,label);		
 	}
 	
-	public ItemConverterTask(String inputFilename, String outputFilename, ZUSE zo, JProgressBar progressBar, JLabel label) {	
+	public ItemConverterTask(String inputFilename, String outputFilename, OZuse zo, JProgressBar progressBar, JLabel label) {	
 		this.zo = zo;		
 		this.progressBar = progressBar;
 		this.label = label;

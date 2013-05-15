@@ -6,9 +6,11 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import module.zusearchive.jaxb.JaxbZuseProfile;
+import module.zusearchive.jaxb.JaxbOType;
 import module.zusearchive.jaxb.ZuseArchiveSchemaFilename;
+import module.zusearchive.vo.generated.OZuse;
 import core.j2j.misc.LocalizedString;
+import core.jaxb.ImejiSchemaFilename;
 import core.jaxb.JaxbUtil;
 import core.mapper.StatementIdMapper;
 import core.mapper.StatementsIdMapper;
@@ -45,7 +47,9 @@ public class GenerateStatementMappingFileTask extends SwingWorker<String, String
 	@Override
 	protected String doInBackground() throws Exception {
 		
-		MetadataProfile mdp = new JaxbZuseProfile().unmarshalMdProfile(this.profileFilename);
+		JaxbOType<MetadataProfile> jot = new JaxbOType<MetadataProfile>(MetadataProfile.class);
+		
+		MetadataProfile mdp = jot.unmarshal(this.profileFilename);
 		
 		Collection<Statement> stCol = mdp.getStatements();
 		
@@ -64,7 +68,7 @@ public class GenerateStatementMappingFileTask extends SwingWorker<String, String
 			stsIdMapper.getStatementIdMapper().add(new StatementIdMapper(attrId,attrId,tag));
 		}
 		
-		JaxbUtil.marshal(ZuseArchiveSchemaFilename.ZUSE_STATEMENTSIDMAPPING_XSDFILE, this.outputFilename, stsIdMapper);
+		JaxbUtil.marshal(ImejiSchemaFilename.STATEMENTSIDMAPPING_XSDFILE, this.outputFilename, stsIdMapper);
 		return this.outputFilename;
 	}
 

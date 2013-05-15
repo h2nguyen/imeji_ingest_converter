@@ -5,4 +5,4 @@
  * @author hnguyen
  *
  */
-package module.defaultmodule;
+package module.imeji;

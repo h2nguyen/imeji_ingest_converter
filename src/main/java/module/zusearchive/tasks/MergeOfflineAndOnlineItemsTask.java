@@ -9,7 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
-import module.zusearchive.jaxb.JaxbZuseProfile;
+import module.zusearchive.jaxb.JaxbOType;
+import module.zusearchive.vo.generated.OZuse;
+
 import core.vo.imeji.Item;
 import core.vo.imeji.Items;
 
@@ -45,9 +47,9 @@ public class MergeOfflineAndOnlineItemsTask extends SwingWorker<String, Void> {
 
 	@Override
 	protected String doInBackground() throws Exception {
-		JaxbZuseProfile jipz = new JaxbZuseProfile();
-		Items offlineItems = jipz.unmarshalItems(this.offlineItemsFilename);
-		Items onlineItems = jipz.unmarshalItems(this.onlineItemsFilename);
+		JaxbOType<Items> jipz = new JaxbOType<Items>(Items.class);
+		Items offlineItems = jipz.unmarshal(this.offlineItemsFilename);
+		Items onlineItems = jipz.unmarshal(this.onlineItemsFilename);
 		
 		Hashtable<String, Item> offlineItemsHashtable = new Hashtable<String, Item>(offlineItems.getItem().size());
 		
@@ -64,7 +66,7 @@ public class MergeOfflineAndOnlineItemsTask extends SwingWorker<String, Void> {
 			this.mergeStatementContent(offItem, onItem);
 		}
 		
-		jipz.marshalItems(this.outputFilename, onlineItems);
+		jipz.marshal(this.outputFilename, onlineItems);
 		
 		return this.outputFilename;
 	}

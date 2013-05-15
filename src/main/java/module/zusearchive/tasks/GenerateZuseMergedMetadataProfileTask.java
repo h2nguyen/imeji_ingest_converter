@@ -12,7 +12,8 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.JaxbZuseProfile;
+
+import module.zusearchive.jaxb.JaxbOType;
 
 import org.xml.sax.SAXException;
 
@@ -70,14 +71,14 @@ public class GenerateZuseMergedMetadataProfileTask extends SwingWorker<String,Vo
 	@Override
 	protected String doInBackground() throws Exception {
 
-		JaxbZuseProfile jmp = new JaxbZuseProfile();
+		JaxbOType<MetadataProfile> jmp = new JaxbOType<MetadataProfile>(MetadataProfile.class);
 		
 		MetadataProfile offline = null;
 		MetadataProfile online  = null;
 		try {			
 			this.timer.start();
-			offline = jmp.unmarshalMdProfile(this.inputFilename1);
-			online  = jmp.unmarshalMdProfile(this.inputFilename2);
+			offline = jmp.unmarshal(this.inputFilename1);
+			online  = jmp.unmarshal(this.inputFilename2);
 			this.stop();
 			
 			MetadataProfilesMergerTask mdmt = new MetadataProfilesMergerTask(this.outputFilename, offline, online, progressBar, label);

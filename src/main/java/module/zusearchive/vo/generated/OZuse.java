@@ -5,12 +5,12 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="ZUSE")
-public class ZUSE {
+public class OZuse {
 
 	private List<OUnterlagen> oFoto;
 	private List<OUnterlagen> oUnterlagen;
 	
-	public ZUSE() {
+	public OZuse() {
 		// TODO Auto-generated constructor stub
 	}
 

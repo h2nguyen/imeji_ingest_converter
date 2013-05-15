@@ -8,10 +8,9 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.ZuseArchiveSchemaFilename;
-
 import org.xml.sax.SAXException;
 
+import core.jaxb.ImejiSchemaFilename;
 import core.mapper.StatementsIdMapper;
 
 /**
@@ -20,7 +19,7 @@ import core.mapper.StatementsIdMapper;
  */
 public interface IJaxbZuseArchiveStatementsIdMapper {	
 	
-	public String xsdFilename = ZuseArchiveSchemaFilename.ZUSE_STATEMENTSIDMAPPING_XSDFILE;
+	public String xsdFilename = ImejiSchemaFilename.STATEMENTSIDMAPPING_XSDFILE;
 	
 	/**
 	 * This method exports the stsIdMapper to the xml file through the given schema file.

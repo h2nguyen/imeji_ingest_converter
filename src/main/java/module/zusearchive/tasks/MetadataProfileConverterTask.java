@@ -15,7 +15,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 
 import module.zusearchive.vo.generated.OUnterlagen;
-import module.zusearchive.vo.generated.ZUSE;
+import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
 import core.j2j.misc.LocalizedString;
 import core.jaxb.JaxbIngestProfile;
@@ -30,16 +30,16 @@ public class MetadataProfileConverterTask extends SwingWorker<String, Void> {
 	protected JLabel label;
 	
 	protected List<Item> items;
-	protected ZUSE zo;
+	protected OZuse zo;
 	protected String inputFilename;
 	protected String outputFilename;
 	protected boolean stopFlag;
 	
-	public MetadataProfileConverterTask(String inputFilename, ZUSE zo, JProgressBar progressBar, JLabel label) {
+	public MetadataProfileConverterTask(String inputFilename, OZuse zo, JProgressBar progressBar, JLabel label) {
 		this(inputFilename,getOutputFilename(inputFilename),zo,progressBar,label);		
 	}
 	
-	public MetadataProfileConverterTask(String inputFilename, String outputFilename, ZUSE zo, JProgressBar progressBar, JLabel label) {	
+	public MetadataProfileConverterTask(String inputFilename, String outputFilename, OZuse zo, JProgressBar progressBar, JLabel label) {	
 		this.zo = zo;		
 		this.progressBar = progressBar;
 		this.label = label;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+	<xs:element name="statementsIdMapper" type="statementsIdMapper"/>
+
+	<xs:complexType name="statementsIdMapper">
+		<xs:sequence>
+			<xs:element name="statementIdMapper" type="statementIdMapper" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="statementIdMapper">
+		<xs:sequence>			
+			<xs:element name="statementOnline" type="xs:string" minOccurs="0"/>
+			<xs:element name="tagName" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="statementOffline" type="xs:string"/>
+	</xs:complexType>
+</xs:schema>

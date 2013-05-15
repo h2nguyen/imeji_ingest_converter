@@ -20,7 +20,7 @@ import javax.swing.SwingWorker;
 
 import module.zusearchive.converter.ZuseConverter;
 import module.zusearchive.vo.generated.OUnterlagen;
-import module.zusearchive.vo.generated.ZUSE;
+import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
 import core.jaxb.JaxbIngestProfile;
 import core.vo.imeji.Item;
@@ -50,17 +50,17 @@ public class ItemAndMdProfileConverterTask extends SwingWorker<String[],Void>{
 	protected JLabel label;
 	
 	protected List<Item> items;
-	protected ZUSE zo;
+	protected OZuse zo;
 	protected String inputFilename;
 	protected String itemOutputFilename;
 	protected String mdProfileOutputFilename;
 	protected boolean stopFlag;
 	
-	public ItemAndMdProfileConverterTask(String inputFilename, ZUSE zo, JProgressBar progressBar, JLabel label) {
+	public ItemAndMdProfileConverterTask(String inputFilename, OZuse zo, JProgressBar progressBar, JLabel label) {
 		this(inputFilename,getOutputFilenameItemize(inputFilename),getOutputFilenameMdProfile(inputFilename),zo,progressBar,label);		
 	}
 	
-	public ItemAndMdProfileConverterTask(String inputFilename, String itemOutputFilename, String mdProfileOutputFilename, ZUSE zo, JProgressBar progressBar, JLabel label) {	
+	public ItemAndMdProfileConverterTask(String inputFilename, String itemOutputFilename, String mdProfileOutputFilename, OZuse zo, JProgressBar progressBar, JLabel label) {	
 		this.zo = zo;		
 		this.progressBar = progressBar;
 		this.label = label;

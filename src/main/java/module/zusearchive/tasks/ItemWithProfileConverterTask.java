@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 
 import module.zusearchive.vo.generated.OUnterlagen;
-import module.zusearchive.vo.generated.ZUSE;
+import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
 import core.jaxb.JaxbIngestProfile;
 import core.vo.imeji.Item;
@@ -43,11 +43,11 @@ public class ItemWithProfileConverterTask extends ItemConverterTask {
 
 	private MetadataProfile mdp;
 	
-	public ItemWithProfileConverterTask(String inputFilename, ZUSE zo, MetadataProfile mdp, JProgressBar progressBar, JLabel label) {
+	public ItemWithProfileConverterTask(String inputFilename, OZuse zo, MetadataProfile mdp, JProgressBar progressBar, JLabel label) {
 		this(inputFilename,getOutputFilename(inputFilename),zo,mdp,progressBar,label);		
 	}
 	
-	public ItemWithProfileConverterTask(String inputFilename, String outputFilename, ZUSE zo, MetadataProfile mdp, JProgressBar progressBar, JLabel label) {
+	public ItemWithProfileConverterTask(String inputFilename, String outputFilename, OZuse zo, MetadataProfile mdp, JProgressBar progressBar, JLabel label) {
 		super(inputFilename,outputFilename,zo,progressBar,label);
 		this.mdp = mdp;
 	}

@@ -9,8 +9,8 @@ import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.jaxb.JaxbZuseProfile;
-import module.zusearchive.vo.generated.ZUSE;
+import module.zusearchive.jaxb.JaxbOType;
+import module.zusearchive.vo.generated.OZuse;
 
 import org.xml.sax.SAXException;
 
@@ -70,13 +70,13 @@ public class GenerateItemAndMetadataProfileTask extends SwingWorker<String[], Vo
 	@Override
 	protected String[] doInBackground() throws Exception {
 
-		JaxbZuseProfile jmp = new JaxbZuseProfile();
+		JaxbOType<OZuse> jmp = new JaxbOType<OZuse>(OZuse.class);
 		
-		ZUSE zo = null;
+		OZuse zo = null;
 		ItemAndMdProfileConverterTask imdpct = null;
 		try {			
 			this.timer.start();
-			zo = jmp.unmarshalZuseObject(this.inputFilename);
+			zo = jmp.unmarshal(this.inputFilename);
 			this.stop();
 			
 			imdpct = new ItemAndMdProfileConverterTask(this.inputFilename, zo, progressBar, label);
