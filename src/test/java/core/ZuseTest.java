@@ -2,6 +2,7 @@ package core;
 
 import java.beans.IntrospectionException;
 import java.io.FileNotFoundException;
+import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBException;
 
@@ -18,9 +19,10 @@ import org.xml.sax.SAXException;
 import core.jaxb.ImejiSchemaFilename;
 import core.jaxb.JaxbGenericObject;
 import core.jaxb.JaxbUtil;
+import core.mapper.MdProfileMapperTask;
 import core.mapper.StatementIdMapper;
 import core.mapper.StatementsIdMapper;
-import core.vo.imeji.Items;
+import core.mapper.MdProfileMapperTask.Task;
 import core.vo.imeji.MetadataProfile;
 
 public class ZuseTest {
@@ -30,38 +32,38 @@ public class ZuseTest {
 		String inputFilename = "src/test/resources/_10_entries.xml";
 		String outputFilename = "src/test/resources/_10_entries_out.xml";
 		ZuseNormalizer n = new ZuseNormalizer(inputFilename, outputFilename);
-		n.getNormalizedFile();
+		n.normalizeFile();
 	}
 
-	// @Test
+	//@Test
 	public void ingestConverterProcessTest() throws JAXBException,
 			SAXException, IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
 		
 
-		OZuse zo = (new JaxbGenericObject<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
-		// JaxbUtil.toString(zo);
+		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
+		JaxbUtil.toString(zo);
 
-		ZuseConverter zmdpconv = new ZuseConverter();
-
-		// MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name",
-		// "profile description", ZuseEnumType.getEnumList());
-		// JaxbUtil.toString(mdp);
-		// OUnterlagen oul = zo.getoUnterlagen().get(0);
-		// JaxbUtil.toString(oul);
-		// Item item = zmdpconv.getItem(oul, ZuseEnumType.getEnumList());
-		// JaxbUtil.toString(item);
-
-		Items items = zmdpconv.getItems(zo.getoUnterlagen(),
-				ZuseEnumType.getEnumList());
-		// JaxbUtil.toString(items);
-
-		String itemsFile = "src/test/resources/_10_items_out.xml";
-
-		(new JaxbGenericObject<Items>(Items.class)).marshal(itemsFile, items);
+//		ZuseConverter zmdpconv = new ZuseConverter();
+//
+//		// MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name",
+//		// "profile description", ZuseEnumType.getEnumList());
+//		// JaxbUtil.toString(mdp);
+//		// OUnterlagen oul = zo.getoUnterlagen().get(0);
+//		// JaxbUtil.toString(oul);
+//		// Item item = zmdpconv.getItem(oul, ZuseEnumType.getEnumList());
+//		// JaxbUtil.toString(item);
+//
+//		Items items = zmdpconv.getItems(zo.getoUnterlagen(),
+//				ZuseEnumType.getEnumList());
+//		// JaxbUtil.toString(items);
+//
+//		String itemsFile = "src/test/resources/_10_items_out.xml";
+//
+//		(new JaxbGenericObject<Items>(Items.class)).marshal(itemsFile, items);
 	}
 
-	@Test
+	//@Test
 	public void mdProfileProcessTest() throws JAXBException, SAXException,
 			IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
@@ -73,13 +75,13 @@ public class ZuseTest {
 
 		OUnterlagen oul = zo.getoUnterlagen().get(0);
 
-		MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name",
-				"profile description", ZuseEnumType.getEnumList());
-		JaxbUtil.toString(mdp);
+		MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name offline",
+				"profile description offline", ZuseEnumType.getEnumList());
+		//JaxbUtil.toString(mdp);
 
-//		String mdpFile = "src/test/resources/_mdp_online.xml";
-//
-//		(new JaxbOType<MetadataProfile>()).marshal(mdpFile, mdp);
+		String mdpFile = "src/test/resources/_mdp_offline_with_statements.xml";
+
+		(new JaxbGenericObject<MetadataProfile>(MetadataProfile.class)).marshal(mdpFile, mdp);
 	}
 
 	// @Test
@@ -106,15 +108,19 @@ public class ZuseTest {
 
 	@Test
 	public void mergeMdProfileMapper() throws FileNotFoundException,
-			JAXBException, SAXException {
+			JAXBException, SAXException, InterruptedException, ExecutionException {
 		
-		String filename = "src/test/resources/mapping.xml";
-//		JaxbZuseProfile jmp = new JaxbZuseProfile();
-//		
-//		
-//		
-//		StatementsIdMapper stsIdMapper = jmp.unmarshalStsIdMapper(filename);
-//		JaxbUtil.toString(stsIdMapper);
+		String filenameMdpOnline = "src/test/resources/_mdp_online_empty.xml";
+		String filenameMdpOffline = "src/test/resources/_mdp_offline_with_statements.xml";
+		
+		
+		MdProfileMapperTask mdpmt = new MdProfileMapperTask(filenameMdpOnline, filenameMdpOffline, Task.UPDATE);
+		mdpmt.execute();
+		
+		MetadataProfile fileMerge = mdpmt.get();
+		
+		
+		String filename = "src/test/resources/mergedMdp.xml";
 
 	}
 

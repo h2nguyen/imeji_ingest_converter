@@ -61,20 +61,30 @@ public class ZuseNormalizer {
 	}
 	
 
-	public File getNormalizedFile() {
-		if(this.normalizeProcess())
+	public File normalizeFile() {
+		if(this.normalizeProcess(this.inputFile,this.outputFile))
 			return this.outputFile;
 		return null;
 	}
 	
-	private boolean normalizeProcess() {
+	public File getNormalizedFile(String inputFilename, String outputFilename) {
+		File inputFile = new File(inputFilename);
+		File outputFile = new File(outputFilename);
+		
+		if(this.normalizeProcess(inputFile, outputFile))
+			return outputFile;
+		return null;
+	}
+	
+	
+	private boolean normalizeProcess(File inputFile, File outputFile) {
 		try {
 			
-			if(!this.inputFile.exists()) {				
+			if(!inputFile.exists()) {				
 				return false;
 			}
 			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(this.inputFile)));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile)));
 	        	         
 	        String line = "";
 
@@ -93,7 +103,7 @@ public class ZuseNormalizer {
 	        			ZuseNormFormat.KEYSTOREPLACE_OUL[i][1]);
 	        }
 	        
-	        FileWriter writer = new FileWriter(this.outputFile);
+	        FileWriter writer = new FileWriter(outputFile);
 	        writer.write(newString);	        
 	        writer.close();
 
