@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -207,45 +208,243 @@ public class ZuseConverter extends
 						break;
 
 					case CONE_PERSON:
+						
+						//TODO: need implementation of merging this metadata
 						ConePerson conePerson = new ConePerson();
 						mdl.add(conePerson);
 						break;
 
 					case DATE:
+						
+						//TODO: need implementation of merging this metadata
 						Date date = new Date();
 						mdl.add(date);
 						break;
 
 					case GEOLOCATION:
+						
+						//TODO: need implementation of merging this metadata
 						Geolocation geolocation = new Geolocation();
 						mdl.add(geolocation);
 						break;
 
 					case LICENSE:
+						
+						//TODO: need implementation of merging this metadata
 						License license = new License();
 						mdl.add(license);
 						break;
 
 					case LINK:
+						
+						//TODO: need implementation of merging this metadata
 						Link link = new Link();
 						mdl.add(link);
 						break;
 
 					case NUMBER:
+						
+						//TODO: need implementation of merging this metadata
 						Number number = new Number();
 						mdl.add(number);
 						break;
 
 					case PUBLICATION:
+						
+						//TODO: need implementation of merging this metadata
 						Publication publication = new Publication();
 						mdl.add(publication);
 						break;
 
 					default:
+						
+						//TODO: need implementation of merging this metadata
 						Text defaultTxt = new Text();
 						mdl.add(defaultTxt);
 						break;
 					}
+					break;
+				}
+			}
+		}
+
+		mds.setMetadata(mdl);
+		mdsl.add(mds);
+		item.setMetadataSets(mdsl);
+
+		// DMA_<bestand>_<signatur>.jpg
+		bestand = bestand.replace(" ", "_").replace("/", "_");
+		signatur = signatur.replace(" ", "_").replace("/", "_");
+
+		filename += bestand + "_" + signatur + filenamePosfix;
+		item.setFilename(filename);
+
+		return item;
+	}
+	
+	@Override
+	public Item getItem(OUnterlagen tObject, List<ZuseEnumType> enumList,
+			MetadataProfile mdProfile) throws IntrospectionException {
+		Item item = new Item();
+
+		item.setCreated(Calendar.getInstance());
+
+		String filename = "DMA_";
+		String bestand = "";
+		String signatur = "";
+		String filenamePosfix = ".jpg";
+
+		List<MetadataSet> mdsl = new ArrayList<MetadataSet>();
+		MetadataSet mds = new MetadataSet();
+		
+		mds.setProfile(mdProfile.getId());
+		
+		
+		
+		Collection<Metadata> mdl = new ArrayList<Metadata>();
+
+		List<?> z = enumList;
+
+		Iterator<Statement> it = mdProfile.getStatements().iterator();
+		Statement sts = null;
+		
+		for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(
+				tObject.getClass()).getPropertyDescriptors()) {
+			if (propertyDescriptor.getReadMethod().getReturnType() != String.class)
+				continue;
+
+			for (int i = 0; i < z.size() && it.hasNext(); i++) {
+				
+				String method = ((ZuseEnumType) z.get(i)).getAttributes()[ZuseEnumType.Column.METHOD_NAME.ordinal()];
+				
+				if (propertyDescriptor.getReadMethod().getName().contains(method)) {
+
+					String type = ((ZuseEnumType) z.get(i)).getAttributes()[ZuseEnumType.Column.TYPE.ordinal()];
+					
+					if (type.isEmpty()) {
+						continue;
+					}					
+					
+					Metadata.Types aType = Enum.valueOf(Metadata.Types.class, type.toUpperCase());
+					
+					sts = it.next();
+					
+					switch (aType) {
+						case TEXT:
+							
+							Text text = new Text();
+							
+							String tag = propertyDescriptor.getReadMethod().getName();
+							String value = (String) tObject.getValueFromMethod(tag);
+							text.setText(value);
+							
+							text.setStatement(sts.getId());
+							
+							text.setPos(sts.getPos());
+							mdl.add(text);
+	
+							// DMA_<bestand>_<signatur>.jpg
+							// getBestand, getSignatur
+	
+							if (tag.equalsIgnoreCase("getBestand")) {
+								bestand = value;
+							}
+	
+							if (tag.equalsIgnoreCase("getSignatur")) {
+								signatur = value;
+							}
+	
+							break;
+	
+						case CONE_PERSON:
+							
+							//TODO: need implementation of merging this metadata
+							ConePerson conePerson = new ConePerson();
+							
+							conePerson.setStatement(sts.getId());
+							conePerson.setPos(sts.getPos());
+							
+							mdl.add(conePerson);
+							break;
+	
+						case DATE:
+							
+							//TODO: need implementation of merging this metadata
+							Date date = new Date();
+							
+							date.setStatement(sts.getId());
+							date.setPos(sts.getPos());
+							
+							mdl.add(date);
+							break;
+	
+						case GEOLOCATION:
+							
+							//TODO: need implementation of merging this metadata
+							Geolocation geolocation = new Geolocation();
+							
+							geolocation.setStatement(sts.getId());
+							geolocation.setPos(sts.getPos());
+							
+							mdl.add(geolocation);
+							break;
+	
+						case LICENSE:
+							
+							//TODO: need implementation of merging this metadata
+							License license = new License();
+							
+							license.setStatement(sts.getId());
+							license.setPos(sts.getPos());
+							
+							mdl.add(license);
+							break;
+	
+						case LINK:
+							
+							//TODO: need implementation of merging this metadata
+							Link link = new Link();
+							
+							link.setStatement(sts.getId());
+							link.setPos(sts.getPos());
+							
+							mdl.add(link);
+							break;
+	
+						case NUMBER:
+							
+							//TODO: need implementation of merging this metadata
+							Number number = new Number();
+							
+							number.setStatement(sts.getId());
+							number.setPos(sts.getPos());
+							
+							mdl.add(number);
+							break;
+	
+						case PUBLICATION:
+							
+							//TODO: need implementation of merging this metadata
+							Publication publication = new Publication();
+							
+							publication.setStatement(sts.getId());
+							publication.setPos(sts.getPos());
+							
+							mdl.add(publication);
+							break;
+	
+						default:
+							
+							//TODO: need implementation of merging this metadata
+							Text defaultTxt = new Text();
+							
+							defaultTxt.setStatement(sts.getId());
+							defaultTxt.setPos(sts.getPos());
+							
+							mdl.add(defaultTxt);
+							break;
+						}
+					
 					break;
 				}
 			}
@@ -272,6 +471,19 @@ public class ZuseConverter extends
 		
 		for (OUnterlagen oul : tObject) {			
 			itemColection.add(this.getItem(oul, enumList));
+		}
+		
+		return new Items(itemColection);
+	}
+
+	@Override
+	public Items getItems(List<OUnterlagen> tObject,
+			List<ZuseEnumType> enumList, MetadataProfile mdProfile)
+			throws IntrospectionException {
+		Collection<Item> itemColection = new ArrayList<Item>();
+		
+		for (OUnterlagen oul : tObject) {			
+			itemColection.add(this.getItem(oul, enumList, mdProfile));
 		}
 		
 		return new Items(itemColection);

@@ -1,7 +1,10 @@
 package core;
 
 import java.beans.IntrospectionException;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBException;
@@ -19,10 +22,15 @@ import org.xml.sax.SAXException;
 import core.jaxb.ImejiSchemaFilename;
 import core.jaxb.JaxbGenericObject;
 import core.jaxb.JaxbUtil;
+import core.mapper.ItemMapperTask;
+import core.mapper.ItemsMapperTask;
 import core.mapper.MdProfileMapperTask;
 import core.mapper.StatementIdMapper;
 import core.mapper.StatementsIdMapper;
-import core.mapper.MdProfileMapperTask.Task;
+import core.task.enums.Task;
+import core.task.enums.Update;
+import core.vo.imeji.Item;
+import core.vo.imeji.Items;
 import core.vo.imeji.MetadataProfile;
 
 public class ZuseTest {
@@ -35,53 +43,104 @@ public class ZuseTest {
 		n.normalizeFile();
 	}
 
-	//@Test
+	// @Test
 	public void ingestConverterProcessTest() throws JAXBException,
 			SAXException, IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
-		
 
-		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
+		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
+				.unmarshal(filenameUnmarshal);
 		JaxbUtil.toString(zo);
 
-//		ZuseConverter zmdpconv = new ZuseConverter();
-//
-//		// MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name",
-//		// "profile description", ZuseEnumType.getEnumList());
-//		// JaxbUtil.toString(mdp);
-//		// OUnterlagen oul = zo.getoUnterlagen().get(0);
-//		// JaxbUtil.toString(oul);
-//		// Item item = zmdpconv.getItem(oul, ZuseEnumType.getEnumList());
-//		// JaxbUtil.toString(item);
-//
-//		Items items = zmdpconv.getItems(zo.getoUnterlagen(),
-//				ZuseEnumType.getEnumList());
-//		// JaxbUtil.toString(items);
-//
-//		String itemsFile = "src/test/resources/_10_items_out.xml";
-//
-//		(new JaxbGenericObject<Items>(Items.class)).marshal(itemsFile, items);
+		// ZuseConverter zmdpconv = new ZuseConverter();
+		//
+		// // MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name",
+		// // "profile description", ZuseEnumType.getEnumList());
+		// // JaxbUtil.toString(mdp);
+		// // OUnterlagen oul = zo.getoUnterlagen().get(0);
+		// // JaxbUtil.toString(oul);
+		// // Item item = zmdpconv.getItem(oul, ZuseEnumType.getEnumList());
+		// // JaxbUtil.toString(item);
+		//
+		// Items items = zmdpconv.getItems(zo.getoUnterlagen(),
+		// ZuseEnumType.getEnumList());
+		// // JaxbUtil.toString(items);
+		//
+		// String itemsFile = "src/test/resources/_10_items_out.xml";
+		//
+		// (new JaxbGenericObject<Items>(Items.class)).marshal(itemsFile,
+		// items);
 	}
 
-	//@Test
+	// @Test
 	public void mdProfileProcessTest() throws JAXBException, SAXException,
 			IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
-		
 
-		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class)).unmarshal(filenameUnmarshal);
+		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
+				.unmarshal(filenameUnmarshal);
 
 		ZuseConverter zmdpconv = new ZuseConverter();
 
 		OUnterlagen oul = zo.getoUnterlagen().get(0);
 
-		MetadataProfile mdp = zmdpconv.getMdProfile(oul, "profile name offline",
-				"profile description offline", ZuseEnumType.getEnumList());
-		//JaxbUtil.toString(mdp);
+		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
+				"profile name offline", "profile description offline",
+				ZuseEnumType.getEnumList());
+		// JaxbUtil.toString(mdp);
 
 		String mdpFile = "src/test/resources/_mdp_offline_with_statements.xml";
 
-		(new JaxbGenericObject<MetadataProfile>(MetadataProfile.class)).marshal(mdpFile, mdp);
+		(new JaxbGenericObject<MetadataProfile>(MetadataProfile.class))
+				.marshal(mdpFile, mdp);
+	}
+
+	
+	//@Test
+	public void itemsProcessTest() throws JAXBException, SAXException,
+			IntrospectionException, FileNotFoundException {
+		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
+
+		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
+				.unmarshal(filenameUnmarshal);
+
+		ZuseConverter zmdpconv = new ZuseConverter();
+
+		OUnterlagen oul = zo.getoUnterlagen().get(0);
+
+		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
+				"profile name offline", "profile description offline",
+				ZuseEnumType.getEnumList());		
+		
+		Items items = zmdpconv.getItems(zo.getoUnterlagen(), ZuseEnumType.getEnumList(), mdp);
+		
+//		JaxbUtil.toString(mdp);
+//		JaxbUtil.toString(items);
+
+		String filenameMdp = "src/test/resources/myMdp.xml";
+		String filenameItem = "src/test/resources/myItems.xml";
+		FileOutputStream fosMdp = new FileOutputStream(new File(filenameMdp));
+		FileOutputStream fosItem = new FileOutputStream(new File(filenameItem));
+
+		JaxbGenericObject.writeToOutputStream(mdp, fosMdp);
+		JaxbGenericObject.writeToOutputStream(items, fosItem);
+	}
+	
+	// @Test
+	public void itemProcessTest() throws JAXBException, SAXException,
+			IntrospectionException, FileNotFoundException {
+		String filenameUnmarshal = "src/test/resources/_17_items_online.xml";
+
+		Items items = new JaxbGenericObject<Items>(Items.class)
+				.unmarshal(filenameUnmarshal);
+
+		Item item = items.getItem().get(0);
+
+		// JaxbGenericObject.toString(item);
+		String filename = "src/test/resources/item_online.xml";
+		FileOutputStream fos = new FileOutputStream(new File(filename));
+
+		JaxbGenericObject.writeToOutputStream(item, fos);
 	}
 
 	// @Test
@@ -106,21 +165,82 @@ public class ZuseTest {
 
 	}
 
-	@Test
+	//@Test
 	public void mergeMdProfileMapper() throws FileNotFoundException,
-			JAXBException, SAXException, InterruptedException, ExecutionException {
-		
+			JAXBException, SAXException, InterruptedException,
+			ExecutionException {
+
 		String filenameMdpOnline = "src/test/resources/_mdp_online_empty.xml";
 		String filenameMdpOffline = "src/test/resources/_mdp_offline_with_statements.xml";
-		
-		
-		MdProfileMapperTask mdpmt = new MdProfileMapperTask(filenameMdpOnline, filenameMdpOffline, Task.UPDATE);
+
+		MdProfileMapperTask mdpmt = new MdProfileMapperTask(filenameMdpOnline,
+				filenameMdpOffline, Task.UPDATE);
 		mdpmt.execute();
-		
+
 		MetadataProfile fileMerge = mdpmt.get();
-		
-		
+
 		String filename = "src/test/resources/mergedMdp.xml";
+		FileOutputStream fos = new FileOutputStream(new File(filename));
+
+		JaxbGenericObject.writeToOutputStream(fileMerge, fos);
+
+	}
+
+	@Test
+	public void mergItemMapper() throws FileNotFoundException,
+			JAXBException, SAXException, InterruptedException,
+			ExecutionException, IntrospectionException {
+
+//		String filenameMdpOnline = "src/test/resources/ingest1/_mdp_online_empty_mds.xml";
+//		String filenameMdpOffline = "src/test/resources/ingest1/_mdp_offline.xml";
+//		
+//		
+//		MdProfileMapperTask mdpmt = new MdProfileMapperTask(filenameMdpOnline, filenameMdpOffline, Task.UPDATE);
+//		
+//		mdpmt.execute();
+//		
+//		MetadataProfile mdpMerged = mdpmt.get();
+//
+//		String filenameMdpMerged = "src/test/resources/ingest1/_mdp_merged.xml";
+//		FileOutputStream fos = new FileOutputStream(new File(filenameMdpMerged));
+//		
+//		JaxbGenericObject.writeToOutputStream(mdpMerged, fos);
+		
+		
+//		MetadataProfile mdp = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).unmarshal(filenameMdpMerged);
+//		
+//		String filenameEntriesNormalizedOffline = "src/test/resources/ingest1/_4_entries_normalized.xml";
+//		
+//		OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline);
+//		
+//		ZuseConverter zmdpconv = new ZuseConverter();
+//		
+//		List<OUnterlagen> ouls = oz.getoUnterlagen();
+//		
+//		Items items = zmdpconv.getItems(ouls, ZuseEnumType.getEnumList(), mdp);
+//		
+//		String filenameItemsOffline = "src/test/resources/ingest1/_4_items_offline.xml";
+//		FileOutputStream fos = new FileOutputStream(new File(filenameItemsOffline));
+//		
+//		JaxbGenericObject.writeToOutputStream(items, fos);
+
+		
+		
+		String filenameItemsOnline = "src/test/resources/ingest1/_4_items_online_empty_md.xml";
+		String filenamItemsOffline = "src/test/resources/ingest1/_4_items_offline.xml";
+
+		
+		
+		ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
+				filenamItemsOffline, Task.UPDATE, Update.UPDATE_BY_FILENAME);
+		ismt.execute();
+
+		Items itemsMerged = ismt.get();
+
+		String filename = "src/test/resources/ingest1/mergedItems.xml";
+		FileOutputStream fos = new FileOutputStream(new File(filename));
+
+		JaxbGenericObject.writeToOutputStream(itemsMerged, fos);
 
 	}
 

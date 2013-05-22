@@ -41,8 +41,29 @@ public abstract class Converter<T, E> {
 	 * 
 	 * @param tObject
 	 * @param enumList
+	 * @param mdProfile
+	 * @return
+	 * @throws IntrospectionException
+	 */
+	public abstract Item getItem(T tObject, List<E> enumList, MetadataProfile mdProfile) throws IntrospectionException;
+	
+	/**
+	 * 
+	 * @param tObject
+	 * @param enumList
 	 * @return
 	 * @throws IntrospectionException
 	 */
 	public abstract Items getItems(List<T> tObject, List<E> enumList) throws IntrospectionException;
+	
+
+	/**
+	 * 
+	 * @param tObject
+	 * @param enumList
+	 * @param mdProfile
+	 * @return
+	 * @throws IntrospectionException
+	 */
+	public abstract Items getItems(List<T> tObject, List<E> enumList, MetadataProfile mdProfile) throws IntrospectionException;
 }

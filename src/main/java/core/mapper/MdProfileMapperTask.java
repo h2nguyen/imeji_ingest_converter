@@ -6,12 +6,11 @@ package core.mapper;
 import java.net.URI;
 import java.util.Calendar;
 
-import javax.swing.SwingWorker;
 import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
 
-import core.jaxb.JaxbGenericObject;
+import core.task.enums.Task;
 import core.vo.imeji.MetadataProfile;
 import core.vo.imeji.Properties.Status;
 
@@ -19,196 +18,119 @@ import core.vo.imeji.Properties.Status;
  * @author hnguyen
  *
  */
-public class MdProfileMapperTask extends SwingWorker<MetadataProfile, Void> {
-	
-	public enum Task {
-		OVERWRITE, UPDATE;
-	}
-	
-	private MetadataProfile mdpOnline;
-	private MetadataProfile mdpOffline;
-	private MetadataProfile mappedMpd;
-	private Task task;
-	
+public class MdProfileMapperTask extends MapperTask<MetadataProfile, Void> {
 	
 	/**
 	 * 
-	 * @param mdpOnline
-	 * @param mdpOffline
-	 * @throws SAXException 
-	 * @throws JAXBException 
+	 * @param mdpOnlineFilename
+	 * @param mdpOfflineFilename
+	 * @param task
+	 * @throws JAXBException
+	 * @throws SAXException
 	 */
 	public MdProfileMapperTask(String mdpOnlineFilename, String mdpOfflineFilename, Task task) throws JAXBException, SAXException {
-		
-		this(new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).unmarshal(mdpOnlineFilename),
-			 new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).unmarshal(mdpOfflineFilename), task);
+		super(mdpOnlineFilename,mdpOfflineFilename,task,MetadataProfile.class);		
 	}
-	
-	
-	public MdProfileMapperTask(MetadataProfile mdpOnline, MetadataProfile mdpOffline, Task task) {
-		this.setMdpOnline(mdpOnline);
-		this.setMdpOffline(mdpOffline);
-		this.setTask(task);
-	}
-
-
-	/**
-	 * @return the mdpOnline
-	 */
-	public MetadataProfile getMdpOnline() {
-		return mdpOnline;
-	}
-
-
-	/**
-	 * @param mdpOnline the mdpOnline to set
-	 */
-	public void setMdpOnline(MetadataProfile mdpOnline) {
-		this.mdpOnline = mdpOnline;
-	}
-
-
-	/**
-	 * @return the mdpOffline
-	 */
-	public MetadataProfile getMdpOffline() {
-		return mdpOffline;
-	}
-
-
-	/**
-	 * @param mdpOffline the mdpOffline to set
-	 */
-	public void setMdpOffline(MetadataProfile mdpOffline) {
-		this.mdpOffline = mdpOffline;
-	}
-
-
-	public MetadataProfile getMappedMpd() {
-		return mappedMpd;
-	}
-
-
-	public void setMappedMpd(MetadataProfile mappedMpd) {
-		this.mappedMpd = mappedMpd;
-	}
-
-
-	/**
-	 * @return the task
-	 */
-	public Task getTask() {
-		return task;
-	}
-
-
-	/**
-	 * @param task the task to set
-	 */
-	public void setTask(Task task) {
-		this.task = task;
-	}
-
 
 	@Override
 	protected MetadataProfile doInBackground() throws Exception {
 		
-		this.mappedMpd = this.mdpOnline;
+		this.setObjectMapped(this.getObjectOnline());
 		
 		// maps metadata properties
-		if(this.mdpOnline.getCreated() == null) {
-			if (this.mdpOffline.getCreated() == null)
-				this.mappedMpd.setCreated(Calendar.getInstance());
+		if(this.getObjectOnline().getCreated() == null) {
+			if (this.getObjectOffline().getCreated() == null)
+				this.getObjectMapped().setCreated(Calendar.getInstance());
 			else
-				this.mappedMpd.setCreated(this.mdpOffline.getCreated());
+				this.getObjectMapped().setCreated(this.getObjectOffline().getCreated());
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getCreated() != null)
-				this.mappedMpd.setCreated(this.mdpOffline.getCreated());
+			if (this.getObjectOffline().getCreated() != null)
+				this.getObjectMapped().setCreated(this.getObjectOffline().getCreated());
 		}
 		
-		if(this.mdpOnline.getCreatedBy() == null) {
-			if (this.mdpOffline.getCreatedBy() == null)
-				this.mappedMpd.setCreatedBy(new URI("http://an.URI.to.set"));
+		if(this.getObjectOnline().getCreatedBy() == null) {
+			if (this.getObjectOffline().getCreatedBy() == null)
+				this.getObjectMapped().setCreatedBy(new URI("http://an.URI.to.set"));
 			else
-				this.mappedMpd.setCreatedBy(this.mdpOffline.getCreatedBy());
+				this.getObjectMapped().setCreatedBy(this.getObjectOffline().getCreatedBy());
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getCreatedBy() != null)
-				this.mappedMpd.setCreatedBy(this.mdpOffline.getCreatedBy());
+			if (this.getObjectOffline().getCreatedBy() != null)
+				this.getObjectMapped().setCreatedBy(this.getObjectOffline().getCreatedBy());
 		}
 		
-		if(this.mdpOnline.getDiscardComment() == null) {
-			if (this.mdpOffline.getDiscardComment() == null)
-				this.mappedMpd.setDiscardComment("");
+		if(this.getObjectOnline().getDiscardComment() == null) {
+			if (this.getObjectOffline().getDiscardComment() == null)
+				this.getObjectMapped().setDiscardComment("");
 			else
-				this.mappedMpd.setDiscardComment(this.mdpOffline.getDiscardComment());
+				this.getObjectMapped().setDiscardComment(this.getObjectOffline().getDiscardComment());
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getDiscardComment() != null)
-				this.mappedMpd.setDiscardComment(this.mdpOffline.getDiscardComment());
+			if (this.getObjectOffline().getDiscardComment() != null)
+				this.getObjectMapped().setDiscardComment(this.getObjectOffline().getDiscardComment());
 		}
 		
-		if(this.mdpOnline.getModified() == null) {
-			if (this.mdpOffline.getModified() == null)
-				this.mappedMpd.setModified(Calendar.getInstance());
+		if(this.getObjectOnline().getModified() == null) {
+			if (this.getObjectOffline().getModified() == null)
+				this.getObjectMapped().setModified(Calendar.getInstance());
 			else
-				this.mappedMpd.setModified(this.mdpOffline.getModified());
+				this.getObjectMapped().setModified(this.getObjectOffline().getModified());
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getModified() != null)
-				this.mappedMpd.setModified(this.mdpOffline.getModified());
+			if (this.getObjectOffline().getModified() != null)
+				this.getObjectMapped().setModified(this.getObjectOffline().getModified());
 		}
 		
-		if(this.mdpOnline.getModifiedBy() == null) {
-			if (this.mdpOffline.getModifiedBy() == null)
-				this.mappedMpd.setModifiedBy(new URI("http://an.URI.to.set"));
+		if(this.getObjectOnline().getModifiedBy() == null) {
+			if (this.getObjectOffline().getModifiedBy() == null)
+				this.getObjectMapped().setModifiedBy(new URI("http://an.URI.to.set"));
 			else
-				this.mappedMpd.setModifiedBy(this.mdpOffline.getModifiedBy());
+				this.getObjectMapped().setModifiedBy(this.getObjectOffline().getModifiedBy());
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getModifiedBy() != null)
-				this.mappedMpd.setModifiedBy(this.mdpOffline.getModifiedBy());
+			if (this.getObjectOffline().getModifiedBy() != null)
+				this.getObjectMapped().setModifiedBy(this.getObjectOffline().getModifiedBy());
 		}
 		
-		if(this.mdpOnline.getStatus() == null) {
-			if (this.mdpOffline.getStatus() == null)
-				this.mappedMpd.setStatus(Status.PENDING);
+		if(this.getObjectOnline().getStatus() == null) {
+			if (this.getObjectOffline().getStatus() == null)
+				this.getObjectMapped().setStatus(Status.PENDING);
 			else
-				this.mappedMpd.setStatus(this.mdpOffline.getStatus());
+				this.getObjectMapped().setStatus(this.getObjectOffline().getStatus());
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getStatus() != null)
-				this.mappedMpd.setStatus(this.mdpOffline.getStatus());
+			if (this.getObjectOffline().getStatus() != null)
+				this.getObjectMapped().setStatus(this.getObjectOffline().getStatus());
 		}
 		
-		if(this.mdpOnline.getDescription() == null) {
-			if (this.mdpOffline.getDescription() == null)
-				this.mappedMpd.setDescription("");
+		if(this.getObjectOnline().getDescription() == null) {
+			if (this.getObjectOffline().getDescription() == null)
+				this.getObjectMapped().setDescription("");
 			else
-				this.mappedMpd.setDescription(this.mdpOffline.getDescription());
+				this.getObjectMapped().setDescription(this.getObjectOffline().getDescription());
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getDescription() != null)
-				this.mappedMpd.setDescription(this.mdpOffline.getDescription());
+			if (this.getObjectOffline().getDescription() != null)
+				this.getObjectMapped().setDescription(this.getObjectOffline().getDescription());
 		}
 		
 		// merge statements here
-		if(this.mdpOnline.getStatements() == null || this.mdpOnline.getStatements().isEmpty()) {
-			if(this.mdpOffline.getStatements() == null || this.mdpOffline.getStatements().isEmpty()) {
+		if(this.getObjectOnline().getStatements() == null || this.getObjectOnline().getStatements().isEmpty()) {
+			if(this.getObjectOffline().getStatements() == null || this.getObjectOffline().getStatements().isEmpty()) {
 				
 			} else {
-				this.mappedMpd.setStatements(this.mdpOffline.getStatements());
+				this.getObjectMapped().setStatements(this.getObjectOffline().getStatements());
 			}
 		} else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getStatements() != null)
-				this.mappedMpd.setStatements(this.mdpOffline.getStatements());
+			if (this.getObjectOffline().getStatements() != null)
+				this.getObjectMapped().setStatements(this.getObjectOffline().getStatements());
 		}
 		
-		if(this.mdpOnline.getTitle() == null) {
-			if (this.mdpOffline.getTitle() == null)
-				this.mappedMpd.setTitle("");
+		if(this.getObjectOnline().getTitle() == null) {
+			if (this.getObjectOffline().getTitle() == null)
+				this.getObjectMapped().setTitle("");
 			else
-				this.mappedMpd.setTitle(this.mdpOffline.getTitle());
+				this.getObjectMapped().setTitle(this.getObjectOffline().getTitle());
 		}  else if (this.task == Task.OVERWRITE) {
-			if (this.mdpOffline.getTitle() != null)
-				this.mappedMpd.setTitle(this.mdpOffline.getTitle());
+			if (this.getObjectOffline().getTitle() != null)
+				this.getObjectMapped().setTitle(this.getObjectOffline().getTitle());
 		}
 
-		return this.mappedMpd;
+		return this.getObjectMapped();
 	}
 	
 
