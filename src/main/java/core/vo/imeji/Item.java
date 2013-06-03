@@ -6,6 +6,7 @@ package core.vo.imeji;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,6 +22,7 @@ import core.j2j.annotations.j2jLiteral;
 import core.j2j.annotations.j2jModel;
 import core.j2j.annotations.j2jResource;
 import core.search.FulltextIndex;
+import core.vo.imeji.Properties.Status;
 
 /**
  * imeji item. Can be an image, a video, a sound, etc.
@@ -34,7 +36,7 @@ import core.search.FulltextIndex;
 @j2jId(getMethod = "getId", setMethod = "setId")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "item", namespace = "http://imeji.org/terms")
-public class Item extends Properties implements FulltextIndex
+public class Item extends Properties implements FulltextIndex, Cloneable
 {
     public enum Visibility
     {		
@@ -273,5 +275,33 @@ public class Item extends Properties implements FulltextIndex
         this.checksum = checksum;
     }
 
+    
+    public Item clone() throws CloneNotSupportedException {
+
+		Item clonedItem = new Item();
+
+		clonedItem.setId(this.getId());
+		clonedItem.setCreatedBy(this.getCreatedBy());
+		clonedItem.setModifiedBy(this.getModifiedBy());
+		clonedItem.setCreated(this.getCreated());
+		clonedItem.setModified(this.getModified());
+		clonedItem.setVersionDate(this.getVersionDate());
+		clonedItem.setStatus(this.getStatus());
+		clonedItem.setVersion(this.getVersion());
+		clonedItem.setDiscardComment(this.getDiscardComment());
+		clonedItem.setCollection(this.getCollection());
+		clonedItem.setMetadataSets(this.getMetadataSets());
+		clonedItem.setWebImageUrl(this.getWebImageUrl());
+		clonedItem.setThumbnailImageUrl(this.getThumbnailImageUrl());
+		clonedItem.setFullImageUrl(this.getFullImageUrl());
+		clonedItem.setVisibility(this.getVisibility());
+		clonedItem.setFilename(this.getFilename());
+		clonedItem.setEscidocId(this.getEscidocId());
+		clonedItem.setStorageId(this.getStorageId());
+		clonedItem.setFulltextIndex(this.getFulltextIndex());
+		clonedItem.setChecksum(this.getChecksum());
+
+		return clonedItem;
+	}
     
 }

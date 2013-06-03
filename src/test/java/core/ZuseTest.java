@@ -4,7 +4,6 @@ import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBException;
@@ -22,7 +21,6 @@ import org.xml.sax.SAXException;
 import core.jaxb.ImejiSchemaFilename;
 import core.jaxb.JaxbGenericObject;
 import core.jaxb.JaxbUtil;
-import core.mapper.ItemMapperTask;
 import core.mapper.ItemsMapperTask;
 import core.mapper.MdProfileMapperTask;
 import core.mapper.StatementIdMapper;
@@ -232,7 +230,7 @@ public class ZuseTest {
 		
 		
 		ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
-				filenamItemsOffline, Task.UPDATE, Update.UPDATE_BY_FILENAME);
+				filenamItemsOffline, Task.OVERWRITE, Update.UPDATE_BY_FILENAME);
 		ismt.execute();
 
 		Items itemsMerged = ismt.get();

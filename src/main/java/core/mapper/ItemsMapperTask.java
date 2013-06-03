@@ -4,9 +4,7 @@
 package core.mapper;
 
 import java.util.Iterator;
-import java.util.List;
 
-import javax.ejb.Init;
 import javax.xml.bind.JAXBException;
 
 import org.xml.sax.SAXException;
@@ -62,7 +60,7 @@ public class ItemsMapperTask extends MapperTask<Items, Void> {
 	@Override
 	protected Items doInBackground() throws Exception {
 
-		this.setObjectMapped(this.getObjectOnline());
+		this.setObjectMapped(this.getObjectOnline().clone());
 		this.getObjectMapped().getItem().clear();
 		
 		switch (this.getUpdateBy()) {
@@ -129,22 +127,30 @@ public class ItemsMapperTask extends MapperTask<Items, Void> {
 	
 	protected Item mergeItem(Item objectOnline, Item objectOffline)
 			throws CloneNotSupportedException {
-		Item item = objectOnline;
-			
+		Item item = objectOnline.clone();
+		
+		MetadataSet mdsOff = objectOffline.getMetadataSet();
+		MetadataSet mdsOn = objectOnline.getMetadataSet();
+		
+		MetadataSet mdsItem = item.getMetadataSet();
+		
+		
 		switch (this.getTask()) {
 			case OVERWRITE:
-				
+				if(mdsOff.getProfile().compareTo(mdsOn.getProfile()) == 0) {
+					if(mdsItem == null) {
+						mdsItem = new MetadataSet();
+					}
+					mdsItem.setMetadata(mdsOff.getMetadata());
+				}
 				break;
 			case UPDATE:
-						
-				MetadataSet mdsOff = objectOffline.getMetadataSet();
-				MetadataSet mdsOn = item.getMetadataSet();
 				
 				if(mdsOff.getProfile().compareTo(mdsOn.getProfile()) == 0) {
 					
-					for (Iterator<Metadata> itMdOn = mdsOn.getMetadata().iterator(); itMdOn.hasNext();) {
+					for (Iterator<Metadata> itMdOn = mdsItem.getMetadata().iterator(); itMdOn.hasNext();) {
 						Metadata mdOn = itMdOn.next();
-						
+
 						for (Iterator<Metadata> itMdOff = mdsOff.getMetadata().iterator(); itMdOff.hasNext();) {
 							Metadata mdOff = itMdOff.next();
 							if(mdOn.getStatement().compareTo(mdOff.getStatement()) == 0) {
@@ -153,7 +159,7 @@ public class ItemsMapperTask extends MapperTask<Items, Void> {
 							}
 						}
 					}
-				}				
+				}
 				
 				break;
 			default:

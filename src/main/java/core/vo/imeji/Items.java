@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author hnguyen
  */
 @XmlRootElement(name = "items", namespace = "http://imeji.org/terms")
-public class Items
+public class Items implements Cloneable
 {
     private List<Item> item;
 
@@ -43,4 +43,15 @@ public class Items
     {
         this.item = item;
     }
+    
+    public Items clone() throws CloneNotSupportedException {
+
+    	List<Item> clonedItemList = new ArrayList<Item>();
+    	
+    	for (Item item : this.getItem()) {
+    		clonedItemList.add(item);
+		}
+   	
+        return new Items(clonedItemList);
+      }
 }
