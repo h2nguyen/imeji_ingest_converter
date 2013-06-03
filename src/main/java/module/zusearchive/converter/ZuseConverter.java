@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import module.zusearchive.vo.generated.OUnterlagen;
-import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseEnumType;
+import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
 
 import core.converter.Converter;
 import core.j2j.misc.LocalizedString;
@@ -32,12 +32,12 @@ import core.vo.imeji.predefinedMetadata.Text;
 import core.vo.imeji.predefinedMetadata.Number;
 
 public class ZuseConverter extends
-		Converter<OUnterlagen, ZuseEnumType> {
+		Converter<OUnterlagen, ZuseMDEnumType> {
 
 	@Override
 	public MetadataProfile getMdProfile(OUnterlagen tObject, String title,
 			String description,
-			List<ZuseEnumType> enumList)
+			List<ZuseMDEnumType> enumList)
 			throws IntrospectionException {
 
 		MetadataProfile mdp = new MetadataProfile();
@@ -54,15 +54,15 @@ public class ZuseConverter extends
 					continue;
 
 				for (int i = 0; i < z.size(); i++) {
-					String method = ((ZuseEnumType) z.get(i))
-							.getAttributes()[ZuseEnumType.Column.METHOD_NAME
+					String method = ((ZuseMDEnumType) z.get(i))
+							.getAttributes()[ZuseMDEnumType.Column.METHOD_NAME
 							.ordinal()];
 
 					if (propertyDescriptor.getReadMethod().getName()
 							.contains(method)) {
 
-						String type = ((ZuseEnumType) z
-								.get(i)).getAttributes()[ZuseEnumType.Column.TYPE
+						String type = ((ZuseMDEnumType) z
+								.get(i)).getAttributes()[ZuseMDEnumType.Column.TYPE
 								.ordinal()];
 						if (type.isEmpty())
 							continue;
@@ -70,14 +70,14 @@ public class ZuseConverter extends
 						Statement statement = new Statement();
 						statement
 								.setId(URI
-										.create(((ZuseEnumType) z
-												.get(i)).getAttributes()[ZuseEnumType.Column.STATEMENT_ID
+										.create(((ZuseMDEnumType) z
+												.get(i)).getAttributes()[ZuseMDEnumType.Column.STATEMENT_ID
 												.ordinal()]));
-						String labelDE = ((ZuseEnumType) z
-								.get(i)).getAttributes()[ZuseEnumType.Column.DE_LABEL
+						String labelDE = ((ZuseMDEnumType) z
+								.get(i)).getAttributes()[ZuseMDEnumType.Column.DE_LABEL
 								.ordinal()];
-						String labelEN = ((ZuseEnumType) z
-								.get(i)).getAttributes()[ZuseEnumType.Column.EN_LABEL
+						String labelEN = ((ZuseMDEnumType) z
+								.get(i)).getAttributes()[ZuseMDEnumType.Column.EN_LABEL
 								.ordinal()];
 						statement.getLabels().add(
 								new LocalizedString(labelDE, "de"));
@@ -140,7 +140,7 @@ public class ZuseConverter extends
 
 	@Override
 	public Item getItem(OUnterlagen tObject,
-			List<ZuseEnumType> enumList)
+			List<ZuseMDEnumType> enumList)
 			throws IntrospectionException {
 		Item item = new Item();
 
@@ -164,14 +164,14 @@ public class ZuseConverter extends
 				continue;
 
 			for (int i = 0; i < z.size(); i++) {
-				String method = ((ZuseEnumType) z.get(i))
-						.getAttributes()[ZuseEnumType.Column.METHOD_NAME
+				String method = ((ZuseMDEnumType) z.get(i))
+						.getAttributes()[ZuseMDEnumType.Column.METHOD_NAME
 						.ordinal()];
 				if (propertyDescriptor.getReadMethod().getName()
 						.contains(method)) {
 
-					String type = ((ZuseEnumType) z.get(i))
-							.getAttributes()[ZuseEnumType.Column.TYPE
+					String type = ((ZuseMDEnumType) z.get(i))
+							.getAttributes()[ZuseMDEnumType.Column.TYPE
 							.ordinal()];
 					if (type.isEmpty())
 						continue;
@@ -188,8 +188,8 @@ public class ZuseConverter extends
 						text.setText(value);
 						// TODO: big problem here for the statement matching!!!!
 
-						text.setStatement(URI.create(((ZuseEnumType) z
-								.get(i)).getAttributes()[ZuseEnumType.Column.STATEMENT_ID
+						text.setStatement(URI.create(((ZuseMDEnumType) z
+								.get(i)).getAttributes()[ZuseMDEnumType.Column.STATEMENT_ID
 								.ordinal()]));
 						text.setPos(counter++);
 						mdl.add(text);
@@ -283,7 +283,7 @@ public class ZuseConverter extends
 	}
 	
 	@Override
-	public Item getItem(OUnterlagen tObject, List<ZuseEnumType> enumList,
+	public Item getItem(OUnterlagen tObject, List<ZuseMDEnumType> enumList,
 			MetadataProfile mdProfile) throws IntrospectionException {
 		Item item = new Item();
 
@@ -315,11 +315,11 @@ public class ZuseConverter extends
 
 			for (int i = 0; i < z.size() && it.hasNext(); i++) {
 				
-				String method = ((ZuseEnumType) z.get(i)).getAttributes()[ZuseEnumType.Column.METHOD_NAME.ordinal()];
+				String method = ((ZuseMDEnumType) z.get(i)).getAttributes()[ZuseMDEnumType.Column.METHOD_NAME.ordinal()];
 				
 				if (propertyDescriptor.getReadMethod().getName().contains(method)) {
 
-					String type = ((ZuseEnumType) z.get(i)).getAttributes()[ZuseEnumType.Column.TYPE.ordinal()];
+					String type = ((ZuseMDEnumType) z.get(i)).getAttributes()[ZuseMDEnumType.Column.TYPE.ordinal()];
 					
 					if (type.isEmpty()) {
 						continue;
@@ -466,7 +466,7 @@ public class ZuseConverter extends
 
 	@Override
 	public Items getItems(List<OUnterlagen> tObject,
-			List<ZuseEnumType> enumList) throws IntrospectionException {
+			List<ZuseMDEnumType> enumList) throws IntrospectionException {
 		Collection<Item> itemColection = new ArrayList<Item>();
 		
 		for (OUnterlagen oul : tObject) {			
@@ -478,7 +478,7 @@ public class ZuseConverter extends
 
 	@Override
 	public Items getItems(List<OUnterlagen> tObject,
-			List<ZuseEnumType> enumList, MetadataProfile mdProfile)
+			List<ZuseMDEnumType> enumList, MetadataProfile mdProfile)
 			throws IntrospectionException {
 		Collection<Item> itemColection = new ArrayList<Item>();
 		

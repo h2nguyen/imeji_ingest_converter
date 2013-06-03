@@ -6,7 +6,7 @@ package module.zusearchive.vo.generated.formats;
 import java.util.Arrays;
 import java.util.List;
 
-import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseEnumType;
+import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
 
 import core.helper.IdentifierUtil;
 import core.vo.generated.formats.NormFormat;
@@ -20,7 +20,7 @@ import core.vo.imeji.Statement;
  */
 public class ZuseNormFormat extends NormFormat {
 	
-	public static enum ZuseEnumType implements IMdProfileFormat {
+	public static enum ZuseMDEnumType implements IMdProfileFormat {
 		
 		ALT_SIGNATUR("getAltSignatur","Alt-Signatur","Alt-Signatur","Former signature","Text","","",IdentifierUtil.newURI(Statement.class).toString()),
 		ALT_TITLE("getAltTitel","Alt-Titel","Alt-Titel","Former title","Text","","",IdentifierUtil.newURI(Statement.class).toString()),
@@ -110,7 +110,7 @@ public class ZuseNormFormat extends NormFormat {
 		
 		private String[] attributes;
 		
-		ZuseEnumType(String ... attributes){
+		ZuseMDEnumType(String ... attributes){
 			this.setAttributes(attributes);
 		}
 
@@ -125,8 +125,8 @@ public class ZuseNormFormat extends NormFormat {
 			
 		}
 
-		public static List<ZuseEnumType> getEnumList() {
-			return Arrays.asList(ZuseEnumType.class.getEnumConstants());
+		public static List<ZuseMDEnumType> getEnumList() {
+			return Arrays.asList(ZuseMDEnumType.class.getEnumConstants());
 		}
 		
 	}

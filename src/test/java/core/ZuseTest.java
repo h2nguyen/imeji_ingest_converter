@@ -4,6 +4,7 @@ import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBException;
@@ -13,7 +14,7 @@ import module.zusearchive.helper.ZuseNormalizer;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
-import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseEnumType;
+import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -84,7 +85,7 @@ public class ZuseTest {
 
 		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
 				"profile name offline", "profile description offline",
-				ZuseEnumType.getEnumList());
+				ZuseMDEnumType.getEnumList());
 		// JaxbUtil.toString(mdp);
 
 		String mdpFile = "src/test/resources/_mdp_offline_with_statements.xml";
@@ -108,9 +109,9 @@ public class ZuseTest {
 
 		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
 				"profile name offline", "profile description offline",
-				ZuseEnumType.getEnumList());		
+				ZuseMDEnumType.getEnumList());		
 		
-		Items items = zmdpconv.getItems(zo.getoUnterlagen(), ZuseEnumType.getEnumList(), mdp);
+		Items items = zmdpconv.getItems(zo.getoUnterlagen(), ZuseMDEnumType.getEnumList(), mdp);
 		
 //		JaxbUtil.toString(mdp);
 //		JaxbUtil.toString(items);
@@ -185,60 +186,66 @@ public class ZuseTest {
 	}
 
 	@Test
-	public void mergItemMapper() throws FileNotFoundException,
+	public void generateIngestFileProcessTest() throws FileNotFoundException,
 			JAXBException, SAXException, InterruptedException,
 			ExecutionException, IntrospectionException {
 
-//		String filenameMdpOnline = "src/test/resources/ingest1/_mdp_online_empty_mds.xml";
-//		String filenameMdpOffline = "src/test/resources/ingest1/_mdp_offline.xml";
-//		
-//		
-//		MdProfileMapperTask mdpmt = new MdProfileMapperTask(filenameMdpOnline, filenameMdpOffline, Task.UPDATE);
-//		
-//		mdpmt.execute();
-//		
-//		MetadataProfile mdpMerged = mdpmt.get();
-//
-//		String filenameMdpMerged = "src/test/resources/ingest1/_mdp_merged.xml";
-//		FileOutputStream fos = new FileOutputStream(new File(filenameMdpMerged));
-//		
-//		JaxbGenericObject.writeToOutputStream(mdpMerged, fos);
+		// create a normalized file from raw file
+		String inputFilename = "src/test/resources/ingest3/raw_entries.xml";
+		String outputFilename = "src/test/resources/ingest3/raw_entries_normalized.xml";
+		ZuseNormalizer n = new ZuseNormalizer(inputFilename, outputFilename);
+		n.normalizeFile();
+		
+		// make specific (here in our case the zuse object) java object from normalized file
+		String filenameEntriesNormalizedOffline = "src/test/resources/ingest3/raw_entries_normalized.xml";
+		OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline);
+		ZuseConverter zmdpconv = new ZuseConverter();
+		List<OUnterlagen> ouls = oz.getoUnterlagen();
+		// generate an imeji meta data profile from the specific object
+		MetadataProfile raw_gen_mdp = zmdpconv.getMdProfile(
+				ouls.get(0),
+				"Generated metadata profile",
+				"The metadata profile is generated from the Zuse object",
+				ZuseMDEnumType.getEnumList());
+		String filenameMdpOffline = "src/test/resources/ingest3/mdp_offline.xml";
+		FileOutputStream fos_raw_gen_mdp = new FileOutputStream(new File(filenameMdpOffline));
+		JaxbGenericObject.writeToOutputStream(raw_gen_mdp, fos_raw_gen_mdp);
 		
 		
-//		MetadataProfile mdp = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).unmarshal(filenameMdpMerged);
-//		
-//		String filenameEntriesNormalizedOffline = "src/test/resources/ingest1/_4_entries_normalized.xml";
-//		
-//		OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline);
-//		
-//		ZuseConverter zmdpconv = new ZuseConverter();
-//		
-//		List<OUnterlagen> ouls = oz.getoUnterlagen();
-//		
-//		Items items = zmdpconv.getItems(ouls, ZuseEnumType.getEnumList(), mdp);
-//		
-//		String filenameItemsOffline = "src/test/resources/ingest1/_4_items_offline.xml";
-//		FileOutputStream fos = new FileOutputStream(new File(filenameItemsOffline));
-//		
-//		JaxbGenericObject.writeToOutputStream(items, fos);
-
+		// merge meta data profile process
+		String filenameMdpOnline = "src/test/resources/ingest3/mdp_online.xml"; // download from the internet
+		String filenameMdpOffline2 = "src/test/resources/ingest3/mdp_offline.xml";
+		MdProfileMapperTask mdpmt = new MdProfileMapperTask(filenameMdpOnline, filenameMdpOffline2, Task.UPDATE);
+		mdpmt.execute();
+		MetadataProfile mdpMerged = mdpmt.get();
+		String filenameMdpMerged = "src/test/resources/ingest3/mdp_merged.xml";
+		FileOutputStream fos_mdp_merged = new FileOutputStream(new File(filenameMdpMerged));
+		JaxbGenericObject.writeToOutputStream(mdpMerged, fos_mdp_merged);
 		
 		
-		String filenameItemsOnline = "src/test/resources/ingest1/_4_items_online_empty_md.xml";
-		String filenamItemsOffline = "src/test/resources/ingest1/_4_items_offline.xml";
-
+		// generate the imeji items from the specific object (Zuse object) with the provided final merged meta data profile
+		String filenameMdpMerged2 = "src/test/resources/ingest3/mdp_online_merged.xml";
+		MetadataProfile merged_mdp = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).unmarshal(filenameMdpMerged2);
+		String filenameEntriesNormalizedOffline2 = "src/test/resources/ingest3/raw_entries_normalized.xml";
+		OZuse oz2 = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline2);
+		ZuseConverter zmdpconv2 = new ZuseConverter();
+		List<OUnterlagen> ouls2 = oz2.getoUnterlagen();
+		Items items = zmdpconv2.getItems(ouls2, ZuseMDEnumType.getEnumList(), merged_mdp);
+		String filenameItemsOffline = "src/test/resources/ingest3/items_offline.xml";
+		FileOutputStream fos_items = new FileOutputStream(new File(filenameItemsOffline));
+		JaxbGenericObject.writeToOutputStream(items, fos_items);
 		
-		
+		// merge the online items with the offline generated items
+		String filenameItemsOnline = "src/test/resources/ingest3/items_online.xml"; // download from the internet
+		String filenameItemsOffline2 = "src/test/resources/ingest3/items_offline.xml";
 		ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
-				filenamItemsOffline, Task.OVERWRITE, Update.UPDATE_BY_FILENAME);
+				filenameItemsOffline2, Task.OVERWRITE, Update.UPDATE_BY_FILENAME);
 		ismt.execute();
-
 		Items itemsMerged = ismt.get();
+		String filename = "src/test/resources/ingest3/mergedItems.xml";
+		FileOutputStream fos_final_items_to_ingest = new FileOutputStream(new File(filename));
 
-		String filename = "src/test/resources/ingest1/mergedItems.xml";
-		FileOutputStream fos = new FileOutputStream(new File(filename));
-
-		JaxbGenericObject.writeToOutputStream(itemsMerged, fos);
+		JaxbGenericObject.writeToOutputStream(itemsMerged, fos_final_items_to_ingest);
 
 	}
 
