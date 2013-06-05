@@ -489,6 +489,20 @@ public class ZuseConverter extends
 		return new Items(itemColection);
 	}
 
-	
+	public static String getOfflineMDFilename(
+			String inputFilename) {
+		int i = inputFilename.lastIndexOf('.');
+		if(i < 0)
+			return inputFilename + "_offline_md";
+		return inputFilename.substring(0, i) + "_offline_md" + inputFilename.substring(i);
+	}
+
+	public static String getOfflineItemsFilename(
+			String inputFilename) {
+		int i = inputFilename.lastIndexOf('.');
+		if(i < 0)
+			return inputFilename + "_offline_items";
+		return inputFilename.substring(0, i) + "_offline_items" + inputFilename.substring(i);
+	}
 
 }

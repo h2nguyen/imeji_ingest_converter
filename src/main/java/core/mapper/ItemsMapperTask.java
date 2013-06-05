@@ -168,4 +168,12 @@ public class ItemsMapperTask extends MapperTask<Items, Void> {
 		
 		return item;
 	}
+
+
+	public static String getMergedItemsFilename(String inputFilename) {
+		int i = inputFilename.lastIndexOf('.');
+		if(i < 0)
+			return inputFilename + "_merged_items_final";
+		return inputFilename.substring(0, i) + "_merged_items_final" + inputFilename.substring(i);
+	}
 }

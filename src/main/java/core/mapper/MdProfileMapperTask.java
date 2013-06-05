@@ -132,6 +132,13 @@ public class MdProfileMapperTask extends MapperTask<MetadataProfile, Void> {
 
 		return this.getObjectMapped();
 	}
+
+	public static String getOfflineMDFilename(String inputFilename) {
+		int i = inputFilename.lastIndexOf('.');
+		if(i < 0)
+			return inputFilename + "_merged_md";
+		return inputFilename.substring(0, i) + "_merged_md" + inputFilename.substring(i);
+	}
 	
 
 }

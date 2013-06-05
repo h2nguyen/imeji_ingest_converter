@@ -29,19 +29,12 @@ public class ZuseNormalizer {
 	}
 	
 	public ZuseNormalizer(File in) {
-		this(in, new File(ZuseNormalizer.getOutputFilename(in.getName())));		
+		this(in, new File(ZuseNormalizer.getOutputFilename(in.getAbsolutePath())));		
 	}
 	
 	public ZuseNormalizer(File in, File out) {
 		this.setInputFile(in);
 		this.setOutputFile(out);
-	}
-	
-	private static String getOutputFilename(String inputFilename) {
-		int i = inputFilename.lastIndexOf('.');
-		if(i < 0)
-			return inputFilename + "_normalized";
-		return inputFilename.substring(0, i) + "_normalized" + inputFilename.substring(i);		
 	}
 
 	public File getInputFile() {
@@ -112,5 +105,12 @@ public class ZuseNormalizer {
 	    }
 		
 		return true;
+	}
+	
+	public static String getOutputFilename(String inputFilename) {
+		int i = inputFilename.lastIndexOf('.');
+		if(i < 0)
+			return inputFilename + "_normalized";
+		return inputFilename.substring(0, i) + "_normalized" + inputFilename.substring(i);
 	}
 }
