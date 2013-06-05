@@ -74,7 +74,8 @@ public class IdentifierUtil
     {
         try
         {
-            method = PropertyReader.getProperty("imeji.identifier.method");
+            method = "counter";
+        	//method = PropertyReader.getProperty("imeji.identifier.method");
         }
         catch (Exception e)
         {

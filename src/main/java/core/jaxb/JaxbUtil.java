@@ -160,15 +160,14 @@ public class JaxbUtil
     public static File getFileInResourcePath(String path)
     {
      
+    	path = "resources/"+path;
     	File file = null;
     	InputStream inputStream = null;
 		OutputStream outputStream = null;
 		
     	try {
-    		System.out.println(path);
-    		
     		file = File.createTempFile("temp", null);
-    		inputStream = JaxbUtil.class.getClassLoader().getResourceAsStream("resources/"+path);
+    		inputStream = JaxbUtil.class.getClassLoader().getResourceAsStream(path);
     		
     		outputStream = new FileOutputStream(file);
     		int read = 0;

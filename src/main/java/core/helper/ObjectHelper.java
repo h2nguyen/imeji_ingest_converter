@@ -40,8 +40,10 @@ public class ObjectHelper
         String applicationURL = null;
         try
         {
-            applicationURL = StringHelper.normalizeURI(PropertyReader.getProperty("escidoc.imeji.instance.url"));
-            baseURI = StringHelper.normalizeURI(PropertyReader.getProperty("imeji.jena.resource.base_uri"));
+        	applicationURL = StringHelper.normalizeURI("");
+        	baseURI = StringHelper.normalizeURI("");
+            //applicationURL = StringHelper.normalizeURI(PropertyReader.getProperty("escidoc.imeji.instance.url"));
+            //baseURI = StringHelper.normalizeURI(PropertyReader.getProperty("imeji.jena.resource.base_uri"));
         }
         catch (Exception e)
         {
