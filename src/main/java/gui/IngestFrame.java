@@ -842,7 +842,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				String filenameItemsOnline = this.txtItemOnline.getText(); // download from the internet
 				String filenameItemsWithMergedMD = this.txtGeneratedItems.getText();
 				ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
-						filenameItemsWithMergedMD, Task.UPDATE, Update.UPDATE_BY_FILENAME);
+						filenameItemsWithMergedMD, Task.OVERWRITE, Update.UPDATE_BY_FILENAME);
 				ismt.execute();
 				Items itemsMerged = ismt.get();
 				String mergedItemsFilename = ItemsMapperTask.getMergedItemsFilename(filenameItemsWithMergedMD);

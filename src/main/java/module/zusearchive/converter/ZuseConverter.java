@@ -47,13 +47,14 @@ public class ZuseConverter extends
 		Collection<Statement> statements = new LinkedList<Statement>();
 		List<?> z = enumList;
 		int counter = 0;
+		int methodeCounter = 0;
 		try {
 			for (PropertyDescriptor propertyDescriptor : Introspector
 					.getBeanInfo(tObject.getClass()).getPropertyDescriptors()) {
 				if (propertyDescriptor.getReadMethod().getReturnType() != String.class)
 					continue;
 
-				for (int i = 0; i < z.size(); i++) {
+				for (int i = methodeCounter; i < z.size(); i++) {
 					String method = ((ZuseMDEnumType) z.get(i))
 							.getAttributes()[ZuseMDEnumType.Column.METHOD_NAME
 							.ordinal()];
@@ -64,8 +65,11 @@ public class ZuseConverter extends
 						String type = ((ZuseMDEnumType) z
 								.get(i)).getAttributes()[ZuseMDEnumType.Column.TYPE
 								.ordinal()];
-						if (type.isEmpty())
+						if (type.isEmpty()) {
+							methodeCounter = i+1;
 							continue;
+						}
+							
 
 						Statement statement = new Statement();
 						statement
@@ -90,38 +94,47 @@ public class ZuseConverter extends
 						switch (aType) {
 						case TEXT:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						case CONE_PERSON:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						case DATE:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						case GEOLOCATION:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						case LICENSE:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						case LINK:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						case NUMBER:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						case PUBLICATION:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 
 						default:
 							statements.add(statement);
+							methodeCounter = i+1;
 							break;
 						}
 						break;

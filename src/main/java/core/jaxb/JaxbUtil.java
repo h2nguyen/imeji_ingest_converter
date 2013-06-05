@@ -121,4 +121,9 @@ public class JaxbUtil
     {
         return JaxbUtil.class.getClassLoader().getResource(path);
     }
+    
+    public static URL getFileURLInResourcePath(String path)
+    {
+        return JaxbUtil.class.getClassLoader().getResource(path);
+    }
 }
