@@ -1,3 +1,8 @@
+Step 1: Prepare the ingest data
+1. If you have a raw data file. try to normalize it in the first step. Meaning remove all special characters from the file.
+
+
+
 1. Online procedure
 1a. Goto imeji and create a collection
 1b. Upload the images

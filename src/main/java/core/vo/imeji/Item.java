@@ -6,7 +6,6 @@ package core.vo.imeji;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -22,7 +21,6 @@ import core.j2j.annotations.j2jLiteral;
 import core.j2j.annotations.j2jModel;
 import core.j2j.annotations.j2jResource;
 import core.search.FulltextIndex;
-import core.vo.imeji.Properties.Status;
 
 /**
  * imeji item. Can be an image, a video, a sound, etc.

@@ -49,7 +49,6 @@ import core.vo.imeji.MetadataProfile;
 import module.zusearchive.converter.ZuseConverter;
 import module.zusearchive.helper.ZuseNormalizer;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
-import module.zusearchive.tasks.GenerateZuseItemsTask;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
@@ -91,8 +90,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JLabel lblGeneratedItems;
 	private JTextField txtGeneratedItems;
 	private JButton btnChooseItems;
-
-	private GenerateZuseItemsTask git;
 	
 	private JButton btnGetMetadataProfileOnline;
 	private JLabel lblStep_2c;
@@ -845,7 +842,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				String filenameItemsOnline = this.txtItemOnline.getText(); // download from the internet
 				String filenameItemsWithMergedMD = this.txtGeneratedItems.getText();
 				ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
-						filenameItemsWithMergedMD, Task.OVERWRITE, Update.UPDATE_BY_FILENAME);
+						filenameItemsWithMergedMD, Task.UPDATE, Update.UPDATE_BY_FILENAME);
 				ismt.execute();
 				Items itemsMerged = ismt.get();
 				String mergedItemsFilename = ItemsMapperTask.getMergedItemsFilename(filenameItemsWithMergedMD);

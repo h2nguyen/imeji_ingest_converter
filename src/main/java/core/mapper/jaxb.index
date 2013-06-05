@@ -1,4 +1,7 @@
-ItemToProfileMapperTask
+ItemMapperTask
+ItemsMapperTask
+MapperTask
+MdProfileMapperTask
 ObjectFactory
 StatementIdMapper
 StatementsIdMapper

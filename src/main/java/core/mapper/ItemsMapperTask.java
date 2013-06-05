@@ -147,15 +147,23 @@ public class ItemsMapperTask extends MapperTask<Items, Void> {
 			case UPDATE:
 				
 				if(mdsOff.getProfile().compareTo(mdsOn.getProfile()) == 0) {
-					
-					for (Iterator<Metadata> itMdOn = mdsItem.getMetadata().iterator(); itMdOn.hasNext();) {
-						Metadata mdOn = itMdOn.next();
-
-						for (Iterator<Metadata> itMdOff = mdsOff.getMetadata().iterator(); itMdOff.hasNext();) {
-							Metadata mdOff = itMdOff.next();
-							if(mdOn.getStatement().compareTo(mdOff.getStatement()) == 0) {
-								mdOn = mdOff;
-								break;
+					if(mdsItem == null || mdsItem.getMetadata().isEmpty()) {
+						if(mdsOff.getMetadata() != null || !mdsOff.getMetadata().isEmpty()) {
+							if(mdsItem == null) {
+								mdsItem = new MetadataSet();
+							}
+							mdsItem.setMetadata(mdsOff.getMetadata());
+						}						
+					} else {
+						for (Iterator<Metadata> itMdOn = mdsItem.getMetadata().iterator(); itMdOn.hasNext();) {
+							Metadata mdOn = itMdOn.next();
+	
+							for (Iterator<Metadata> itMdOff = mdsOff.getMetadata().iterator(); itMdOff.hasNext();) {
+								Metadata mdOff = itMdOff.next();
+								if(mdOn.getStatement().compareTo(mdOff.getStatement()) == 0) {
+									mdOn = mdOff;
+									break;
+								}
 							}
 						}
 					}

@@ -6,8 +6,6 @@ package module.zusearchive.vo.generated.formats;
 import java.util.Arrays;
 import java.util.List;
 
-import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
-
 import core.helper.IdentifierUtil;
 import core.vo.generated.formats.NormFormat;
 import core.vo.generated.formats.interfaces.IMdProfileFormat;

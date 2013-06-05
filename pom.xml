@@ -158,9 +158,11 @@
 							<tasks>
 								copying the jaxb files into the build directories, because of
 								the
-								xml schema handling issue (marshalling and unmarshalling) those
+								xml schema handling issue (marshalling and unmarshalling)
+								those
 								files will
-								not be copied into the build directories, Maven does not copy them
+								not be copied into the build directories, Maven
+								does not copy them
 								automatically!!!
 								<copy file="src/main/java/de/mpg/j2j/misc/jaxb.index"
 									tofile="${project.build.directory}/classes/de/mpg/j2j/misc/jaxb.index" />
@@ -177,7 +179,7 @@
 							<goal>run</goal>
 						</goals>
 					</execution>
-					<!-- copy the war folder into the tomcat deploy folder	($TOMCAT_HOME/webapps)  -->
+					<!-- copy the war folder into the tomcat deploy folder ($TOMCAT_HOME/webapps) -->
 					<execution>
 						<id>install</id>
 						<phase>install</phase>
@@ -262,11 +264,10 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
-			<groupId>jgoodies</groupId>
-			<artifactId>forms</artifactId>
-			<version>1.0.5</version>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
 		</dependency>
-
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -277,8 +278,6 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.apache.jena</groupId> <artifactId>jena-tdb</artifactId> 
-			<version>0.9.4-SNAPSHOT</version> </dependency> -->
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-tdb</artifactId>

@@ -24,7 +24,6 @@ public class Download {
 	}
 
 	public static int getXML(String urlString) {
-		// Holen des XML - Files
 		try {
 			URL url = new URL(urlString);
 			URLConnection connection = url.openConnection();
@@ -43,8 +42,7 @@ public class Download {
 			br.close();
 			bw.close();
 		} catch (Exception e) {
-			System.out.println("BUG beim Holen der initialen Daten...: "
-					+ e.getMessage());
+			e.printStackTrace();
 
 			return -1;
 		}
