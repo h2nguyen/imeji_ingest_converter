@@ -467,6 +467,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		
 		lblNotification = new JLabel("Notification");
 		GridBagConstraints gbc_lblNotification = new GridBagConstraints();
+		gbc_lblNotification.gridwidth = 4;
 		gbc_lblNotification.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNotification.gridx = 1;
 		gbc_lblNotification.gridy = 16;
@@ -477,7 +478,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		gbc_btnCancel.anchor = GridBagConstraints.EAST;
 		gbc_btnCancel.fill = GridBagConstraints.VERTICAL;
 		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
-		gbc_btnCancel.gridx = 4;
+		gbc_btnCancel.gridx = 6;
 		gbc_btnCancel.gridy = 16;
 		contentPane.add(btnCancel, gbc_btnCancel);
 		btnCancel.setEnabled(false);
