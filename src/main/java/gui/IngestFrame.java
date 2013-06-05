@@ -49,12 +49,7 @@ import core.vo.imeji.MetadataProfile;
 import module.zusearchive.converter.ZuseConverter;
 import module.zusearchive.helper.ZuseNormalizer;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
-import module.zusearchive.tasks.GenerateItemAndMetadataProfileTask;
-import module.zusearchive.tasks.GenerateMetadataProfileTask;
-import module.zusearchive.tasks.GenerateStatementMappingFileTask;
-import module.zusearchive.tasks.GenerateZuseMergedMetadataProfileTask;
 import module.zusearchive.tasks.GenerateZuseItemsTask;
-import module.zusearchive.tasks.MergeOfflineAndOnlineItemsTask;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
@@ -79,13 +74,13 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JTextField txtNormalizedData;
 	private JButton btnChooseNormalizedData;
 	private JLabel lblMetadataProfile;
-	private JTextField txtGeneratedMetadataProfile;
-	private JButton btnChooseMetadataProfile;
+	private JTextField txtGeneratedOfflineMetadataProfile;
+	private JButton btnChooseMetadataProfileOffline;
 	private JLabel lblStep_1;
 	private JLabel lblStep_2;
 	private JLabel lblStep_3;
 	private JButton btnMergeItems;
-	private JTextField txtMetadataProfileOnlineInformation;
+	private JTextField txtMetadataProfileOnline;
 	private JTextField txtMetadataProfileMerged;
 	private JButton btnChooseMetadataProfileOnline;
 	private JButton btnChooseMetadataProfileMerged;
@@ -98,9 +93,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JButton btnChooseItems;
 
 	private GenerateZuseItemsTask git;
-	private GenerateMetadataProfileTask gmdt;
-	private GenerateZuseMergedMetadataProfileTask gmmdt;
-	private MergeOfflineAndOnlineItemsTask mooit;
 	
 	private JButton btnGetMetadataProfileOnline;
 	private JLabel lblStep_2c;
@@ -109,7 +101,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private JLabel lblStep_3b;
 	private JLabel lblStep_3c;
 	private JButton btnGetItemsOnline;
-	private JTextField txtItemOnlineInformation;
+	private JTextField txtItemOnline;
 	private JTextField txtItemsMerged;
 	private JButton btnChooseItemsOnline;
 	private JButton btnChooseItemsMerged;
@@ -206,16 +198,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		gbc_separator_2.gridy = 3;
 		contentPane.add(separator_2, gbc_separator_2);
 		
-		txtGeneratedMetadataProfile = new JTextField();
-		GridBagConstraints gbc_txtGeneratedMetadataProfile = new GridBagConstraints();
-		gbc_txtGeneratedMetadataProfile.gridwidth = 4;
-		gbc_txtGeneratedMetadataProfile.fill = GridBagConstraints.BOTH;
-		gbc_txtGeneratedMetadataProfile.insets = new Insets(0, 0, 5, 5);
-		gbc_txtGeneratedMetadataProfile.gridx = 4;
-		gbc_txtGeneratedMetadataProfile.gridy = 4;
-		contentPane.add(txtGeneratedMetadataProfile, gbc_txtGeneratedMetadataProfile);
-		txtGeneratedMetadataProfile.setColumns(10);
-		
 		lblMetadataProfile = new JLabel("Metadata profile");
 		GridBagConstraints gbc_lblMetadataProfile = new GridBagConstraints();
 		gbc_lblMetadataProfile.gridheight = 3;
@@ -225,31 +207,41 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		gbc_lblMetadataProfile.gridy = 4;
 		contentPane.add(lblMetadataProfile, gbc_lblMetadataProfile);
 		
-		btnChooseMetadataProfile = new JButton("...");
-		GridBagConstraints gbc_btnChooseMetadataProfile = new GridBagConstraints();
-		gbc_btnChooseMetadataProfile.fill = GridBagConstraints.BOTH;
-		gbc_btnChooseMetadataProfile.insets = new Insets(0, 0, 5, 5);
-		gbc_btnChooseMetadataProfile.gridx = 8;
-		gbc_btnChooseMetadataProfile.gridy = 4;
-		contentPane.add(btnChooseMetadataProfile, gbc_btnChooseMetadataProfile);
-		
-		txtMetadataProfileOnlineInformation = new JTextField();
-		GridBagConstraints gbc_txtMetadataProfileOnlineInformation = new GridBagConstraints();
-		gbc_txtMetadataProfileOnlineInformation.fill = GridBagConstraints.BOTH;
-		gbc_txtMetadataProfileOnlineInformation.gridwidth = 4;
-		gbc_txtMetadataProfileOnlineInformation.insets = new Insets(0, 0, 5, 5);
-		gbc_txtMetadataProfileOnlineInformation.gridx = 4;
-		gbc_txtMetadataProfileOnlineInformation.gridy = 5;
-		contentPane.add(txtMetadataProfileOnlineInformation, gbc_txtMetadataProfileOnlineInformation);
-		txtMetadataProfileOnlineInformation.setColumns(10);
+		txtMetadataProfileOnline = new JTextField();
+		GridBagConstraints gbc_txtMetadataProfileOnline = new GridBagConstraints();
+		gbc_txtMetadataProfileOnline.fill = GridBagConstraints.BOTH;
+		gbc_txtMetadataProfileOnline.gridwidth = 4;
+		gbc_txtMetadataProfileOnline.insets = new Insets(0, 0, 5, 5);
+		gbc_txtMetadataProfileOnline.gridx = 4;
+		gbc_txtMetadataProfileOnline.gridy = 4;
+		contentPane.add(txtMetadataProfileOnline, gbc_txtMetadataProfileOnline);
+		txtMetadataProfileOnline.setColumns(10);
 		
 		btnChooseMetadataProfileOnline = new JButton("...");
 		GridBagConstraints gbc_btnChooseMetadataProfileOnline = new GridBagConstraints();
 		gbc_btnChooseMetadataProfileOnline.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseMetadataProfileOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseMetadataProfileOnline.gridx = 8;
-		gbc_btnChooseMetadataProfileOnline.gridy = 5;
+		gbc_btnChooseMetadataProfileOnline.gridy = 4;
 		contentPane.add(btnChooseMetadataProfileOnline, gbc_btnChooseMetadataProfileOnline);
+		
+		txtGeneratedOfflineMetadataProfile = new JTextField();
+		GridBagConstraints gbc_txtGeneratedOfflineMetadataProfile = new GridBagConstraints();
+		gbc_txtGeneratedOfflineMetadataProfile.gridwidth = 4;
+		gbc_txtGeneratedOfflineMetadataProfile.fill = GridBagConstraints.BOTH;
+		gbc_txtGeneratedOfflineMetadataProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_txtGeneratedOfflineMetadataProfile.gridx = 4;
+		gbc_txtGeneratedOfflineMetadataProfile.gridy = 5;
+		contentPane.add(txtGeneratedOfflineMetadataProfile, gbc_txtGeneratedOfflineMetadataProfile);
+		txtGeneratedOfflineMetadataProfile.setColumns(10);
+		
+		btnChooseMetadataProfileOffline = new JButton("...");
+		GridBagConstraints gbc_btnChooseMetadataProfileOffline = new GridBagConstraints();
+		gbc_btnChooseMetadataProfileOffline.fill = GridBagConstraints.BOTH;
+		gbc_btnChooseMetadataProfileOffline.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseMetadataProfileOffline.gridx = 8;
+		gbc_btnChooseMetadataProfileOffline.gridy = 5;
+		contentPane.add(btnChooseMetadataProfileOffline, gbc_btnChooseMetadataProfileOffline);
 		
 		txtMetadataProfileMerged = new JTextField();
 		GridBagConstraints gbc_txtMetadataProfileMerged = new GridBagConstraints();
@@ -278,16 +270,6 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		gbc_separator_1.gridy = 7;
 		contentPane.add(separator_1, gbc_separator_1);
 		
-		txtGeneratedItems = new JTextField();
-		GridBagConstraints gbc_txtGeneratedItems = new GridBagConstraints();
-		gbc_txtGeneratedItems.fill = GridBagConstraints.BOTH;
-		gbc_txtGeneratedItems.gridwidth = 4;
-		gbc_txtGeneratedItems.insets = new Insets(0, 0, 5, 5);
-		gbc_txtGeneratedItems.gridx = 4;
-		gbc_txtGeneratedItems.gridy = 8;
-		contentPane.add(txtGeneratedItems, gbc_txtGeneratedItems);
-		txtGeneratedItems.setColumns(10);
-		
 		lblGeneratedItems = new JLabel("Items");
 		GridBagConstraints gbc_lblGeneratedItems = new GridBagConstraints();
 		gbc_lblGeneratedItems.gridheight = 3;
@@ -297,31 +279,41 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		gbc_lblGeneratedItems.gridy = 8;
 		contentPane.add(lblGeneratedItems, gbc_lblGeneratedItems);
 		
-		btnChooseItems = new JButton("...");
-		GridBagConstraints gbc_btnChooseItems = new GridBagConstraints();
-		gbc_btnChooseItems.fill = GridBagConstraints.BOTH;
-		gbc_btnChooseItems.insets = new Insets(0, 0, 5, 5);
-		gbc_btnChooseItems.gridx = 8;
-		gbc_btnChooseItems.gridy = 8;
-		contentPane.add(btnChooseItems, gbc_btnChooseItems);
-		
-		txtItemOnlineInformation = new JTextField();
-		GridBagConstraints gbc_txtItemOnlineInformation = new GridBagConstraints();
-		gbc_txtItemOnlineInformation.fill = GridBagConstraints.BOTH;
-		gbc_txtItemOnlineInformation.gridwidth = 4;
-		gbc_txtItemOnlineInformation.insets = new Insets(0, 0, 5, 5);
-		gbc_txtItemOnlineInformation.gridx = 4;
-		gbc_txtItemOnlineInformation.gridy = 9;
-		contentPane.add(txtItemOnlineInformation, gbc_txtItemOnlineInformation);
-		txtItemOnlineInformation.setColumns(10);
+		txtItemOnline = new JTextField();
+		GridBagConstraints gbc_txtItemOnline = new GridBagConstraints();
+		gbc_txtItemOnline.fill = GridBagConstraints.BOTH;
+		gbc_txtItemOnline.gridwidth = 4;
+		gbc_txtItemOnline.insets = new Insets(0, 0, 5, 5);
+		gbc_txtItemOnline.gridx = 4;
+		gbc_txtItemOnline.gridy = 8;
+		contentPane.add(txtItemOnline, gbc_txtItemOnline);
+		txtItemOnline.setColumns(10);
 		
 		btnChooseItemsOnline = new JButton("...");
 		GridBagConstraints gbc_btnChooseItemsOnline = new GridBagConstraints();
 		gbc_btnChooseItemsOnline.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseItemsOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseItemsOnline.gridx = 8;
-		gbc_btnChooseItemsOnline.gridy = 9;
+		gbc_btnChooseItemsOnline.gridy = 8;
 		contentPane.add(btnChooseItemsOnline, gbc_btnChooseItemsOnline);
+		
+		txtGeneratedItems = new JTextField();
+		GridBagConstraints gbc_txtGeneratedItems = new GridBagConstraints();
+		gbc_txtGeneratedItems.fill = GridBagConstraints.BOTH;
+		gbc_txtGeneratedItems.gridwidth = 4;
+		gbc_txtGeneratedItems.insets = new Insets(0, 0, 5, 5);
+		gbc_txtGeneratedItems.gridx = 4;
+		gbc_txtGeneratedItems.gridy = 9;
+		contentPane.add(txtGeneratedItems, gbc_txtGeneratedItems);
+		txtGeneratedItems.setColumns(10);
+		
+		btnChooseItems = new JButton("...");
+		GridBagConstraints gbc_btnChooseItems = new GridBagConstraints();
+		gbc_btnChooseItems.fill = GridBagConstraints.BOTH;
+		gbc_btnChooseItems.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseItems.gridx = 8;
+		gbc_btnChooseItems.gridy = 9;
+		contentPane.add(btnChooseItems, gbc_btnChooseItems);
 		
 		txtItemsMerged = new JTextField();
 		GridBagConstraints gbc_txtItemsMerged = new GridBagConstraints();
@@ -509,8 +501,8 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		initActionListener();
 	}
 	
-	private void initOtherVariables() {
-		chooserFile = new JFileChooser();
+	private void initOtherVariables() {		
+		chooserFile = new JFileChooser(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
 		
 		this.txtRawData.setDragEnabled(true);
 		new DropTarget(txtRawData, this);
@@ -518,17 +510,17 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		this.txtNormalizedData.setDragEnabled(true);
 		new DropTarget(txtNormalizedData, this);
 		
-		this.txtMetadataProfileOnlineInformation.setDragEnabled(true);
-		new DropTarget(txtMetadataProfileOnlineInformation, this);
+		this.txtMetadataProfileOnline.setDragEnabled(true);
+		new DropTarget(txtMetadataProfileOnline, this);
 		
-		this.txtGeneratedMetadataProfile.setDragEnabled(true);
-		new DropTarget(txtGeneratedMetadataProfile, this);
+		this.txtGeneratedOfflineMetadataProfile.setDragEnabled(true);
+		new DropTarget(txtGeneratedOfflineMetadataProfile, this);
 		
 		this.txtMetadataProfileMerged.setDragEnabled(true);
 		new DropTarget(txtMetadataProfileMerged, this);
 		
-		this.txtItemOnlineInformation.setDragEnabled(true);
-		new DropTarget(txtItemOnlineInformation, this);
+		this.txtItemOnline.setDragEnabled(true);
+		new DropTarget(txtItemOnline, this);
 		
 		this.txtGeneratedItems.setDragEnabled(true);
 		new DropTarget(txtGeneratedItems, this);
@@ -541,7 +533,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 	private void initActionListener() {
 		this.btnChooseRawData.addActionListener(this);
 		this.btnChooseNormalizedData.addActionListener(this);		
-		this.btnChooseMetadataProfile.addActionListener(this);
+		this.btnChooseMetadataProfileOffline.addActionListener(this);
 		this.btnChooseMetadataProfileOnline.addActionListener(this);
 		this.btnChooseMetadataProfileMerged.addActionListener(this);
 		this.btnChooseItems.addActionListener(this);
@@ -580,10 +572,10 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 			}
 		}
 		
-		if(e.getSource() == this.btnChooseMetadataProfile) {
+		if(e.getSource() == this.btnChooseMetadataProfileOffline) {
 			this.chooserFile.setDialogTitle("Open meta data profile file");
 			if(this.chooserFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				this.txtGeneratedMetadataProfile.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+				this.txtGeneratedOfflineMetadataProfile.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
 				this.notifyMessage("A meta data profile file was seleted!");
 			}
 		}
@@ -591,7 +583,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		if(e.getSource() == this.btnChooseMetadataProfileOnline) {
 			this.chooserFile.setDialogTitle("Open online meta data profile file");
 			if(this.chooserFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				this.txtMetadataProfileOnlineInformation.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+				this.txtMetadataProfileOnline.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
 				this.notifyMessage("An online meta data profile file was seleted!");
 			}
 		}
@@ -615,7 +607,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		if(e.getSource() == this.btnChooseItemsOnline) {
 			this.chooserFile.setDialogTitle("Open an online items file");
 			if(this.chooserFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				this.txtItemOnlineInformation.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+				this.txtItemOnline.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
 				this.notifyMessage("An online item file was seleted!");
 			}
 		}
@@ -654,6 +646,18 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 			}
 		}
 		
+		// gets the metedata profile from the online repository
+		if(e.getSource() == this.btnGetMetadataProfileOnline) {
+			while(this.txtMetadataProfileOnline.getText().isEmpty()) {
+				this.chooserFile.setDialogTitle("Open an online meta data profile file");
+				if(this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+					return;
+				} else {
+					this.txtMetadataProfileOnline.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+				}
+			}
+		}
+		
 		// generate the meta data profile from the raw data
 		if(e.getSource() == this.btnGenerateOfflineMetadataProfile) {
 			while(this.txtNormalizedData.getText().isEmpty()) {
@@ -683,7 +687,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				JaxbGenericObject.writeToOutputStream(raw_gen_mdp, fos_raw_gen_mdp);
 				this.notifyMessage("Done generating metadata profile file!");
 				
-				this.txtGeneratedMetadataProfile.setText(filenameMdpOffline);
+				this.txtGeneratedOfflineMetadataProfile.setText(filenameMdpOffline);
 			} catch (JAXBException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -698,43 +702,30 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				e1.printStackTrace();
 			}
 		}
-		
-		// gets the metedata profile from the online repository
-		if(e.getSource() == this.btnGetMetadataProfileOnline) {
-			while(this.txtMetadataProfileOnlineInformation.getText().isEmpty()) {
-				this.chooserFile.setDialogTitle("Open an online meta data profile file");
-				if(this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtMetadataProfileOnlineInformation.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
-				}
-			}
-		}
-		
-		
+
 		// merges the offline meta data profile with the online version
 		if(e.getSource() == this.btnMergeMetadataProfile) {
-			while(this.txtGeneratedMetadataProfile.getText().isEmpty()) {
+			while(this.txtGeneratedOfflineMetadataProfile.getText().isEmpty()) {
 				this.chooserFile.setDialogTitle("Open a generated meta data profile file");
 				if(this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 					return;
 				} else {
-					this.txtGeneratedMetadataProfile.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+					this.txtGeneratedOfflineMetadataProfile.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
 				}
 			}
 			
-			while(this.txtMetadataProfileOnlineInformation.getText().isEmpty()) {
+			while(this.txtMetadataProfileOnline.getText().isEmpty()) {
 				this.chooserFile.setDialogTitle("Open an online meta data profile file");
 				if(this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 					return;
 				} else {
-					this.txtMetadataProfileOnlineInformation.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+					this.txtMetadataProfileOnline.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
 				}
 			}
 			
 			try {
-				String filenameMdpOnline = this.txtMetadataProfileOnlineInformation.getText(); // download from the internet
-				String filenameMdpOffline = this.txtGeneratedMetadataProfile.getText();
+				String filenameMdpOnline = this.txtMetadataProfileOnline.getText(); // download from the internet
+				String filenameMdpOffline = this.txtGeneratedOfflineMetadataProfile.getText();
 				MdProfileMapperTask mdpmt = new MdProfileMapperTask(filenameMdpOnline, filenameMdpOffline, Task.UPDATE);
 				this.notifyMessage("Generating merged metadata profile file...");
 				mdpmt.execute();
@@ -764,12 +755,12 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 		
 		// gets the items data from the online repository
 		if(e.getSource() == this.btnGetItemsOnline) {
-			while(this.txtItemOnlineInformation.getText().isEmpty()) {
+			while(this.txtItemOnline.getText().isEmpty()) {
 				this.chooserFile.setDialogTitle("Open an online item file");
 				if(this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 					return;
 				} else {
-					this.txtItemOnlineInformation.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+					this.txtItemOnline.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
 				}
 			}
 		}
@@ -809,13 +800,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				FileOutputStream fos_items = new FileOutputStream(new File(filenameItemsOffline));
 				JaxbGenericObject.writeToOutputStream(items, fos_items);
 				this.notifyMessage("Done generating items!");
-				this.txtGeneratedItems.setText(this.git.get());
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExecutionException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				this.txtGeneratedItems.setText(filenameItemsOffline);
 			} catch (JAXBException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -844,12 +829,12 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				}
 			}
 			
-			while(this.txtItemOnlineInformation.getText().isEmpty()) {
+			while(this.txtItemOnline.getText().isEmpty()) {
 				this.chooserFile.setDialogTitle("Open an online items file");
 				if(this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 					return;
 				} else {
-					this.txtItemOnlineInformation.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
+					this.txtItemOnline.setText(this.chooserFile.getSelectedFile().getAbsolutePath());
 				}
 			}
 			
@@ -857,7 +842,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				
 				
 				// merge the online items with the offline generated items
-				String filenameItemsOnline = this.txtItemOnlineInformation.getText(); // download from the internet
+				String filenameItemsOnline = this.txtItemOnline.getText(); // download from the internet
 				String filenameItemsWithMergedMD = this.txtGeneratedItems.getText();
 				ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
 						filenameItemsWithMergedMD, Task.OVERWRITE, Update.UPDATE_BY_FILENAME);
@@ -941,20 +926,20 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 					this.txtNormalizedData.setText(((File) files.get(0)).getAbsolutePath());
 				}
 				
-				if(dtde.getDropTargetContext().getComponent().equals(this.txtMetadataProfileOnlineInformation)){
-					this.txtMetadataProfileOnlineInformation.setText(((File) files.get(0)).getAbsolutePath());
+				if(dtde.getDropTargetContext().getComponent().equals(this.txtMetadataProfileOnline)){
+					this.txtMetadataProfileOnline.setText(((File) files.get(0)).getAbsolutePath());
 				}
 				
-				if(dtde.getDropTargetContext().getComponent().equals(this.txtGeneratedMetadataProfile)){
-					this.txtGeneratedMetadataProfile.setText(((File) files.get(0)).getAbsolutePath());
+				if(dtde.getDropTargetContext().getComponent().equals(this.txtGeneratedOfflineMetadataProfile)){
+					this.txtGeneratedOfflineMetadataProfile.setText(((File) files.get(0)).getAbsolutePath());
 				}
 				
 				if(dtde.getDropTargetContext().getComponent().equals(this.txtMetadataProfileMerged)){
 					this.txtMetadataProfileMerged.setText(((File) files.get(0)).getAbsolutePath());
 				}
 				
-				if(dtde.getDropTargetContext().getComponent().equals(this.txtItemOnlineInformation)){
-					this.txtItemOnlineInformation.setText(((File) files.get(0)).getAbsolutePath());
+				if(dtde.getDropTargetContext().getComponent().equals(this.txtItemOnline)){
+					this.txtItemOnline.setText(((File) files.get(0)).getAbsolutePath());
 				}
 				
 				if(dtde.getDropTargetContext().getComponent().equals(this.txtGeneratedItems)){
