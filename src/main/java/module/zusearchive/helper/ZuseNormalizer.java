@@ -83,21 +83,26 @@ public class ZuseNormalizer {
 
 	        String oldString = "";
 	        
-	        while((line = reader.readLine()) != null) {
+	        while((line = reader.readLine()) != null) {	        	
+	        	for (int i = 0; i < ZuseNormFormat.KEYSTOREPLACE_OUL.length; i++) {
+	        		if(line.contains(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0]))
+	        			line = line.replaceAll(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0],ZuseNormFormat.KEYSTOREPLACE_OUL[i][1]);
+		        }
+	        	
 	        	oldString += line + "\r\n";
 	        }
 	        
 	        reader.close();
 	        
-	        String newString = new String(oldString);
-	        
-	        for (int i = 0; i < ZuseNormFormat.KEYSTOREPLACE_OUL.length; i++) {
-	        	newString = newString.replaceAll(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0],
-	        			ZuseNormFormat.KEYSTOREPLACE_OUL[i][1]);
-	        }
+//	        String newString = new String(oldString);
+//	        
+//	        for (int i = 0; i < ZuseNormFormat.KEYSTOREPLACE_OUL.length; i++) {
+//	        	newString = newString.replaceAll(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0],ZuseNormFormat.KEYSTOREPLACE_OUL[i][1]);
+//	        	System.out.println(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0]+ " : "+ZuseNormFormat.KEYSTOREPLACE_OUL[i][1]);
+//	        }
 	        
 	        FileWriter writer = new FileWriter(outputFile);
-	        writer.write(newString);	        
+	        writer.write(oldString);	        
 	        writer.close();
 
 	    } catch (IOException ioe) {

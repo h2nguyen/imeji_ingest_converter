@@ -13,8 +13,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.joda.time.chrono.AssembledChronology.Fields;
-
 import core.j2j.annotations.j2jId;
 import core.j2j.annotations.j2jList;
 import core.j2j.annotations.j2jLiteral;

@@ -5,8 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.Collection;
 import java.util.List;
 
-import org.opensaml.xml.util.LazyList;
-
 import com.hp.hpl.jena.Jena;
 import com.hp.hpl.jena.rdf.model.Resource;
 

@@ -18,7 +18,6 @@ import core.vo.generated.formats.interfaces.IMdProfileFormat;
 public abstract class NormFormat {
 	
 	public static String[] norm(String string) {
-
 		System.setProperty("file.encoding", "UTF-8");
 
 		String[] filteredString = new String[2];

@@ -34,10 +34,10 @@ import core.vo.imeji.MetadataProfile;
 
 public class ZuseTest {
 
-	// @Test
+	@Test
 	public void normalizeProcessTest() {
-		String inputFilename = "src/test/resources/_10_entries.xml";
-		String outputFilename = "src/test/resources/_10_entries_out.xml";
+		String inputFilename = "src/test/resources/normalize/_20_raw_entries.xml";
+		String outputFilename = "src/test/resources/normalize/_20_raw_entries_out.xml";
 		ZuseNormalizer n = new ZuseNormalizer(inputFilename, outputFilename);
 		n.normalizeFile();
 	}
@@ -185,7 +185,7 @@ public class ZuseTest {
 
 	}
 
-	@Test
+	//@Test
 	public void generateIngestFileProcessTest() throws FileNotFoundException,
 			JAXBException, SAXException, InterruptedException,
 			ExecutionException, IntrospectionException {

@@ -111,6 +111,10 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>nexus</id>
+			<url>http://rd.mpdl.mpg.de/nexus/content/groups/public</url>
+		</repository>
 	</repositories>
 	<build>
 		<plugins>
