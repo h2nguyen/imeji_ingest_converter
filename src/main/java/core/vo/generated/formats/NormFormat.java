@@ -31,6 +31,16 @@ public abstract class NormFormat {
 		return filteredString;
 	}
 	
+	public static String norm1(String string) {
+		System.setProperty("file.encoding", "UTF-8");
+
+		return string.toLowerCase().replace("-", "_")
+				.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue")
+				.replace("ß", "ss");
+
+
+	}
+	
 	public static List<?> enum2list(Class<? extends IMdProfileFormat> cls) {
 		return (List<?>) Arrays.asList(cls.getEnumConstants());		
 	}

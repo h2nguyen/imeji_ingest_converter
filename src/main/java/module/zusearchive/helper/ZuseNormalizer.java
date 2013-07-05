@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import core.vo.generated.formats.NormFormat;
+
 import module.zusearchive.vo.generated.formats.ZuseNormFormat;
 
 /**
@@ -86,9 +88,8 @@ public class ZuseNormalizer {
 	        while((line = reader.readLine()) != null) {	        	
 	        	for (int i = 0; i < ZuseNormFormat.KEYSTOREPLACE_OUL.length; i++) {
 	        		if(line.contains(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0]))
-	        			line = line.replaceAll(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0],ZuseNormFormat.KEYSTOREPLACE_OUL[i][1]);
+	        			line = line.replace(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0],NormFormat.norm1(ZuseNormFormat.KEYSTOREPLACE_OUL[i][0]));
 		        }
-	        	
 	        	oldString += line + "\r\n";
 	        }
 	        
