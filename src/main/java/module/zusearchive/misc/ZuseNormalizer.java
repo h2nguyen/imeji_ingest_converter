@@ -1,7 +1,7 @@
 /**
  * 
  */
-package module.zusearchive.helper;
+package module.zusearchive.misc;
 
 import java.io.BufferedReader;
 import java.io.File;

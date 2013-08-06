@@ -47,8 +47,8 @@ import core.vo.imeji.Items;
 import core.vo.imeji.MetadataProfile;
 
 import module.zusearchive.converter.ZuseConverter;
-import module.zusearchive.helper.ZuseNormalizer;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
+import module.zusearchive.misc.ZuseNormalizer;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
 import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
