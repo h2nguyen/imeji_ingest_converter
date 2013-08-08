@@ -39,8 +39,10 @@ public class ZuseXmlItemReader {
 
 	}
 
-	public void getAllUniqueSys() {
+	public ArrayList<String> getAllUniqueSys() {
 
+		ArrayList<String> oul = new ArrayList<String>();
+		
 		if (this.xmlFile.exists()) {
 			Document doc = null;
 			Element docEle = null;
@@ -64,7 +66,7 @@ public class ZuseXmlItemReader {
 
 			System.out.println("Total item: " + itemList.getLength());
 
-			ArrayList<String> oul = new ArrayList<String>();
+			
 			
 			if (itemList != null && itemList.getLength() > 0) {
 				for (int i = 0; i < itemList.getLength(); i++) {
@@ -93,22 +95,9 @@ public class ZuseXmlItemReader {
 
 						if (canAdd) {
 							oul.add(value);
-							System.out.println("Sys: " + value);
+							//System.out.println("Sys: " + value);
 						}
 
-						// System.out.println("Sys: "
-						// + nodeList.item(0).getChildNodes().item(0)
-						// .getNodeValue());
-
-						// nodeList = e.getElementsByTagName("grade");
-						// System.out.println("Grade: "
-						// + nodeList.item(0).getChildNodes().item(0)
-						// .getNodeValue());
-						//
-						// nodeList = e.getElementsByTagName("age");
-						// System.out.println("Age: "
-						// + nodeList.item(0).getChildNodes().item(0)
-						// .getNodeValue());
 					}
 				}
 			} else {
@@ -116,12 +105,11 @@ public class ZuseXmlItemReader {
 			}
 		}
 
+		return oul;
 	}
 
 	public ArrayList<SysSigVor> getSysAndItsIds() {
 
-		
-		
 		if (this.xmlFile.exists()) {
 			
 			ArrayList<SysSigVor> sysSigVors = new ArrayList<ZuseXmlItemReader.SysSigVor>();
@@ -153,15 +141,23 @@ public class ZuseXmlItemReader {
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 
 						Element e = (Element) node;
+						
+						
 						nodeListSys = e.getElementsByTagName("Sys");
-						String sys = nodeListSys.item(0).getChildNodes().item(0).getNodeValue();
+						String sys = "";
+						if(nodeListSys.item(0).getChildNodes().getLength() > 0)
+							sys = nodeListSys.item(0).getChildNodes().item(0).getNodeValue();
 						
 						nodeListSig = e.getElementsByTagName("Signatur");
-						String sig = nodeListSig.item(0).getChildNodes().item(0).getNodeValue();
-
+						String sig = "";
+						if(nodeListSig.item(0).getChildNodes().getLength() > 0)
+							sig = nodeListSig.item(0).getChildNodes().item(0).getNodeValue();						
+						
 						nodeListVor = e.getElementsByTagName("Vorl__Nr_");
-						String vor = nodeListVor.item(0).getChildNodes().item(0).getNodeValue();
-
+						String vor = "";
+						if(nodeListVor.item(0).getChildNodes().getLength() > 0)
+							vor = nodeListVor.item(0).getChildNodes().item(0).getNodeValue();
+							
 						sysSigVors.add(new SysSigVor(sys, sig, vor));
 					}
 				}
@@ -174,13 +170,13 @@ public class ZuseXmlItemReader {
 	}
 	
 	public class SysSigVor {
-		protected String sys;
-		protected String sig;
-		protected String vor;
+		public String sys;
+		public String sig;
+		public String vor;
 		
 		public SysSigVor(String sys, String sig, String vor) {
 			this.sys = sys;
-			this.sig = sys;
+			this.sig = sig;
 			this.vor = vor;
 		}
 	}
