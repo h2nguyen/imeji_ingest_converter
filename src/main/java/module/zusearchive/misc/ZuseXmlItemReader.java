@@ -39,26 +39,6 @@ public class ZuseXmlItemReader {
 
 	}
 
-	// private void readData() throws FileNotFoundException, XMLStreamException
-	// {
-	// InputStream is = new FileInputStream(this.xmlFile);
-	// XMLInputFactory factory = XMLInputFactory.newInstance();
-	// XMLStreamReader reader = factory.createXMLStreamReader(is);
-	//
-	//
-	// while(reader.hasNext())
-	// {
-	//
-	// if(reader.hasText())
-	// {
-	// if(reader.hasName())
-	// System.out.println(reader.getName());
-	// System.out.println(reader.getText());
-	// }
-	// reader.next();
-	// }
-	// }
-
 	public void getAllUniqueSys() {
 
 		if (this.xmlFile.exists()) {
@@ -138,4 +118,71 @@ public class ZuseXmlItemReader {
 
 	}
 
+	public ArrayList<SysSigVor> getSysAndItsIds() {
+
+		
+		
+		if (this.xmlFile.exists()) {
+			
+			ArrayList<SysSigVor> sysSigVors = new ArrayList<ZuseXmlItemReader.SysSigVor>();
+			
+			Document doc = null;
+			Element docEle = null;
+			try {
+				doc = this.db.parse(this.xmlFile);
+				docEle = doc.getDocumentElement();
+			} catch (SAXException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			NodeList itemList = docEle.getElementsByTagName("oUnterlagen");
+
+			NodeList nodeListSys = null;
+			NodeList nodeListSig = null;
+			NodeList nodeListVor = null;
+
+			if (itemList != null && itemList.getLength() > 0) {
+				for (int i = 0; i < itemList.getLength(); i++) {
+
+					Node node = itemList.item(i);
+
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element e = (Element) node;
+						nodeListSys = e.getElementsByTagName("Sys");
+						String sys = nodeListSys.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListSig = e.getElementsByTagName("Signatur");
+						String sig = nodeListSig.item(0).getChildNodes().item(0).getNodeValue();
+
+						nodeListVor = e.getElementsByTagName("Vorl__Nr_");
+						String vor = nodeListVor.item(0).getChildNodes().item(0).getNodeValue();
+
+						sysSigVors.add(new SysSigVor(sys, sig, vor));
+					}
+				}
+			}
+			
+			return sysSigVors;
+		}
+		return null;
+		
+	}
+	
+	public class SysSigVor {
+		protected String sys;
+		protected String sig;
+		protected String vor;
+		
+		public SysSigVor(String sys, String sig, String vor) {
+			this.sys = sys;
+			this.sig = sys;
+			this.vor = vor;
+		}
+	}
+	
 }

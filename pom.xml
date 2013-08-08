@@ -373,10 +373,11 @@
 			<version>0.97</version>
 			<classifier>incubator</classifier>
 		</dependency>
+
 		<dependency>
-			<groupId>stax</groupId>
-			<artifactId>stax-api</artifactId>
-			<version>1.0.1</version>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>2.6.12</version>
 		</dependency>
 
 	</dependencies>
