@@ -169,6 +169,73 @@ public class ZuseXmlItemReader {
 		
 	}
 	
+	public ArrayList<SysSigVorUmf> getSysAndExtItsIds() {
+
+		if (this.xmlFile.exists()) {
+			
+			ArrayList<SysSigVorUmf> sysSigVorUmfs = new ArrayList<ZuseXmlItemReader.SysSigVorUmf>();
+			
+			Document doc = null;
+			Element docEle = null;
+			try {
+				doc = this.db.parse(this.xmlFile);
+				docEle = doc.getDocumentElement();
+			} catch (SAXException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			NodeList itemList = docEle.getElementsByTagName("oUnterlagen");
+
+			NodeList nodeListSys = null;
+			NodeList nodeListSig = null;
+			NodeList nodeListVor = null;
+			NodeList nodeListUmf = null;
+
+			if (itemList != null && itemList.getLength() > 0) {
+				for (int i = 0; i < itemList.getLength(); i++) {
+
+					Node node = itemList.item(i);
+
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element e = (Element) node;
+						
+						
+						nodeListSys = e.getElementsByTagName("Sys");
+						String sys = "";
+						if(nodeListSys.item(0).getChildNodes().getLength() > 0)
+							sys = nodeListSys.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListSig = e.getElementsByTagName("Signatur");
+						String sig = "";
+						if(nodeListSig.item(0).getChildNodes().getLength() > 0)
+							sig = nodeListSig.item(0).getChildNodes().item(0).getNodeValue();						
+						
+						nodeListVor = e.getElementsByTagName("Vorl__Nr_");
+						String vor = "";
+						if(nodeListVor.item(0).getChildNodes().getLength() > 0)
+							vor = nodeListVor.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListUmf = e.getElementsByTagName("Umfang");
+						String umf = "";
+						if(nodeListUmf.item(0).getChildNodes().getLength() > 0)
+							umf = nodeListUmf.item(0).getChildNodes().item(0).getNodeValue();
+							
+						sysSigVorUmfs.add(new SysSigVorUmf(sys, sig, vor, umf));
+					}
+				}
+			}
+			
+			return sysSigVorUmfs;
+		}
+		return null;
+		
+	}
+	
 	public class SysSigVor {
 		public String sys;
 		public String sig;
@@ -178,6 +245,15 @@ public class ZuseXmlItemReader {
 			this.sys = sys;
 			this.sig = sig;
 			this.vor = vor;
+		}
+	}
+	
+	public class SysSigVorUmf extends SysSigVor {
+		public String umf;
+		
+		public SysSigVorUmf(String sys, String sig, String vor, String umf) {
+			super(sys,sig,vor);
+			this.umf = umf;
 		}
 	}
 	

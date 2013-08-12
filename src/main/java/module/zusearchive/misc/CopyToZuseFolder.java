@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import jxl.LabelCell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
@@ -42,20 +43,19 @@ public class CopyToZuseFolder {
 			IOException, URISyntaxException {
 		Workbook workbook = Workbook.getWorkbook(new File(filename));
 		Sheet sheet = workbook.getSheet(0);
+		
+		int filenameCol = getColumnNum(sheet, "Filename");
+		int folderCol = getColumnNum(sheet, "Sys");
+		
 		for (int i = 1; i < sheet.getRows(); i++) {
 			try {
-				File afile = new File(sheet.getCell(3, i).getContents());
+				
+				File afile = new File(sheet.getCell(filenameCol, i).getContents());
 
-				// afile.renameTo(new File(sheet.getCell(0,i).getContents() +
-				// "/" + afile.getName()));
-
-				if (afile.renameTo(new File(sheet.getCell(0, i).getContents()
+				if (afile.renameTo(new File(sheet.getCell(folderCol, i).getContents()
 						+ "/" + afile.getName()))) {
 					System.out.println("File: "+afile.getName()+" is moved successfully!");
 				}
-				// else{
-				// System.out.println("File is failed to move!");
-				// }
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -71,15 +71,22 @@ public class CopyToZuseFolder {
 
 		Sheet sheet = workbook.getSheet(0);
 
+		int filenameCol = getColumnNum(sheet, "Filename");
+		int folderCol = getColumnNum(sheet, "Sys");
+		
 		for (int i = 1; i < sheet.getRows(); i++) {
 
-			Path source = Paths.get(new URI(sheet.getCell(3, i).getContents()));
-			Path target = Paths.get(new URI(sheet.getCell(0, i).getContents()));
+			Path source = Paths.get(new URI(sheet.getCell(filenameCol, i).getContents()));
+			Path target = Paths.get(new URI(sheet.getCell(folderCol, i).getContents()));
 
 			Files.copy(source, target, ATOMIC_MOVE);
 
 		}
 		workbook.close();
+	}
+	
+	public static int getColumnNum(Sheet sheet, String colName) {
+		return sheet.findLabelCell(colName).getColumn();
 	}
 
 }

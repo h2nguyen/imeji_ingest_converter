@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import module.zusearchive.misc.ZuseXmlItemReader.SysSigVor;
+import module.zusearchive.misc.ZuseXmlItemReader.SysSigVorUmf;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -56,6 +57,88 @@ public class ExcelExporter {
 			
 			
 			sheet.addCell(new Label(3, i+1, imageFN));
+		}
+		
+		workbook.write(); 
+		workbook.close();
+	}
+	
+	public static void exportSysSigVorUmf(ArrayList<SysSigVorUmf> sysSigVorUmfList, String filename) throws IOException, RowsExceededException, WriteException {
+		if(!filename.endsWith(".xls") || !filename.endsWith(".xlsx"))
+			filename.concat(".xls");
+		
+		WritableWorkbook workbook = Workbook.createWorkbook(new File(filename));
+		
+		WritableSheet sheet = workbook.createSheet("Sources", 0);
+		
+		// headers for the column
+		Label labelSys = new Label(0, 0, "Sys");
+		Label labelSig = new Label(1, 0, "Signatur");
+		Label labelVor = new Label(2, 0, "Vorl__Nr_");
+		Label labelUmf = new Label(3, 0, "Umfang");
+		Label labelFilename = new Label(4, 0, "Filename");
+		
+		sheet.addCell(labelSys);
+		sheet.addCell(labelSig);
+		sheet.addCell(labelVor);		
+		sheet.addCell(labelUmf);
+		sheet.addCell(labelFilename);
+		
+		int rowCounter = 1;
+		
+		for (SysSigVorUmf sysSigVorUmf : sysSigVorUmfList) {
+			
+		
+						
+			String imageFN = "zuse_archive_";
+			
+			if(sysSigVorUmf.sig.isEmpty()) {
+				String vor = sysSigVorUmf.vor.replace("/", "_").replace(" ", "");
+				imageFN += vor;
+			} else {
+				String sig = sysSigVorUmf.sig.replace("P ", "").replace("/",	"_").replace(" ", "_");
+				imageFN += sig;
+			}
+			
+			int pages = 0;
+			
+			if(!sysSigVorUmf.umf.isEmpty()) {
+				String[] umf = sysSigVorUmf.umf.split(" ");
+				if(umf.length > 0) {
+					try {
+						pages = Integer.parseInt(umf[0]);
+					} catch (NumberFormatException nfe) {
+						nfe.printStackTrace();
+					}
+					
+				}
+			}
+			
+			if(pages > 0) {
+				
+				for (int j = 1; j <= pages; j++) {
+					String otherFN = imageFN + "-" + String.format("%03d", j) + EXTENSION; 
+
+					sheet.addCell(new Label(0, rowCounter, sysSigVorUmf.sys));
+					sheet.addCell(new Label(1, rowCounter, sysSigVorUmf.sig));
+					sheet.addCell(new Label(2, rowCounter, sysSigVorUmf.vor));
+					sheet.addCell(new Label(3, rowCounter, sysSigVorUmf.umf));
+					sheet.addCell(new Label(4, rowCounter, otherFN));
+					++rowCounter;
+				}
+			} else {
+				imageFN += EXTENSION;
+				
+				sheet.addCell(new Label(0, rowCounter, sysSigVorUmf.sys));
+				sheet.addCell(new Label(1, rowCounter, sysSigVorUmf.sig));
+				sheet.addCell(new Label(2, rowCounter, sysSigVorUmf.vor));
+				sheet.addCell(new Label(3, rowCounter, sysSigVorUmf.umf));
+				sheet.addCell(new Label(4, rowCounter, imageFN));
+				
+				++rowCounter;
+			}
+			
+			
 		}
 		
 		workbook.write(); 
