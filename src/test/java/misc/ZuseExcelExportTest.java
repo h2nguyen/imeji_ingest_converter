@@ -19,14 +19,15 @@ public class ZuseExcelExportTest {
 
 	@Test
 	public void test() throws RowsExceededException, WriteException, IOException {
-		String filename = "C:/Users/hnguyen/Documents/My Dropbox/zuse_local/zuse_metadata_issue/xmls/_130806_xml_issues/ZusePM_final.xml";
+		String filename = "C:/Users/hnguyen/Documents/My Dropbox/zuse_local/zuse_metadata_issue/xmls/_130814_xml_issues/ZusePMWithoutPTag.xml";
 		
-		String filenameExcel = "src/test/resources/export/test3.xls";
+		String filenameExcel = "src/test/resources/export/test4.xls";
 		
 		ZuseXmlItemReader zxmlir = new ZuseXmlItemReader(filename);
 		ArrayList<SysSigVorUmf> sysSigVorUmf = zxmlir.getSysAndExtItsIds();
 		
-		ExcelExporter.exportSysSigVorUmf(sysSigVorUmf, filenameExcel);
+//		ExcelExporter.exportSysSigVorUmf(sysSigVorUmf, filenameExcel);
+		ExcelExporter.exportVorPages(sysSigVorUmf, filenameExcel);
 		
 	}
 

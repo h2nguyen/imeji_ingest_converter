@@ -9,6 +9,7 @@ import module.zusearchive.misc.ZuseXmlItemReader.SysSigVorUmf;
 
 import jxl.Workbook;
 import jxl.write.Label;
+import jxl.write.Number;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -139,6 +140,42 @@ public class ExcelExporter {
 			}
 			
 			
+		}
+		
+		workbook.write(); 
+		workbook.close();
+	}
+	
+	public static void exportVorPages(ArrayList<SysSigVorUmf> sysSigVorUmfList, String filename) throws IOException, RowsExceededException, WriteException {
+		if(!filename.endsWith(".xls") || !filename.endsWith(".xlsx"))
+			filename.concat(".xls");
+		
+		WritableWorkbook workbook = Workbook.createWorkbook(new File(filename));
+		
+		WritableSheet sheet = workbook.createSheet("Sources", 0);
+		
+		// headers for the column
+		Label labelVor = new Label(0, 0, "Vorlage");
+		Label labelPag = new Label(1, 0, "Pages");
+		sheet.addCell(labelVor);
+		sheet.addCell(labelPag);
+		
+		for (int i = 0; i < sysSigVorUmfList.size(); i++) {
+			if(!sysSigVorUmfList.get(i).vor.isEmpty() && !sysSigVorUmfList.get(i).umf.isEmpty()) {
+				String vor = "207_" + sysSigVorUmfList.get(i).vor.replace("/", "_").replace(" ", "");
+				String[] umf = sysSigVorUmfList.get(i).umf.split(" ");
+				int pages = 0;
+				if(umf.length > 0) {
+					try {
+						pages = Integer.parseInt(umf[0]);
+					} catch (NumberFormatException nfe) {
+						nfe.printStackTrace();
+					}
+				}
+				
+				sheet.addCell(new Label(0, i+1, vor));
+				sheet.addCell(new Number(1, i+1, pages));
+			}
 		}
 		
 		workbook.write(); 
