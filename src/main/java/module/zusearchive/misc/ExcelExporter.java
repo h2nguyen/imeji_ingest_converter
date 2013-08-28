@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import module.zusearchive.misc.ZuseXmlItemReader.SysSigVor;
 import module.zusearchive.misc.ZuseXmlItemReader.SysSigVorUmf;
+import module.zusearchive.misc.ZuseXmlItemReader.SysSigVorUmfPag;
+import module.zusearchive.misc.ZuseXmlItemReader.SysSy2SigVorUmfPag;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -146,7 +148,7 @@ public class ExcelExporter {
 		workbook.close();
 	}
 	
-	public static void exportVorPages(ArrayList<SysSigVorUmf> sysSigVorUmfList, String filename) throws IOException, RowsExceededException, WriteException {
+	public static void exportSysSigVorUmfPag(ArrayList<SysSigVorUmfPag> sysSigVorUmfPagList, String filename) throws IOException, RowsExceededException, WriteException {
 		if(!filename.endsWith(".xls") || !filename.endsWith(".xlsx"))
 			filename.concat(".xls");
 		
@@ -155,26 +157,184 @@ public class ExcelExporter {
 		WritableSheet sheet = workbook.createSheet("Sources", 0);
 		
 		// headers for the column
-		Label labelVor = new Label(0, 0, "Vorlage");
+		Label labelSys = new Label(0, 0, "Sys");
+		Label labelSig = new Label(1, 0, "Signatur");
+		Label labelVor = new Label(2, 0, "Vorl__Nr_");
+		Label labelUmf = new Label(3, 0, "Umfang");
+		Label labelPag = new Label(4, 0, "Seiten_-Digitalisate-");
+		Label labelFilename = new Label(5, 0, "Filename");
+		
+		sheet.addCell(labelSys);
+		sheet.addCell(labelSig);
+		sheet.addCell(labelVor);		
+		sheet.addCell(labelUmf);
+		sheet.addCell(labelPag);
+		sheet.addCell(labelFilename);
+		
+		int rowCounter = 1;
+		
+		for (SysSigVorUmfPag sysSigVorUmfPag : sysSigVorUmfPagList) {
+			
+		
+						
+			String imageFN = "zuse_archive_";
+			
+			if(sysSigVorUmfPag.sig.isEmpty()) {
+				String vor = sysSigVorUmfPag.vor.replace("/", "_").replace(" ", "");
+				imageFN += vor;
+			} else {
+				String sig = sysSigVorUmfPag.sig.replace("P ", "p").replace("/",	"_").replace(" ", "_");
+				imageFN += sig;
+			}
+			
+			int pages = 0;
+			
+			if(!sysSigVorUmfPag.pag.isEmpty()) {
+				pages = Integer.parseInt(sysSigVorUmfPag.pag.trim());
+			}
+			
+			if(pages > 0) {
+				
+				for (int j = 1; j <= pages; j++) {
+					String otherFN = imageFN + "-" + String.format("%03d", j) + EXTENSION; 
+
+					sheet.addCell(new Label(0, rowCounter, sysSigVorUmfPag.sys));
+					sheet.addCell(new Label(1, rowCounter, sysSigVorUmfPag.sig));
+					sheet.addCell(new Label(2, rowCounter, sysSigVorUmfPag.vor));
+					sheet.addCell(new Label(3, rowCounter, sysSigVorUmfPag.umf));
+					sheet.addCell(new Label(4, rowCounter, sysSigVorUmfPag.pag));
+					sheet.addCell(new Label(5, rowCounter, otherFN));
+					++rowCounter;
+				}
+			} else {
+				imageFN += EXTENSION;
+				
+				sheet.addCell(new Label(0, rowCounter, sysSigVorUmfPag.sys));
+				sheet.addCell(new Label(1, rowCounter, sysSigVorUmfPag.sig));
+				sheet.addCell(new Label(2, rowCounter, sysSigVorUmfPag.vor));
+				sheet.addCell(new Label(3, rowCounter, sysSigVorUmfPag.umf));
+				sheet.addCell(new Label(4, rowCounter, sysSigVorUmfPag.pag));
+				sheet.addCell(new Label(5, rowCounter, imageFN));
+				
+				++rowCounter;
+			}
+			
+			
+		}
+		
+		workbook.write(); 
+		workbook.close();
+	}
+	
+	public static void exportSysSy2SigVorUmfPag(ArrayList<SysSy2SigVorUmfPag> sysSy2SigVorUmfPagList, String filename) throws IOException, RowsExceededException, WriteException {
+		if(!filename.endsWith(".xls") || !filename.endsWith(".xlsx"))
+			filename.concat(".xls");
+		
+		WritableWorkbook workbook = Workbook.createWorkbook(new File(filename));
+		
+		WritableSheet sheet = workbook.createSheet("Sources", 0);
+		
+		// headers for the column
+		Label labelSys = new Label(0, 0, "Sys");
+		Label labelSy2 = new Label(1, 0, "Sys2");
+		Label labelSig = new Label(2, 0, "Signatur");
+		Label labelVor = new Label(3, 0, "Vorl__Nr_");
+		Label labelUmf = new Label(4, 0, "Umfang");
+		Label labelPag = new Label(5, 0, "Seiten_-Digitalisate-");
+		Label labelFilename = new Label(6, 0, "Filename");
+		
+		sheet.addCell(labelSys);
+		sheet.addCell(labelSy2);
+		sheet.addCell(labelSig);
+		sheet.addCell(labelVor);		
+		sheet.addCell(labelUmf);
+		sheet.addCell(labelPag);
+		sheet.addCell(labelFilename);
+		
+		int rowCounter = 1;
+		
+		for (SysSy2SigVorUmfPag sysSigVorUmfPag : sysSy2SigVorUmfPagList) {
+			
+		
+						
+			String imageFN = "zuse_archive_";
+			
+			if(sysSigVorUmfPag.sig.isEmpty()) {
+				String vor = sysSigVorUmfPag.vor.replace("/", "_").replace(" ", "");
+				imageFN += vor;
+			} else {
+				String sig = sysSigVorUmfPag.sig.replace("P ", "p").replace("/",	"_").replace(" ", "_");
+				imageFN += sig;
+			}
+			
+			int pages = 0;
+			
+			if(!sysSigVorUmfPag.pag.isEmpty()) {
+				pages = Integer.parseInt(sysSigVorUmfPag.pag.trim());
+			}
+			
+			if(pages > 0) {
+				
+				for (int j = 1; j <= pages; j++) {
+					String otherFN = imageFN + "-" + String.format("%03d", j) + EXTENSION; 
+
+					sheet.addCell(new Label(0, rowCounter, sysSigVorUmfPag.sys));
+					sheet.addCell(new Label(1, rowCounter, sysSigVorUmfPag.sy2));
+					sheet.addCell(new Label(2, rowCounter, sysSigVorUmfPag.sig));
+					sheet.addCell(new Label(3, rowCounter, sysSigVorUmfPag.vor));
+					sheet.addCell(new Label(4, rowCounter, sysSigVorUmfPag.umf));
+					sheet.addCell(new Label(5, rowCounter, sysSigVorUmfPag.pag));
+					sheet.addCell(new Label(6, rowCounter, otherFN));
+					++rowCounter;
+				}
+			} else {
+				imageFN += EXTENSION;
+				
+				sheet.addCell(new Label(0, rowCounter, sysSigVorUmfPag.sys));
+				sheet.addCell(new Label(1, rowCounter, sysSigVorUmfPag.sy2));
+				sheet.addCell(new Label(2, rowCounter, sysSigVorUmfPag.sig));
+				sheet.addCell(new Label(3, rowCounter, sysSigVorUmfPag.vor));
+				sheet.addCell(new Label(4, rowCounter, sysSigVorUmfPag.umf));
+				sheet.addCell(new Label(5, rowCounter, sysSigVorUmfPag.pag));
+				sheet.addCell(new Label(6, rowCounter, imageFN));
+				
+				++rowCounter;
+			}
+			
+			
+		}
+		
+		workbook.write(); 
+		workbook.close();
+	}
+	
+	public static void exportVorPages(ArrayList<SysSigVorUmfPag> sysSigVorUmfPagList, String filename) throws IOException, RowsExceededException, WriteException {
+		if(!filename.endsWith(".xls") || !filename.endsWith(".xlsx"))
+			filename.concat(".xls");
+		
+		WritableWorkbook workbook = Workbook.createWorkbook(new File(filename));
+		
+		WritableSheet sheet = workbook.createSheet("Sources", 0);
+		
+		// headers for the column
+		Label labelVor = new Label(0, 0, "Mappe");
 		Label labelPag = new Label(1, 0, "Pages");
 		sheet.addCell(labelVor);
 		sheet.addCell(labelPag);
 		
-		for (int i = 0; i < sysSigVorUmfList.size(); i++) {
-			if(!sysSigVorUmfList.get(i).vor.isEmpty() && !sysSigVorUmfList.get(i).umf.isEmpty()) {
-				String vor = "207_" + sysSigVorUmfList.get(i).vor.replace("/", "_").replace(" ", "");
-				String[] umf = sysSigVorUmfList.get(i).umf.split(" ");
-				int pages = 0;
-				if(umf.length > 0) {
-					try {
-						pages = Integer.parseInt(umf[0]);
-					} catch (NumberFormatException nfe) {
-						nfe.printStackTrace();
-					}
+		int counter = 1;
+		for (int i = 0; i < sysSigVorUmfPagList.size(); i++) {
+			if(!sysSigVorUmfPagList.get(i).vor.isEmpty() && !sysSigVorUmfPagList.get(i).pag.isEmpty()) {
+				try {
+					String vor = "207_" + sysSigVorUmfPagList.get(i).vor.replace("/", "_").replace(" ", "");
+					int pages = Integer.parseInt(sysSigVorUmfPagList.get(i).pag.trim());
+					sheet.addCell(new Label(0, counter, vor));
+					sheet.addCell(new Number(1, counter, pages));
+					++counter;
+				} catch (NumberFormatException nfe) {
+					nfe.printStackTrace();
 				}
 				
-				sheet.addCell(new Label(0, i+1, vor));
-				sheet.addCell(new Number(1, i+1, pages));
 			}
 		}
 		

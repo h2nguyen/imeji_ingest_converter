@@ -1,18 +1,12 @@
 package module.zusearchive.misc;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -97,6 +91,80 @@ public class ZuseXmlItemReader {
 							oul.add(value);
 							//System.out.println("Sys: " + value);
 						}
+
+					}
+				}
+			} else {
+				System.exit(1);
+			}
+		}
+
+		return oul;
+	}
+	
+	public ArrayList<String> getAllUniqueSys2() {
+
+		ArrayList<String> oul = new ArrayList<String>();
+		
+		if (this.xmlFile.exists()) {
+			Document doc = null;
+			Element docEle = null;
+			try {
+				doc = this.db.parse(this.xmlFile);
+				docEle = doc.getDocumentElement();
+			} catch (SAXException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+
+			// Print root element of the document
+			System.out.println("Root element of the document: "
+					+ docEle.getNodeName());
+
+			NodeList itemList = docEle.getElementsByTagName("oUnterlagen");
+
+			System.out.println("Total item: " + itemList.getLength());
+
+			
+			
+			if (itemList != null && itemList.getLength() > 0) {
+				for (int i = 0; i < itemList.getLength(); i++) {
+
+					Node node = itemList.item(i);					
+
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+						// System.out
+						// .println("=====================");
+
+						Element e = (Element) node;
+						NodeList nodeList = e.getElementsByTagName("Sys2");
+
+						if(nodeList.item(0).getChildNodes().getLength() > 0) {
+							String value = nodeList.item(0).getChildNodes().item(0)
+									.getNodeValue();
+
+							boolean canAdd = true;
+
+							for (int j = 0; j < oul.size(); j++) {
+								if (value.equalsIgnoreCase(oul.get(j))) {
+									canAdd = false;
+									break;
+								}
+							}
+
+							if (canAdd) {
+								oul.add(value);
+								//System.out.println("Sys: " + value);
+							}
+						}
+							
+						
+						
 
 					}
 				}
@@ -236,6 +304,158 @@ public class ZuseXmlItemReader {
 		
 	}
 	
+	public ArrayList<SysSigVorUmfPag> getSysAndExtItsIdsAndPages() {
+
+		if (this.xmlFile.exists()) {
+			
+			ArrayList<SysSigVorUmfPag> sysSigVorUmfPags = new ArrayList<ZuseXmlItemReader.SysSigVorUmfPag>();
+			
+			Document doc = null;
+			Element docEle = null;
+			try {
+				doc = this.db.parse(this.xmlFile);
+				docEle = doc.getDocumentElement();
+			} catch (SAXException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			NodeList itemList = docEle.getElementsByTagName("oUnterlagen");
+
+			NodeList nodeListSys = null;
+			NodeList nodeListSig = null;
+			NodeList nodeListVor = null;
+			NodeList nodeListUmf = null;
+			NodeList nodeListPag = null;
+
+			if (itemList != null && itemList.getLength() > 0) {
+				for (int i = 0; i < itemList.getLength(); i++) {
+
+					Node node = itemList.item(i);
+
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element e = (Element) node;
+						
+						
+						nodeListSys = e.getElementsByTagName("Sys");
+						String sys = "";
+						if(nodeListSys.item(0).getChildNodes().getLength() > 0)
+							sys = nodeListSys.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListSig = e.getElementsByTagName("Signatur");
+						String sig = "";
+						if(nodeListSig.item(0).getChildNodes().getLength() > 0)
+							sig = nodeListSig.item(0).getChildNodes().item(0).getNodeValue();						
+						
+						nodeListVor = e.getElementsByTagName("Vorl__Nr_");
+						String vor = "";
+						if(nodeListVor.item(0).getChildNodes().getLength() > 0)
+							vor = nodeListVor.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListUmf = e.getElementsByTagName("Umfang");
+						String umf = "";
+						if(nodeListUmf.item(0).getChildNodes().getLength() > 0)
+							umf = nodeListUmf.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListPag = e.getElementsByTagName("Seiten_-Digitalisate-");
+						String pag = "";
+						if(nodeListPag.item(0).getChildNodes().getLength() > 0)
+							pag = nodeListPag.item(0).getChildNodes().item(0).getNodeValue();
+							
+						sysSigVorUmfPags.add(new SysSigVorUmfPag(sys, sig, vor, umf, pag));
+					}
+				}
+			}
+			
+			return sysSigVorUmfPags;
+		}
+		return null;
+		
+	}
+	
+	public ArrayList<SysSy2SigVorUmfPag> getSysSy2AndExtItsIdsAndPages() {
+
+		if (this.xmlFile.exists()) {
+			
+			ArrayList<SysSy2SigVorUmfPag> sysSy2SigVorUmfPags = new ArrayList<ZuseXmlItemReader.SysSy2SigVorUmfPag>();
+			
+			Document doc = null;
+			Element docEle = null;
+			try {
+				doc = this.db.parse(this.xmlFile);
+				docEle = doc.getDocumentElement();
+			} catch (SAXException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			NodeList itemList = docEle.getElementsByTagName("oUnterlagen");
+
+			NodeList nodeListSys = null;
+			NodeList nodeListSy2 = null;
+			NodeList nodeListSig = null;
+			NodeList nodeListVor = null;
+			NodeList nodeListUmf = null;
+			NodeList nodeListPag = null;
+
+			if (itemList != null && itemList.getLength() > 0) {
+				for (int i = 0; i < itemList.getLength(); i++) {
+
+					Node node = itemList.item(i);
+
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element e = (Element) node;
+						
+						
+						nodeListSys = e.getElementsByTagName("Sys");
+						String sys = "";
+						if(nodeListSys.item(0).getChildNodes().getLength() > 0)
+							sys = nodeListSys.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListSy2 = e.getElementsByTagName("Sys2");
+						String sy2 = "";
+						if(nodeListSy2.item(0).getChildNodes().getLength() > 0)
+							sys = nodeListSy2.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListSig = e.getElementsByTagName("Signatur");
+						String sig = "";
+						if(nodeListSig.item(0).getChildNodes().getLength() > 0)
+							sig = nodeListSig.item(0).getChildNodes().item(0).getNodeValue();						
+						
+						nodeListVor = e.getElementsByTagName("Vorl__Nr_");
+						String vor = "";
+						if(nodeListVor.item(0).getChildNodes().getLength() > 0)
+							vor = nodeListVor.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListUmf = e.getElementsByTagName("Umfang");
+						String umf = "";
+						if(nodeListUmf.item(0).getChildNodes().getLength() > 0)
+							umf = nodeListUmf.item(0).getChildNodes().item(0).getNodeValue();
+						
+						nodeListPag = e.getElementsByTagName("Seiten_-Digitalisate-");
+						String pag = "";
+						if(nodeListPag.item(0).getChildNodes().getLength() > 0)
+							pag = nodeListPag.item(0).getChildNodes().item(0).getNodeValue();
+							
+						sysSy2SigVorUmfPags.add(new SysSy2SigVorUmfPag(sys, sig, vor, umf, pag, sy2));
+					}
+				}
+			}
+			
+			return sysSy2SigVorUmfPags;
+		}
+		return null;
+		
+	}
+	
 	public class SysSigVor {
 		public String sys;
 		public String sig;
@@ -256,5 +476,24 @@ public class ZuseXmlItemReader {
 			this.umf = umf;
 		}
 	}
+	
+	public class SysSigVorUmfPag extends SysSigVorUmf {
+		public String pag;
+		
+		public SysSigVorUmfPag(String sys, String sig, String vor, String umf, String pag) {
+			super(sys,sig,vor, umf);
+			this.pag = pag;
+		}
+	}
+	
+	public class SysSy2SigVorUmfPag extends SysSigVorUmfPag {
+		public String sy2;
+		
+		public SysSy2SigVorUmfPag(String sys, String sig, String vor, String umf, String pag, String sy2) {
+			super(sys,sig,vor, umf, pag);
+			this.sy2 = sy2;
+		}
+	}
+	
 	
 }
