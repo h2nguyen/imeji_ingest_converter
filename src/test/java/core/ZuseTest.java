@@ -9,12 +9,12 @@ import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBException;
 
-import module.zusearchive.converter.ZuseConverter;
+import module.zusearchive.converter.ZuseXMLConverter;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
 import module.zusearchive.misc.ZuseNormalizer;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
-import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
+import module.zusearchive.vo.generated.formats.enums.ZuseXMLMDEnumType;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
@@ -79,13 +79,13 @@ public class ZuseTest {
 		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
 				.unmarshal(filenameUnmarshal);
 
-		ZuseConverter zmdpconv = new ZuseConverter();
+		ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
 
 		OUnterlagen oul = zo.getoUnterlagen().get(0);
 
 		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
 				"profile name offline", "profile description offline",
-				ZuseMDEnumType.getEnumList());
+				ZuseXMLMDEnumType.getEnumList());
 		// JaxbUtil.toString(mdp);
 
 		String mdpFile = "src/test/resources/_mdp_offline_with_statements.xml";
@@ -103,15 +103,15 @@ public class ZuseTest {
 		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
 				.unmarshal(filenameUnmarshal);
 
-		ZuseConverter zmdpconv = new ZuseConverter();
+		ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
 
 		OUnterlagen oul = zo.getoUnterlagen().get(0);
 
 		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
 				"profile name offline", "profile description offline",
-				ZuseMDEnumType.getEnumList());		
+				ZuseXMLMDEnumType.getEnumList());		
 		
-		Items items = zmdpconv.getItems(zo.getoUnterlagen(), ZuseMDEnumType.getEnumList(), mdp);
+		Items items = zmdpconv.getItems(zo.getoUnterlagen(), ZuseXMLMDEnumType.getEnumList(), mdp);
 		
 //		JaxbUtil.toString(mdp);
 //		JaxbUtil.toString(items);
@@ -201,14 +201,14 @@ public class ZuseTest {
 		// get specific metadata profile (here in our case the zuse object) java object from normalized file
 		String filenameEntriesNormalizedOffline = "src/test/resources/"+folder+"/raw_entries_normalized.xml";
 		OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline);
-		ZuseConverter zmdpconv = new ZuseConverter();
+		ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
 		List<OUnterlagen> ouls = oz.getoUnterlagen();
 		// generate an imeji meta data profile from the specific object
 		MetadataProfile raw_gen_mdp = zmdpconv.getMdProfile(
 				ouls.get(0),
 				"Generated metadata profile",
 				"The metadata profile is generated from the Zuse object",
-				ZuseMDEnumType.getEnumList());
+				ZuseXMLMDEnumType.getEnumList());
 		String filenameMdpOffline = "src/test/resources/"+folder+"/mdp_offline.xml";
 		FileOutputStream fos_raw_gen_mdp = new FileOutputStream(new File(filenameMdpOffline));
 		JaxbGenericObject.writeToOutputStream(raw_gen_mdp, fos_raw_gen_mdp);
@@ -230,9 +230,9 @@ public class ZuseTest {
 		MetadataProfile merged_mdp = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).unmarshal(filenameMdpMerged2);
 		String filenameEntriesNormalizedOffline2 = "src/test/resources/"+folder+"/raw_entries_normalized.xml";
 		OZuse oz2 = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline2);
-		ZuseConverter zmdpconv2 = new ZuseConverter();
+		ZuseXMLConverter zmdpconv2 = new ZuseXMLConverter();
 		List<OUnterlagen> ouls2 = oz2.getoUnterlagen();
-		Items items = zmdpconv2.getItems(ouls2, ZuseMDEnumType.getEnumList(), merged_mdp);
+		Items items = zmdpconv2.getItems(ouls2, ZuseXMLMDEnumType.getEnumList(), merged_mdp);
 		String filenameItemsOffline = "src/test/resources/"+folder+"/items_offline.xml";
 		FileOutputStream fos_items = new FileOutputStream(new File(filenameItemsOffline));
 		JaxbGenericObject.writeToOutputStream(items, fos_items);

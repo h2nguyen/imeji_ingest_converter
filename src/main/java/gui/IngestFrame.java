@@ -46,12 +46,12 @@ import core.task.enums.Update;
 import core.vo.imeji.Items;
 import core.vo.imeji.MetadataProfile;
 
-import module.zusearchive.converter.ZuseConverter;
+import module.zusearchive.converter.ZuseXMLConverter;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
 import module.zusearchive.misc.ZuseNormalizer;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.OZuse;
-import module.zusearchive.vo.generated.formats.ZuseNormFormat.ZuseMDEnumType;
+import module.zusearchive.vo.generated.formats.enums.ZuseXMLMDEnumType;
 
 public class IngestFrame extends JFrame implements ActionListener, DropTargetListener {
 
@@ -671,7 +671,7 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				
 				String filenameEntriesNormalizedOffline = this.txtNormalizedData.getText();
 				OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline);
-				ZuseConverter zmdpconv = new ZuseConverter();
+				ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
 				List<OUnterlagen> ouls = oz.getoUnterlagen();
 				// generate an imeji meta data profile from the specific object
 				this.notifyMessage("Generating metadata profile file...");
@@ -679,8 +679,8 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 						ouls.get(0),
 						"Generated metadata profile",
 						"The metadata profile is generated from the Zuse object",
-						ZuseMDEnumType.getEnumList());
-				String filenameMdpOffline = ZuseConverter.getOfflineMDFilename(filenameEntriesNormalizedOffline);
+						ZuseXMLMDEnumType.getEnumList());
+				String filenameMdpOffline = ZuseXMLConverter.getOfflineMDFilename(filenameEntriesNormalizedOffline);
 				FileOutputStream fos_raw_gen_mdp = new FileOutputStream(new File(filenameMdpOffline));
 				JaxbGenericObject.writeToOutputStream(raw_gen_mdp, fos_raw_gen_mdp);
 				this.notifyMessage("Done generating metadata profile file!");
@@ -791,10 +791,10 @@ public class IngestFrame extends JFrame implements ActionListener, DropTargetLis
 				String filenameEntriesNormalizedOffline = this.txtNormalizedData.getText();
 				this.notifyMessage("Generating items...");
 				OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline);
-				ZuseConverter zmdpconv = new ZuseConverter();
+				ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
 				List<OUnterlagen> ouls = oz.getoUnterlagen();
-				Items items = zmdpconv.getItems(ouls, ZuseMDEnumType.getEnumList(), merged_mdp);
-				String filenameItemsOffline = ZuseConverter.getOfflineItemsFilename(filenameEntriesNormalizedOffline);
+				Items items = zmdpconv.getItems(ouls, ZuseXMLMDEnumType.getEnumList(), merged_mdp);
+				String filenameItemsOffline = ZuseXMLConverter.getOfflineItemsFilename(filenameEntriesNormalizedOffline);
 				FileOutputStream fos_items = new FileOutputStream(new File(filenameItemsOffline));
 				JaxbGenericObject.writeToOutputStream(items, fos_items);
 				this.notifyMessage("Done generating items!");
