@@ -3,102 +3,121 @@ package module.zusearchive.vo.generated;
 public class ExcelEntry {
 	private String type;
 	private boolean typeEnabled = false;
+	private boolean typeMultiEnabled = false;
 	
 	private String zia_id;
 	private boolean zia_idEnabled = false;
+	private boolean zia_idMultiEnabled = false;
 	
 	private String gmd_nr;
 	private boolean gmd_nrEnabled = false;
+	private boolean gmd_nrMultiEnabled = false;
 	
 	private String author;
 	private boolean authorEnabled = false;
+	private boolean authorMultiEnabled = false;
 	
 	private String year;
 	private boolean yearEnabled = false;
+	private boolean yearMultiEnabled = false;
 	
 	private String title;
 	private boolean titleEnabled = false;
+	private boolean titleMultiEnabled = false;
 	
 	private String file;
 	private boolean fileEnabled = false;
+	private boolean fileMultiEnabled = false;
 	
 	private String chronological;
 	private boolean chronologicalEnabled = false;
+	private boolean chronologicalMultiEnabled = false;
 	
 	private String thematic;
 	private boolean thematicEnabled = false;
+	private boolean thematicMultiEnabled = false;
 	
 	private String language;
 	private boolean languageEnabled = false;
+	private boolean languageMultiEnabled = false;
 	
 	private String description;
 	private boolean descriptionEnabled = false;
-	
-	private String directory;
-	private boolean directoryEnabled = false;
+	private boolean descriptionMultiEnabled = false;
 	
 	private String url;
 	private boolean urlEnabled = false;
+	private boolean urlMultiEnabled = false;
 	
 	private String publishedBy;
 	private boolean publishedByEnabled = false;
+	private boolean publishedByMultiEnabled = false;
 
 	public ExcelEntry(
-			String type, boolean typeEnabled,
-			String zia_id, boolean zia_idEnabled,
-			String gmd_nr, boolean gmd_nrEnabled,
-			String author, boolean authorEnabled,
-			String year, boolean yearEnabled,
-			String title, boolean titleEnabled,
-			String file, boolean fileEnabled,
-			String chronological, boolean chronologicalEnabled,
-			String thematic, boolean thematicEnabled,
-			String language, boolean languageEnabled, 
-			String description, boolean descriptionEnabled, 
-			String url, boolean urlEnabled,
-			String directory, boolean directoryEnabled,
-			String publishedBy, boolean publishedByEnabled) {
+			String type, boolean typeEnabled, boolean typeMultiEnabled,
+			String zia_id, boolean zia_idEnabled, boolean zia_idMultiEnabled,
+			String gmd_nr, boolean gmd_nrEnabled, boolean gmd_nrMultiEnabled,
+			String author, boolean authorEnabled, boolean authorMultiEnabled,
+			String year, boolean yearEnabled, boolean yearMultiEnabled,
+			String title, boolean titleEnabled, boolean titleMultiEnabled,
+			String file, boolean fileEnabled, boolean fileMultiEnabled,
+			String chronological, boolean chronologicalEnabled, boolean chronologicalMultiEnabled,
+			String thematic, boolean thematicEnabled, boolean thematicMultiEnabled,
+			String language, boolean languageEnabled, boolean languageMultiEnabled,
+			String description, boolean descriptionEnabled, boolean descriptionMultiEnabled, 
+			String url, boolean urlEnabled, boolean urlMultiEnabled,
+			String publishedBy, boolean publishedByEnabled, boolean publishedByMultiEnabled) {
 		this.type = type;
 		this.typeEnabled = typeEnabled;
+		this.typeMultiEnabled = typeMultiEnabled;
 		
 		this.zia_id = zia_id;
 		this.zia_idEnabled = zia_idEnabled;
+		this.zia_idMultiEnabled = zia_idMultiEnabled;
 		
 		this.setGmd_nr(gmd_nr);
 		this.gmd_nrEnabled = gmd_nrEnabled;
+		this.gmd_nrMultiEnabled = gmd_nrMultiEnabled;
 		
 		this.author = author;
 		this.authorEnabled = authorEnabled;
+		this.authorMultiEnabled = authorMultiEnabled;
 		
 		this.year = year;
 		this.yearEnabled = yearEnabled;
+		this.yearMultiEnabled = yearMultiEnabled;
 		
 		this.title = title;
 		this.titleEnabled = titleEnabled;
+		this.titleMultiEnabled = titleMultiEnabled;
 		
 		this.file = file;
 		this.fileEnabled = fileEnabled;
+		this.fileMultiEnabled = fileMultiEnabled;
 		
 		this.setChronological(chronological);
 		this.chronologicalEnabled = chronologicalEnabled;
+		this.chronologicalMultiEnabled = chronologicalMultiEnabled;
 		
 		this.setThematic(thematic);
 		this.thematicEnabled = thematicEnabled;
+		this.thematicMultiEnabled = thematicMultiEnabled;
 		
 		this.setLanguage(language);
 		this.languageEnabled = languageEnabled;
-		
-		this.directory = directory;
-		this.directoryEnabled = directoryEnabled;
+		this.languageMultiEnabled = languageMultiEnabled;
 		
 		this.url = url;
 		this.urlEnabled = urlEnabled;
+		this.urlMultiEnabled = urlMultiEnabled;
 		
 		this.setDescription(description);
 		this.descriptionEnabled = descriptionEnabled;
+		this.descriptionMultiEnabled = descriptionMultiEnabled;
 		
 		this.setPublishedBy(publishedBy);
 		this.publishedByEnabled = publishedByEnabled;
+		this.publishedByMultiEnabled = publishedByMultiEnabled;
 	}
 
 	public String getType() {
@@ -140,15 +159,7 @@ public class ExcelEntry {
 	public void setYear(String year) {
 		this.year = year;
 	}
-
-	public String getDirectory() {
-		return directory;
-	}
-
-	public void setDirectory(String directory) {
-		this.directory = directory;
-	}
-
+	
 	public String getFile() {
 		return file;
 	}
@@ -368,20 +379,6 @@ public class ExcelEntry {
 	}
 
 	/**
-	 * @return the directoryEnabled
-	 */
-	public boolean isDirectoryEnabled() {
-		return directoryEnabled;
-	}
-
-	/**
-	 * @param directoryEnabled the directoryEnabled to set
-	 */
-	public void setDirectoryEnabled(boolean directoryEnabled) {
-		this.directoryEnabled = directoryEnabled;
-	}
-
-	/**
 	 * @return the urlEnabled
 	 */
 	public boolean isUrlEnabled() {
@@ -407,6 +404,188 @@ public class ExcelEntry {
 	 */
 	public void setPublishedByEnabled(boolean publishedByEnabled) {
 		this.publishedByEnabled = publishedByEnabled;
+	}
+
+	/**
+	 * @return the typeMultiEnabled
+	 */
+	public boolean isTypeMultiEnabled() {
+		return typeMultiEnabled;
+	}
+
+	/**
+	 * @param typeMultiEnabled the typeMultiEnabled to set
+	 */
+	public void setTypeMultiEnabled(boolean typeMultiEnabled) {
+		this.typeMultiEnabled = typeMultiEnabled;
+	}
+
+	/**
+	 * @return the zia_idMultiEnabled
+	 */
+	public boolean isZia_idMultiEnabled() {
+		return zia_idMultiEnabled;
+	}
+
+	/**
+	 * @param zia_idMultiEnabled the zia_idMultiEnabled to set
+	 */
+	public void setZia_idMultiEnabled(boolean zia_idMultiEnabled) {
+		this.zia_idMultiEnabled = zia_idMultiEnabled;
+	}
+
+	/**
+	 * @return the gmd_nrMultiEnabled
+	 */
+	public boolean isGmd_nrMultiEnabled() {
+		return gmd_nrMultiEnabled;
+	}
+
+	/**
+	 * @param gmd_nrMultiEnabled the gmd_nrMultiEnabled to set
+	 */
+	public void setGmd_nrMultiEnabled(boolean gmd_nrMultiEnabled) {
+		this.gmd_nrMultiEnabled = gmd_nrMultiEnabled;
+	}
+
+	/**
+	 * @return the authorMultiEnabled
+	 */
+	public boolean isAuthorMultiEnabled() {
+		return authorMultiEnabled;
+	}
+
+	/**
+	 * @param authorMultiEnabled the authorMultiEnabled to set
+	 */
+	public void setAuthorMultiEnabled(boolean authorMultiEnabled) {
+		this.authorMultiEnabled = authorMultiEnabled;
+	}
+
+	/**
+	 * @return the yearMultiEnabled
+	 */
+	public boolean isYearMultiEnabled() {
+		return yearMultiEnabled;
+	}
+
+	/**
+	 * @param yearMultiEnabled the yearMultiEnabled to set
+	 */
+	public void setYearMultiEnabled(boolean yearMultiEnabled) {
+		this.yearMultiEnabled = yearMultiEnabled;
+	}
+
+	/**
+	 * @return the titleMultiEnabled
+	 */
+	public boolean isTitleMultiEnabled() {
+		return titleMultiEnabled;
+	}
+
+	/**
+	 * @param titleMultiEnabled the titleMultiEnabled to set
+	 */
+	public void setTitleMultiEnabled(boolean titleMultiEnabled) {
+		this.titleMultiEnabled = titleMultiEnabled;
+	}
+
+	/**
+	 * @return the fileMultiEnabled
+	 */
+	public boolean isFileMultiEnabled() {
+		return fileMultiEnabled;
+	}
+
+	/**
+	 * @param fileMultiEnabled the fileMultiEnabled to set
+	 */
+	public void setFileMultiEnabled(boolean fileMultiEnabled) {
+		this.fileMultiEnabled = fileMultiEnabled;
+	}
+
+	/**
+	 * @return the chronologicalMultiEnabled
+	 */
+	public boolean isChronologicalMultiEnabled() {
+		return chronologicalMultiEnabled;
+	}
+
+	/**
+	 * @param chronologicalMultiEnabled the chronologicalMultiEnabled to set
+	 */
+	public void setChronologicalMultiEnabled(boolean chronologicalMultiEnabled) {
+		this.chronologicalMultiEnabled = chronologicalMultiEnabled;
+	}
+
+	/**
+	 * @return the thematicMultiEnabled
+	 */
+	public boolean isThematicMultiEnabled() {
+		return thematicMultiEnabled;
+	}
+
+	/**
+	 * @param thematicMultiEnabled the thematicMultiEnabled to set
+	 */
+	public void setThematicMultiEnabled(boolean thematicMultiEnabled) {
+		this.thematicMultiEnabled = thematicMultiEnabled;
+	}
+
+	/**
+	 * @return the languageMultiEnabled
+	 */
+	public boolean isLanguageMultiEnabled() {
+		return languageMultiEnabled;
+	}
+
+	/**
+	 * @param languageMultiEnabled the languageMultiEnabled to set
+	 */
+	public void setLanguageMultiEnabled(boolean languageMultiEnabled) {
+		this.languageMultiEnabled = languageMultiEnabled;
+	}
+
+	/**
+	 * @return the descriptionMultiEnabled
+	 */
+	public boolean isDescriptionMultiEnabled() {
+		return descriptionMultiEnabled;
+	}
+
+	/**
+	 * @param descriptionMultiEnabled the descriptionMultiEnabled to set
+	 */
+	public void setDescriptionMultiEnabled(boolean descriptionMultiEnabled) {
+		this.descriptionMultiEnabled = descriptionMultiEnabled;
+	}
+
+	/**
+	 * @return the urlMultiEnabled
+	 */
+	public boolean isUrlMultiEnabled() {
+		return urlMultiEnabled;
+	}
+
+	/**
+	 * @param urlMultiEnabled the urlMultiEnabled to set
+	 */
+	public void setUrlMultiEnabled(boolean urlMultiEnabled) {
+		this.urlMultiEnabled = urlMultiEnabled;
+	}
+
+	/**
+	 * @return the publishedByMultiEnabled
+	 */
+	public boolean isPublishedByMultiEnabled() {
+		return publishedByMultiEnabled;
+	}
+
+	/**
+	 * @param publishedByMultiEnabled the publishedByMultiEnabled to set
+	 */
+	public void setPublishedByMultiEnabled(boolean publishedByMultiEnabled) {
+		this.publishedByMultiEnabled = publishedByMultiEnabled;
 	}
 
 }

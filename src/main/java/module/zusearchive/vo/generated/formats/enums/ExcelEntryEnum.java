@@ -15,8 +15,7 @@ public enum ExcelEntryEnum {
 	LANGUAGE("Language", 9),
 	DESCRIPTION("Description", 10),
 	URL("Url", 11),
-	DIRECTORY("directory", 12),
-	PUBLISHED_BY("Published by", 13);
+	PUBLISHED_BY("Published by", 12);
 	
 
 	private String type;
