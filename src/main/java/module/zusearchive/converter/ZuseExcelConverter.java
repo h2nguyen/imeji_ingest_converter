@@ -201,7 +201,6 @@ public class ZuseExcelConverter {
 		
 		Collection<Metadata> mdl = new ArrayList<Metadata>();
 
-		int positionCounter = 0;
 		Metadata md = null;
 		String cachedMethod = "";
 		boolean canBeAdded = false;
@@ -215,23 +214,44 @@ public class ZuseExcelConverter {
 				continue;
 			}
 			
-			for (Iterator<Statement> it = mdp.getStatements().iterator(); it.hasNext();) {
-				
-				sts = it.next();
+			
 				
 				// starts to pair the issue
 				if (propertyDescriptor.getReadMethod().getReturnType() == boolean.class) {
 					if(propertyDescriptor.getName().contains(cachedMethod)) {
 						if(propertyDescriptor.getName().contains("Multi")) {
 							if(canBeAdded) {
-								md.setPos(positionCounter++);
-								if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
-									//TODO: add mulitple issue
-//									md.setMaxOccurs("unbounded");
-								}
+								
+								
+								
+								for (Iterator<Statement> it = mdp.getStatements().iterator(); it.hasNext();) {
 									
-								mdl.add(md);
-								canBeAdded = false;
+									sts = it.next();
+									boolean leave = false;
+									for (Iterator<LocalizedString> itLab = sts.getLabels().iterator(); itLab.hasNext();) {
+										String name = propertyDescriptor.getName();
+										if(propertyDescriptor.getName().contains(itLab.next().getValue().toLowerCase().replace(" ", "_"))) {
+											md.setStatement(sts.getId());
+											md.setPos(sts.getPos());
+											
+											if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
+												//TODO: add mulitple issue
+//												md.setMaxOccurs("unbounded");
+											}
+												
+											mdl.add(md);
+											canBeAdded = false;
+											leave = true;
+											break;
+										}
+									}
+									
+									if(leave) {
+										break;
+									}
+									
+								}
+								
 							}
 								
 						} else if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
@@ -243,11 +263,9 @@ public class ZuseExcelConverter {
 				
 				Text text = new Text();
 				text.setText((String) propertyDescriptor.getReadMethod().invoke(entry));
-				text.setStatement(sts.getId());
-				text.setPos(sts.getPos());
 				md = text;
 				cachedMethod = propertyDescriptor.getName();
-			}
+			
 
 			
 		}

@@ -9,9 +9,9 @@ public class ExcelEntry {
 	private boolean zia_idEnabled = false;
 	private boolean zia_idMultiEnabled = false;
 	
-	private String gmd_nr;
-	private boolean gmd_nrEnabled = false;
-	private boolean gmd_nrMultiEnabled = false;
+	private String gmd_number;
+	private boolean gmd_numberEnabled = false;
+	private boolean gmd_numberMultiEnabled = false;
 	
 	private String author;
 	private boolean authorEnabled = false;
@@ -56,7 +56,7 @@ public class ExcelEntry {
 	public ExcelEntry(
 			String type, boolean typeEnabled, boolean typeMultiEnabled,
 			String zia_id, boolean zia_idEnabled, boolean zia_idMultiEnabled,
-			String gmd_nr, boolean gmd_nrEnabled, boolean gmd_nrMultiEnabled,
+			String gmd_number, boolean gmd_numberEnabled, boolean gmd_numberMultiEnabled,
 			String author, boolean authorEnabled, boolean authorMultiEnabled,
 			String year, boolean yearEnabled, boolean yearMultiEnabled,
 			String title, boolean titleEnabled, boolean titleMultiEnabled,
@@ -75,9 +75,9 @@ public class ExcelEntry {
 		this.zia_idEnabled = zia_idEnabled;
 		this.zia_idMultiEnabled = zia_idMultiEnabled;
 		
-		this.setGmd_nr(gmd_nr);
-		this.gmd_nrEnabled = gmd_nrEnabled;
-		this.gmd_nrMultiEnabled = gmd_nrMultiEnabled;
+		this.gmd_number = gmd_number;
+		this.gmd_numberEnabled = gmd_numberEnabled;
+		this.gmd_numberMultiEnabled = gmd_numberMultiEnabled;
 		
 		this.author = author;
 		this.authorEnabled = authorEnabled;
@@ -184,14 +184,6 @@ public class ExcelEntry {
 		this.description = description;
 	}
 
-	public String getGmd_nr() {
-		return gmd_nr;
-	}
-
-	public void setGmd_nr(String gmd_nr) {
-		this.gmd_nr = gmd_nr;
-	}
-
 	public String getChronological() {
 		return chronological;
 	}
@@ -250,20 +242,6 @@ public class ExcelEntry {
 	 */
 	public void setZia_idEnabled(boolean zia_idEnabled) {
 		this.zia_idEnabled = zia_idEnabled;
-	}
-
-	/**
-	 * @return the gmd_nrEnabled
-	 */
-	public boolean isGmd_nrEnabled() {
-		return gmd_nrEnabled;
-	}
-
-	/**
-	 * @param gmd_nrEnabled the gmd_nrEnabled to set
-	 */
-	public void setGmd_nrEnabled(boolean gmd_nrEnabled) {
-		this.gmd_nrEnabled = gmd_nrEnabled;
 	}
 
 	/**
@@ -435,20 +413,6 @@ public class ExcelEntry {
 	}
 
 	/**
-	 * @return the gmd_nrMultiEnabled
-	 */
-	public boolean isGmd_nrMultiEnabled() {
-		return gmd_nrMultiEnabled;
-	}
-
-	/**
-	 * @param gmd_nrMultiEnabled the gmd_nrMultiEnabled to set
-	 */
-	public void setGmd_nrMultiEnabled(boolean gmd_nrMultiEnabled) {
-		this.gmd_nrMultiEnabled = gmd_nrMultiEnabled;
-	}
-
-	/**
 	 * @return the authorMultiEnabled
 	 */
 	public boolean isAuthorMultiEnabled() {
@@ -586,6 +550,48 @@ public class ExcelEntry {
 	 */
 	public void setPublishedByMultiEnabled(boolean publishedByMultiEnabled) {
 		this.publishedByMultiEnabled = publishedByMultiEnabled;
+	}
+
+	/**
+	 * @return the gmd_number
+	 */
+	public String getGmd_number() {
+		return gmd_number;
+	}
+
+	/**
+	 * @param gmd_number the gmd_number to set
+	 */
+	public void setGmd_number(String gmd_number) {
+		this.gmd_number = gmd_number;
+	}
+
+	/**
+	 * @return the gmd_numberEnabled
+	 */
+	public boolean isGmd_numberEnabled() {
+		return gmd_numberEnabled;
+	}
+
+	/**
+	 * @param gmd_numberEnabled the gmd_numberEnabled to set
+	 */
+	public void setGmd_numberEnabled(boolean gmd_numberEnabled) {
+		this.gmd_numberEnabled = gmd_numberEnabled;
+	}
+
+	/**
+	 * @return the gmd_numberMultiEnabled
+	 */
+	public boolean isGmd_numberMultiEnabled() {
+		return gmd_numberMultiEnabled;
+	}
+
+	/**
+	 * @param gmd_numberMultiEnabled the gmd_numberMultiEnabled to set
+	 */
+	public void setGmd_numberMultiEnabled(boolean gmd_numberMultiEnabled) {
+		this.gmd_numberMultiEnabled = gmd_numberMultiEnabled;
 	}
 
 }

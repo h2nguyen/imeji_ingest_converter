@@ -9,12 +9,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+import core.vo.imeji.Metadata;
 import core.j2j.annotations.j2jDataType;
 import core.j2j.annotations.j2jId;
-import core.j2j.annotations.j2jLiteral;
 import core.j2j.annotations.j2jResource;
-import core.vo.imeji.Metadata;
+import core.j2j.annotations.j2jLiteral;
 
 /**
  * {@link Metadata} for number values
@@ -28,6 +29,7 @@ import core.vo.imeji.Metadata;
 @j2jId(getMethod = "getId", setMethod = "setId")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "number", namespace = "http://imeji.org/terms/metadata")
+@XmlType(propOrder = { "number", "statement" })
 public class Number extends Metadata
 {
     @j2jLiteral("http://imeji.org/terms/number")
@@ -49,14 +51,14 @@ public class Number extends Metadata
         this.number = number;
     }
 
-    @XmlElement(name = "number", namespace="http://imeji.org/terms")
+    @XmlElement(name = "number", namespace = "http://imeji.org/terms")
     public double getNumber()
     {
         return number;
     }
 
     @Override
-    @XmlElement(name = "statement", namespace="http://imeji.org/terms")
+    @XmlElement(name = "statement", namespace = "http://imeji.org/terms")
     public URI getStatement()
     {
         return statement;
@@ -73,6 +75,7 @@ public class Number extends Metadata
     {
         if (metadata instanceof Number)
         {
+            setPos(metadata.getPos());
             this.number = ((Number)metadata).getNumber();
             this.statement = metadata.getStatement();
         }

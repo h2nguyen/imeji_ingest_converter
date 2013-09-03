@@ -26,7 +26,7 @@ import core.j2j.annotations.j2jResource;
 @j2jId(getMethod = "getId", setMethod = "setId")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "organizationalunit", namespace = "http://purl.org/escidoc/metadata/profiles/0.1")
-public class Organization
+public class Organization implements Cloneable
 {
     private URI id;
     @j2jLiteral("http://purl.org/dc/terms/title")
@@ -131,5 +131,18 @@ public class Organization
     public URI getId()
     {
         return id;
+    }
+
+    @Override
+    public Organization clone()
+    {
+        Organization clone = new Organization();
+        clone.city = this.city;
+        clone.country = this.country;
+        clone.description = this.description;
+        clone.identifier = this.identifier;
+        clone.name = this.name;
+        clone.pos = this.pos;
+        return clone;
     }
 }

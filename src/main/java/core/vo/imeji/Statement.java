@@ -37,7 +37,7 @@ public class Statement implements Comparable<Statement>
     private URI id = IdentifierUtil.newURI(Statement.class);
     @j2jResource("http://purl.org/dc/terms/type")
     private URI type = URI.create("http://imeji.org/terms/metadata#text");
-    //@j2jList("http://imeji.org/terms/label")
+    // @j2jList("http://imeji.org/terms/label")
     @j2jList("http://www.w3.org/2000/01/rdf-schema#label")
     private Collection<LocalizedString> labels = new ArrayList<LocalizedString>();
     @j2jResource("http://purl.org/dc/dcam/VocabularyEncodingScheme")
@@ -74,7 +74,7 @@ public class Statement implements Comparable<Statement>
         this.type = type;
     }
 
-    @XmlElement(name = "label", namespace = "http://www.w3.org/2000/01/rdf-schema#")    
+    @XmlElement(name = "label", namespace = "http://www.w3.org/2000/01/rdf-schema#")
     public Collection<LocalizedString> getLabels()
     {
         return labels;
@@ -96,7 +96,7 @@ public class Statement implements Comparable<Statement>
         this.vocabulary = vocabulary;
     }
 
-    @XmlElement(name = "literalConstraint", namespace = "http://imeji.org/terms")    
+    @XmlElement(name = "literalConstraint", namespace = "http://imeji.org/terms")
     public Collection<String> getLiteralConstraints()
     {
         return literalConstraints;
@@ -140,6 +140,7 @@ public class Statement implements Comparable<Statement>
         this.pos = pos;
     }
 
+    @Override
     public int compareTo(Statement o)
     {
         if (o.getPos() > this.pos)
@@ -150,7 +151,6 @@ public class Statement implements Comparable<Statement>
             return 1;
     }
 
-    
     @XmlElement(name = "isDescription", namespace = "http://imeji.org/terms")
     public boolean isDescription()
     {

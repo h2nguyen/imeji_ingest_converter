@@ -9,12 +9,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+import core.vo.imeji.Metadata;
 import core.j2j.annotations.j2jDataType;
 import core.j2j.annotations.j2jId;
-import core.j2j.annotations.j2jLiteral;
 import core.j2j.annotations.j2jResource;
-import core.vo.imeji.Metadata;
+import core.j2j.annotations.j2jLiteral;
 
 /**
  * {@link Metadata} for geolocation data
@@ -28,6 +29,7 @@ import core.vo.imeji.Metadata;
 @j2jId(getMethod = "getId", setMethod = "setId")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "geolocation", namespace = "http://imeji.org/terms/metadata")
+@XmlType(propOrder = { "latitude", "longitude", "name", "statement" })
 public class Geolocation extends Metadata
 {
     @j2jLiteral("http://imeji.org/terms/longitude")
@@ -47,7 +49,7 @@ public class Geolocation extends Metadata
     {
     }
 
-    @XmlElement(name = "longitude", namespace="http://imeji.org/terms")
+    @XmlElement(name = "longitude", namespace = "http://imeji.org/terms")
     public double getLongitude()
     {
         return longitude;
@@ -58,7 +60,7 @@ public class Geolocation extends Metadata
         this.longitude = longitude;
     }
 
-    @XmlElement(name = "latitude", namespace="http://imeji.org/terms")
+    @XmlElement(name = "latitude", namespace = "http://imeji.org/terms")
     public double getLatitude()
     {
         return latitude;
@@ -69,7 +71,7 @@ public class Geolocation extends Metadata
         this.latitude = latitude;
     }
 
-    @XmlElement(name = "title", namespace="http://purl.org/dc/terms")
+    @XmlElement(name = "title", namespace = "http://purl.org/dc/terms")
     public String getName()
     {
         return name;
@@ -81,7 +83,7 @@ public class Geolocation extends Metadata
     }
 
     @Override
-    @XmlElement(name = "statement", namespace="http://imeji.org/terms")
+    @XmlElement(name = "statement", namespace = "http://imeji.org/terms")
     public URI getStatement()
     {
         return statement;
@@ -98,6 +100,7 @@ public class Geolocation extends Metadata
     {
         if (metadata instanceof Geolocation)
         {
+            setPos(metadata.getPos());
             this.latitude = ((Geolocation)metadata).getLatitude();
             this.longitude = ((Geolocation)metadata).getLongitude();
             this.name = ((Geolocation)metadata).getName();

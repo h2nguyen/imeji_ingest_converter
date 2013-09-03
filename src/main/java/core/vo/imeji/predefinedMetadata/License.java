@@ -10,12 +10,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
+import core.vo.imeji.Metadata;
 import core.j2j.annotations.j2jDataType;
 import core.j2j.annotations.j2jId;
-import core.j2j.annotations.j2jLiteral;
 import core.j2j.annotations.j2jResource;
-import core.vo.imeji.Metadata;
+import core.j2j.annotations.j2jLiteral;
 
 /**
  * {@link Metadata} for license value
@@ -29,6 +30,7 @@ import core.vo.imeji.Metadata;
 @j2jId(getMethod = "getId", setMethod = "setId")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "license", namespace = "http://imeji.org/terms/metadata")
+@XmlType(propOrder = { "externalUri", "license", "statement" })
 public class License extends Metadata
 {
     private SimpleDateFormat date;
@@ -57,7 +59,7 @@ public class License extends Metadata
         return date.format(date);
     }
 
-    @XmlElement(name = "license", namespace="http://imeji.org/terms")
+    @XmlElement(name = "license", namespace = "http://imeji.org/terms")
     public String getLicense()
     {
         return license;
@@ -69,7 +71,7 @@ public class License extends Metadata
     }
 
     @Override
-    @XmlElement(name = "statement", namespace="http://imeji.org/terms")
+    @XmlElement(name = "statement", namespace = "http://imeji.org/terms")
     public URI getStatement()
     {
         return statement;
@@ -84,7 +86,7 @@ public class License extends Metadata
     /**
      * @return the externalUri
      */
-    @XmlElement(name = "identifier", namespace="http://purl.org/dc/elements/1.1")
+    @XmlElement(name = "identifier", namespace = "http://purl.org/dc/elements/1.1")
     public URI getExternalUri()
     {
         return externalUri;
@@ -103,6 +105,7 @@ public class License extends Metadata
     {
         if (metadata instanceof License)
         {
+            setPos(metadata.getPos());
             this.license = ((License)metadata).getLicense();
             this.statement = metadata.getStatement();
             this.externalUri = ((License)metadata).getExternalUri();

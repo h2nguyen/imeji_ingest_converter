@@ -13,12 +13,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.joda.time.chrono.AssembledChronology.Fields;
+
+import core.search.FulltextIndex;
 import core.j2j.annotations.j2jId;
 import core.j2j.annotations.j2jList;
 import core.j2j.annotations.j2jLiteral;
 import core.j2j.annotations.j2jModel;
 import core.j2j.annotations.j2jResource;
-import core.search.FulltextIndex;
 
 /**
  * imeji item. Can be an image, a video, a sound, etc.
@@ -32,14 +34,14 @@ import core.search.FulltextIndex;
 @j2jId(getMethod = "getId", setMethod = "setId")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "item", namespace = "http://imeji.org/terms")
-public class Item extends Properties implements FulltextIndex, Cloneable
+public class Item extends Properties implements FulltextIndex
 {
     public enum Visibility
-    {		
+    {
         PUBLIC, PRIVATE;
     }
 
-    @j2jResource("http://imeji.org/terms/collection")    
+    @j2jResource("http://imeji.org/terms/collection")
     private URI collection;
     @j2jList("http://imeji.org/terms/metadataSet")
     private List<MetadataSet> metadataSets = new ArrayList<MetadataSet>();
@@ -62,9 +64,7 @@ public class Item extends Properties implements FulltextIndex, Cloneable
     @j2jLiteral("http://imeji.org/terms/checksum")
     private String checksum;
 
-
-
-	public Item()
+    public Item()
     {
     }
 
@@ -73,7 +73,7 @@ public class Item extends Properties implements FulltextIndex, Cloneable
         copyInFields(im);
     }
 
-	@XmlElement(name = "escidocId", namespace = "http://imeji.org/terms")
+    @XmlElement(name = "escidocId", namespace = "http://imeji.org/terms")
     public String getEscidocId()
     {
         return escidocId;
@@ -122,12 +122,12 @@ public class Item extends Properties implements FulltextIndex, Cloneable
         this.visibility = URI.create("http://imeji.org/terms/visibility#" + visibility.name());
     }
 
-    @XmlElement(name = "visibility", namespace = "http://imeji.org/terms")    
+    @XmlElement(name = "visibility", namespace = "http://imeji.org/terms")
     public Visibility getVisibility()
     {
         return Visibility.valueOf(visibility.getFragment());
     }
-    
+
     public MetadataSet getMetadataSet()
     {
         if (metadataSets.size() > 0)
@@ -184,7 +184,7 @@ public class Item extends Properties implements FulltextIndex, Cloneable
                     Method methodTo = copyToClass.getMethod(setMethodName, methodFrom.getReturnType());
                     try
                     {
-                        methodTo.invoke(this, methodFrom.invoke(copyFrom, (Object) null));
+                        methodTo.invoke(this, methodFrom.invoke(copyFrom, (Object)null));
                     }
                     catch (Exception e)
                     {
@@ -227,11 +227,13 @@ public class Item extends Properties implements FulltextIndex, Cloneable
         this.storageId = storageId;
     }
 
+    @Override
     public void setFulltextIndex(String fulltext)
     {
         this.fulltext = fulltext;
     }
 
+    @Override
     @XmlElement(name = "fulltext", namespace = "http://imeji.org/terms")
     public String getFulltextIndex()
     {
@@ -241,6 +243,7 @@ public class Item extends Properties implements FulltextIndex, Cloneable
     /**
      * Set the value for the fulltext search (according to all {@link Metadata} values)
      */
+    @Override
     public void indexFulltext()
     {
         fulltext = filename;
@@ -270,7 +273,6 @@ public class Item extends Properties implements FulltextIndex, Cloneable
     {
         this.checksum = checksum;
     }
-
     
     public Item clone() throws CloneNotSupportedException {
 
@@ -299,5 +301,4 @@ public class Item extends Properties implements FulltextIndex, Cloneable
 
 		return clonedItem;
 	}
-    
 }

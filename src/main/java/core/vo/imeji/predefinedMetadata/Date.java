@@ -9,13 +9,14 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import core.helper.DateFormatter;
+import core.vo.imeji.Metadata;
 import core.j2j.annotations.j2jDataType;
 import core.j2j.annotations.j2jId;
-import core.j2j.annotations.j2jLiteral;
 import core.j2j.annotations.j2jResource;
-import core.vo.imeji.Metadata;
+import core.j2j.annotations.j2jLiteral;
 
 /**
  * The Date {@link Metadata}. Should be used for {@link Metadata} related to a date
@@ -29,6 +30,7 @@ import core.vo.imeji.Metadata;
 @j2jId(getMethod = "getId", setMethod = "setId")
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "date", namespace = "http://imeji.org/terms/metadata")
+@XmlType(propOrder = { "date", "time", "statement" })
 public class Date extends Metadata
 {
     @j2jLiteral("http://imeji.org/terms/date")
@@ -42,7 +44,7 @@ public class Date extends Metadata
     {
     }
 
-    @XmlElement(name = "date", namespace="http://imeji.org/terms")
+    @XmlElement(name = "date", namespace = "http://imeji.org/terms")
     public String getDate()
     {
         return date;
@@ -57,7 +59,7 @@ public class Date extends Metadata
         }
     }
 
-    @XmlElement(name = "time", namespace="http://imeji.org/terms")
+    @XmlElement(name = "time", namespace = "http://imeji.org/terms")
     public long getTime()
     {
         return time;
@@ -69,7 +71,7 @@ public class Date extends Metadata
     }
 
     @Override
-    @XmlElement(name = "statement", namespace="http://imeji.org/terms")
+    @XmlElement(name = "statement", namespace = "http://imeji.org/terms")
     public URI getStatement()
     {
         return statement;
@@ -86,6 +88,7 @@ public class Date extends Metadata
     {
         if (metadata instanceof Date)
         {
+            setPos(metadata.getPos());
             setDate(((Date)metadata).getDate());
             this.statement = metadata.getStatement();
         }
