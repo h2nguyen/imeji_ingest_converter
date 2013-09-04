@@ -37,7 +37,7 @@ public class ZuseExcelConverterTest {
 	public void testGetItemsFile() throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException, IOException, URISyntaxException, JAXBException, SAXException {
 		File excelFile = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
 		File xmlFile = new File("src/test/resources/excelmd/online_mpd.xml");
-		OutputStream os = new FileOutputStream("src/test/resources/excelmd/offline_items.xml");
+		OutputStream os = new FileOutputStream("src/test/resources/excelmd/items_offline.xml");
 
 		JaxbGenericObject<MetadataProfile> jzgo = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class);
 		MetadataProfile mdp = jzgo.unmarshal(xmlFile);

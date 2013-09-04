@@ -6,8 +6,6 @@ package core.jaxb;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
@@ -30,17 +28,8 @@ public class JaxbUtil
             SAXException
     {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        
-        Schema schema = null;
-        if(getFileURLInClasspath(xsdFilename) == null) {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileInResourcePath(xsdFilename));
-        } else {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileURLInClasspath(xsdFilename));
-        }
-        
-        
+        Schema schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
+                .newSchema(getFileURLInClasspath(xsdFilename));
         JAXBContext jaxbContext = JAXBContext.newInstance(clss.getPackage().getName());
         return unmarshal(jaxbContext, schema, xmlFilename, clss);
     }
@@ -56,16 +45,8 @@ public class JaxbUtil
     public static <T> T unmarshal(String xsdFilename, File xmlFile, Class<T> clss) throws JAXBException, SAXException
     {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        
-        Schema schema = null;
-        if(getFileURLInClasspath(xsdFilename) == null) {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileInResourcePath(xsdFilename));
-        } else {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileURLInClasspath(xsdFilename));
-        }
-        
+        Schema schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
+                .newSchema(getFileURLInClasspath(xsdFilename));
         JAXBContext jaxbContext = JAXBContext.newInstance(clss.getPackage().getName());
         return unmarshal(jaxbContext, schema, xmlFile, clss);
     }
@@ -82,16 +63,8 @@ public class JaxbUtil
             SAXException, FileNotFoundException
     {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        
-        Schema schema = null;
-        if(getFileURLInClasspath(xsdFilename) == null) {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileInResourcePath(xsdFilename));
-        } else {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileURLInClasspath(xsdFilename));
-        }
-        
+        Schema schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
+                .newSchema(getFileURLInClasspath(xsdFilename));
         JAXBContext jaxbContext = JAXBContext.newInstance(jaxbElement.getClass().getPackage().getName());
         marshal(jaxbContext, schema, xmlFilename, jaxbElement);
     }
@@ -110,16 +83,8 @@ public class JaxbUtil
             SAXException, FileNotFoundException
     {
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        
-        Schema schema = null;
-        if(getFileURLInClasspath(xsdFilename) == null) {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileInResourcePath(xsdFilename));
-        } else {
-        	schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
-                    .newSchema(getFileURLInClasspath(xsdFilename));
-        }
-        
+        Schema schema = (xsdFilename == null || xsdFilename.trim().length() == 0) ? null : schemaFactory
+                .newSchema(getFileURLInClasspath(xsdFilename));
         JAXBContext jaxbContext = JAXBContext.newInstance(jaxbElement.getClass().getPackage().getName());
         marshal(jaxbContext, schema, xmlFile, jaxbElement);
     }
@@ -155,48 +120,5 @@ public class JaxbUtil
     public static URL getFileURLInClasspath(String path)
     {
         return JaxbUtil.class.getClassLoader().getResource(path);
-    }
-    
-    public static File getFileInResourcePath(String path)
-    {
-     
-    	path = "resources/"+path;
-    	File file = null;
-    	InputStream inputStream = null;
-		OutputStream outputStream = null;
-		
-    	try {
-    		file = File.createTempFile("temp", null);
-    		inputStream = JaxbUtil.class.getClassLoader().getResourceAsStream(path);
-    		
-    		outputStream = new FileOutputStream(file);
-    		int read = 0;
-    		byte[] bytes = new byte[1024];
-     
-    		while ((read = inputStream.read(bytes)) != -1) {
-    			outputStream.write(bytes, 0, read);
-    		}
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	} finally {
-    		if (inputStream != null) {
-    			try {
-    				inputStream.close();
-    			} catch (IOException e) {
-    				e.printStackTrace();
-    			}
-    		}
-    		if (outputStream != null) {
-    			try {
-    				// outputStream.flush();
-    				outputStream.close();
-    			} catch (IOException e) {
-    				e.printStackTrace();
-    			}
-     
-    		}
-    	}
-    	
-        return file;
     }
 }

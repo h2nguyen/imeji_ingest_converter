@@ -503,19 +503,21 @@ public class ZuseXMLConverter extends
 	}
 
 	public static String getOfflineMDFilename(
-			String inputFilename) {
+			String inputFilename, String suffix) {
 		int i = inputFilename.lastIndexOf('.');
 		if(i < 0)
 			return inputFilename + "_offline_md";
-		return inputFilename.substring(0, i) + "_offline_md" + inputFilename.substring(i);
+		//return inputFilename.substring(0, i) + "_offline_md" + inputFilename.substring(i);
+		return inputFilename.substring(0, i) + "_offline_md" + "." + suffix;
 	}
 
 	public static String getOfflineItemsFilename(
-			String inputFilename) {
+			String inputFilename, String suffix) {
 		int i = inputFilename.lastIndexOf('.');
 		if(i < 0)
 			return inputFilename + "_offline_items";
-		return inputFilename.substring(0, i) + "_offline_items" + inputFilename.substring(i);
+		//return inputFilename.substring(0, i) + "_offline_items" + inputFilename.substring(i);
+		return inputFilename.substring(0, i) + "_offline_items" + "." + suffix;
 	}
 
 }

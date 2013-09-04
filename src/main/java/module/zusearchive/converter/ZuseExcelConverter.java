@@ -36,6 +36,10 @@ import core.vo.imeji.predefinedMetadata.Text;
  */
 public class ZuseExcelConverter {
 
+	public MetadataProfile getMdProfile(String filePath, String title, String description) throws BiffException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		return getMdProfile(new File(filePath), title, description);
+	}
+	
 	public MetadataProfile getMdProfile(File file, String title, String description) throws BiffException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
 		MetadataProfile mdp = null;
@@ -226,6 +230,44 @@ public class ZuseExcelConverter {
 								
 								
 								for (Iterator<Statement> it = mdp.getStatements().iterator(); it.hasNext();) {
+									// code for separating the multiple metadata set
+//									sts = it.next();
+//									boolean leave = false;
+//									for (Iterator<LocalizedString> itLab = sts.getLabels().iterator(); itLab.hasNext();) {
+//										if(propertyDescriptor.getName().contains(itLab.next().getValue().toLowerCase().replace(" ", "_"))) {
+//											md.setStatement(sts.getId());
+//											md.setPos(sts.getPos());
+//											
+//											ArrayList<Text> texts = new ArrayList<Text>();
+//											
+//											if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
+//												String content = ((Text)md).getText();
+//												String contents[] = content.split(";");
+//												
+//												for (int i = 0; i < contents.length; i++) {
+//													Text tmd = new Text();
+//													tmd.copy(md);
+//													tmd.setText(contents[i]);
+//													texts.add(tmd);
+//												}
+//											}
+//											
+//											if(texts.isEmpty()) {
+//												mdl.add(md);
+//											} else  {
+//												for (Text text : texts) {
+//													mdl.add(text);
+//												}
+//											}
+//											canBeAdded = false;
+//											leave = true;
+//											break;
+//										}
+//									}
+//									
+//									if(leave) {
+//										break;
+//									}
 									
 									sts = it.next();
 									boolean leave = false;
@@ -233,23 +275,17 @@ public class ZuseExcelConverter {
 										if(propertyDescriptor.getName().contains(itLab.next().getValue().toLowerCase().replace(" ", "_"))) {
 											md.setStatement(sts.getId());
 											md.setPos(sts.getPos());
-											
-											if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
-												//TODO: add mulitple issue
-//												md.setMaxOccurs("unbounded");
-											}
-												
+
 											mdl.add(md);
 											canBeAdded = false;
 											leave = true;
 											break;
 										}
 									}
-									
+
 									if(leave) {
 										break;
 									}
-									
 								}
 								
 							}
@@ -265,9 +301,6 @@ public class ZuseExcelConverter {
 				text.setText((String) propertyDescriptor.getReadMethod().invoke(entry));
 				md = text;
 				cachedMethod = propertyDescriptor.getName();
-			
-
-			
 		}
 
 		mds.setMetadata(mdl);
@@ -275,6 +308,10 @@ public class ZuseExcelConverter {
 		item.setMetadataSets(mdsl);
 		item.setFilename("zuse_archive_"+entry.getFile());
 		return item;
+	}
+	
+	public Items getItems(String filePath, MetadataProfile mdp) throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException, IOException, URISyntaxException {
+		return getItems(new File(filePath), mdp);
 	}
 	
 	public Items getItems(File file, MetadataProfile mdp)
