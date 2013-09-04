@@ -164,6 +164,7 @@ public class ZuseExcelConverter {
 		mds.setMetadata(mdl);
 		mdsl.add(mds);
 		item.setMetadataSets(mdsl);
+		item.setFilename("zuse_archive_"+entry.getFile());
 
 		return item;
 	}
@@ -229,7 +230,6 @@ public class ZuseExcelConverter {
 									sts = it.next();
 									boolean leave = false;
 									for (Iterator<LocalizedString> itLab = sts.getLabels().iterator(); itLab.hasNext();) {
-										String name = propertyDescriptor.getName();
 										if(propertyDescriptor.getName().contains(itLab.next().getValue().toLowerCase().replace(" ", "_"))) {
 											md.setStatement(sts.getId());
 											md.setPos(sts.getPos());
@@ -273,7 +273,7 @@ public class ZuseExcelConverter {
 		mds.setMetadata(mdl);
 		mdsl.add(mds);
 		item.setMetadataSets(mdsl);
-
+		item.setFilename("zuse_archive_"+entry.getFile());
 		return item;
 	}
 	

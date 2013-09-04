@@ -14,13 +14,19 @@ import jxl.read.biff.BiffException;
 
 public class ZuseExcelEntryHandler {
 	
+	private static String ENCODING = "Cp1252";
+	
 	public static ArrayList<ExcelEntry> getDataFromExcelFile(String filePath) throws BiffException, IOException, URISyntaxException {
 		return ZuseExcelEntryHandler.getDataFromExcelFile(new File(filePath));
 	}
 	
 	public static ArrayList<ExcelEntry> getDataFromExcelFile(File file) throws BiffException, IOException, URISyntaxException {
-		ArrayList<ExcelEntry> data = new ArrayList<ExcelEntry>();	
-		Workbook workbook = Workbook.getWorkbook(file);
+		ArrayList<ExcelEntry> data = new ArrayList<ExcelEntry>();
+		
+		WorkbookSettings ws = new WorkbookSettings();
+		ws.setEncoding(ENCODING);
+		
+		Workbook workbook = Workbook.getWorkbook(file,ws);
 		
 		Sheet sheet = workbook.getSheet(0);
 		
@@ -54,7 +60,10 @@ public class ZuseExcelEntryHandler {
 	}
 	
 	public static ExcelEntry getMetadataFromExcelFile(File file) throws BiffException, IOException {
-		Workbook workbook = Workbook.getWorkbook(file);
+		WorkbookSettings ws = new WorkbookSettings();
+		ws.setEncoding(ENCODING);
+		
+		Workbook workbook = Workbook.getWorkbook(file,ws);
 		Sheet sheet = workbook.getSheet(0);
 		int multiEnabledRow = 0;
 		int enabledRow = 1;	

@@ -25,7 +25,7 @@ import core.vo.imeji.MetadataProfile;
 
 public class ZuseExcelConverterTest {
 
-	//@Test
+	@Test
 	public void testGetMdProfile() throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException, JAXBException {
 		File file = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
 		ZuseExcelConverter zec = new ZuseExcelConverter();
@@ -37,7 +37,7 @@ public class ZuseExcelConverterTest {
 	public void testGetItemsFile() throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException, IOException, URISyntaxException, JAXBException, SAXException {
 		File excelFile = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
 		File xmlFile = new File("src/test/resources/excelmd/online_mpd.xml");
-		OutputStream os = new FileOutputStream("src/test/resources/excelmd/mergedItems.xml");
+		OutputStream os = new FileOutputStream("src/test/resources/excelmd/offline_items.xml");
 
 		JaxbGenericObject<MetadataProfile> jzgo = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class);
 		MetadataProfile mdp = jzgo.unmarshal(xmlFile);
