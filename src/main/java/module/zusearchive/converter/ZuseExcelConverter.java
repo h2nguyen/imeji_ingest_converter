@@ -9,6 +9,7 @@ import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,7 +21,9 @@ import java.util.List;
 import jxl.read.biff.BiffException;
 
 import module.zusearchive.tasks.ZuseExcelEntryHandler;
-import module.zusearchive.vo.generated.ExcelEntry;
+import module.zusearchive.vo.generated.ExcelEntry4PDF;
+import module.zusearchive.vo.generated.ExcelMetadataEntry;
+import module.zusearchive.vo.generated.formats.enums.ExcelZuseEntryEnum;
 import core.j2j.misc.LocalizedString;
 import core.vo.imeji.Item;
 import core.vo.imeji.Items;
@@ -36,19 +39,72 @@ import core.vo.imeji.predefinedMetadata.Text;
  */
 public class ZuseExcelConverter {
 
+	
 	public MetadataProfile getMdProfile(String filePath, String title, String description) throws BiffException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		return getMdProfile(new File(filePath), title, description);
+	}
+	
+	public MetadataProfile getMdProfile4PDF(String filePath, String title, String description) throws BiffException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		return getMdProfile4PDF(new File(filePath), title, description);
 	}
 	
 	public MetadataProfile getMdProfile(File file, String title, String description) throws BiffException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
 		MetadataProfile mdp = null;
-		ExcelEntry mdProfileExcel = null;
+		ArrayList<ExcelMetadataEntry> mdProfileExcelEntries = null;
 		
 		
 		try {
 			mdp = new MetadataProfile();
-			mdProfileExcel = ZuseExcelEntryHandler.getMetadataFromExcelFile(file);			
+			mdProfileExcelEntries = ZuseExcelEntryHandler.getMetadataFromExcelFile(file);			
+			
+			
+			mdp.setDescription(description);
+			mdp.setTitle(title);
+
+			Collection<Statement> statements = new LinkedList<Statement>();
+			
+			
+			
+			for (ExcelMetadataEntry mdProfileExcelEntry : mdProfileExcelEntries) {
+				if(mdProfileExcelEntry.isActive()) {
+					if(mdProfileExcelEntry.getType().equalsIgnoreCase("Text")) {						
+						Statement statement = new Statement();
+						
+						statement.getLabels().add(new LocalizedString(mdProfileExcelEntry.getLanguage_de(), "de"));
+						statement.getLabels().add(new LocalizedString(mdProfileExcelEntry.getLanguage_en(), "en"));
+						if(mdProfileExcelEntry.isMultiplicity()) {
+							statement.setMaxOccurs("unbounded");
+						}
+//						statement.setType(new URI("http://imeji.org/terms/metadata#text"));
+						statement.setPos(Integer.parseInt(mdProfileExcelEntry.getPosition()));
+						
+						statements.add(statement);
+					}
+					
+				}
+			}
+			mdp.setStatements(statements);
+			
+		} catch (BiffException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mdp;
+	}
+	
+	public MetadataProfile getMdProfile4PDF(File file, String title, String description) throws BiffException, IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		
+		MetadataProfile mdp = null;
+		ExcelEntry4PDF mdProfileExcel = null;
+		
+		
+		try {
+			mdp = new MetadataProfile();
+			mdProfileExcel = ZuseExcelEntryHandler.getMetadataFromExcelFile4PDF(file);			
 			
 			
 			mdp.setDescription(description);
@@ -115,7 +171,7 @@ public class ZuseExcelConverter {
 	}
 
 	
-	public Item getItem(ExcelEntry entry)
+	public Item getItem(ExcelEntry4PDF entry)
 			throws IntrospectionException, BiffException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Item item = new Item();
 
@@ -175,16 +231,16 @@ public class ZuseExcelConverter {
 	
 	public Items getItems(File file)
 			throws IntrospectionException, BiffException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		return getItems(ZuseExcelEntryHandler.getDataFromExcelFile(file));
+		return getItems4PDF(ZuseExcelEntryHandler.getDataFromExcelFile4PDF(file));
 	}
 
 
 
-	public Items getItems(List<ExcelEntry> tObject) throws BiffException, IntrospectionException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Items getItems4PDF(List<ExcelEntry4PDF> tObject) throws BiffException, IntrospectionException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
 		ArrayList<Item> itemList = new ArrayList<Item>(tObject.size());
 		
-		for (ExcelEntry entry : tObject) {
+		for (ExcelEntry4PDF entry : tObject) {
 			Item item = this.getItem(entry);
 			itemList.add(item);
 		}
@@ -192,7 +248,7 @@ public class ZuseExcelConverter {
 		return  new Items(itemList);
 	}
 	
-	public Item getItem(ExcelEntry entry, MetadataProfile mdp)
+	public Item getItem4PDF(ExcelEntry4PDF entry, MetadataProfile mdp)
 			throws IntrospectionException, BiffException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Item item = new Item();
 
@@ -310,23 +366,23 @@ public class ZuseExcelConverter {
 		return item;
 	}
 	
-	public Items getItems(String filePath, MetadataProfile mdp) throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException, IOException, URISyntaxException {
-		return getItems(new File(filePath), mdp);
+	public Items getItems4PDF(String filePath, MetadataProfile mdp) throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException, IOException, URISyntaxException {
+		return getItems4PDF(new File(filePath), mdp);
 	}
 	
-	public Items getItems(File file, MetadataProfile mdp)
+	public Items getItems4PDF(File file, MetadataProfile mdp)
 			throws IntrospectionException, BiffException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		return getItems(ZuseExcelEntryHandler.getDataFromExcelFile(file), mdp);
+		return getItems4PDF(ZuseExcelEntryHandler.getDataFromExcelFile4PDF(file), mdp);
 	}
 
 
 
-	public Items getItems(List<ExcelEntry> tObject, MetadataProfile mdp) throws BiffException, IntrospectionException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Items getItems4PDF(List<ExcelEntry4PDF> tObject, MetadataProfile mdp) throws BiffException, IntrospectionException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
 		ArrayList<Item> itemList = new ArrayList<Item>(tObject.size());
 		
-		for (ExcelEntry entry : tObject) {
-			Item item = this.getItem(entry, mdp);
+		for (ExcelEntry4PDF entry : tObject) {
+			Item item = this.getItem4PDF(entry, mdp);
 			itemList.add(item);
 		}
 		

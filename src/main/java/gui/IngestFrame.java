@@ -759,7 +759,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 									ZuseXMLMDEnumType.getEnumList());
 
 				} else if (cbbFileType.getSelectedIndex() == 1) { // Excel handling
-					raw_gen_mdp = new ZuseExcelConverter().getMdProfile(
+					raw_gen_mdp = new ZuseExcelConverter().getMdProfile4PDF(
 							filenameEntriesNormalizedOffline, "Metadata file",
 							"Metadata file generated from an Excel file");
 				}
@@ -923,7 +923,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 							ZuseXMLMDEnumType.getEnumList(), merged_mdp);
 				} else if (cbbFileType.getSelectedIndex() == 1) { // Excel handling
 					ZuseExcelConverter zec = new ZuseExcelConverter();
-					items = zec.getItems(filenameEntriesNormalizedOffline,merged_mdp);
+					items = zec.getItems4PDF(filenameEntriesNormalizedOffline,merged_mdp);
 				}
 				
 				String filenameItemsOffline = ZuseXMLConverter

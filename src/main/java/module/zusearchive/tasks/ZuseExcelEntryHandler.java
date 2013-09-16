@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import module.zusearchive.vo.generated.ExcelEntry;
+import module.zusearchive.vo.generated.ExcelEntry4PDF;
+import module.zusearchive.vo.generated.ExcelMetadataEntry;
 import module.zusearchive.vo.generated.formats.enums.ExcelEntryEnum;
+import module.zusearchive.vo.generated.formats.enums.ExcelZuseEntryEnum;
 
 import jxl.*;
 import jxl.read.biff.BiffException;
@@ -16,12 +18,12 @@ public class ZuseExcelEntryHandler {
 	
 	private static String ENCODING = "Cp1252";
 	
-	public static ArrayList<ExcelEntry> getDataFromExcelFile(String filePath) throws BiffException, IOException, URISyntaxException {
-		return ZuseExcelEntryHandler.getDataFromExcelFile(new File(filePath));
+	public static ArrayList<ExcelEntry4PDF> getDataFromExcelFile4PDF(String filePath) throws BiffException, IOException, URISyntaxException {
+		return ZuseExcelEntryHandler.getDataFromExcelFile4PDF(new File(filePath));
 	}
 	
-	public static ArrayList<ExcelEntry> getDataFromExcelFile(File file) throws BiffException, IOException, URISyntaxException {
-		ArrayList<ExcelEntry> data = new ArrayList<ExcelEntry>();
+	public static ArrayList<ExcelEntry4PDF> getDataFromExcelFile4PDF(File file) throws BiffException, IOException, URISyntaxException {
+		ArrayList<ExcelEntry4PDF> data = new ArrayList<ExcelEntry4PDF>();
 		
 		WorkbookSettings ws = new WorkbookSettings();
 		ws.setEncoding(ENCODING);
@@ -35,7 +37,7 @@ public class ZuseExcelEntryHandler {
 		int enabledRow = 1;
 		
 		for (int row = 3; row < rows; row++) {			
-			ExcelEntry entry = new ExcelEntry(
+			ExcelEntry4PDF entry = new ExcelEntry4PDF(
 					sheet.getCell(ExcelEntryEnum.TYPE.getOrd(), row).getContents(), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.TYPE.getOrd(), enabledRow).getContents()), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.TYPE.getOrd(), multiEnabledRow).getContents()),
 					sheet.getCell(ExcelEntryEnum.ZIA_ID.getOrd(), row).getContents(), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.ZIA_ID.getOrd(), enabledRow).getContents()), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.ZIA_ID.getOrd(), multiEnabledRow).getContents()),
 					sheet.getCell(ExcelEntryEnum.GMD_NR.getOrd(), row).getContents(), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.GMD_NR.getOrd(), enabledRow).getContents()), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.GMD_NR.getOrd(), multiEnabledRow).getContents()),
@@ -55,11 +57,11 @@ public class ZuseExcelEntryHandler {
 		return data;
 	}
 	
-	public static ExcelEntry getMetadataFromExcelFile(String filePath) throws BiffException, IOException {
-		return ZuseExcelEntryHandler.getMetadataFromExcelFile(new File(filePath));
+	public static ExcelEntry4PDF getMetadataFromExcelFile4PDF(String filePath) throws BiffException, IOException {
+		return ZuseExcelEntryHandler.getMetadataFromExcelFile4PDF(new File(filePath));
 	}
 	
-	public static ExcelEntry getMetadataFromExcelFile(File file) throws BiffException, IOException {
+	public static ExcelEntry4PDF getMetadataFromExcelFile4PDF(File file) throws BiffException, IOException {
 		WorkbookSettings ws = new WorkbookSettings();
 		ws.setEncoding(ENCODING);
 		
@@ -68,7 +70,7 @@ public class ZuseExcelEntryHandler {
 		int multiEnabledRow = 0;
 		int enabledRow = 1;	
 		int metadataRow = 2;
-		ExcelEntry metadataEntry = new ExcelEntry(
+		ExcelEntry4PDF metadataEntry = new ExcelEntry4PDF(
 				sheet.getCell(ExcelEntryEnum.TYPE.getOrd(), metadataRow).getContents(), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.TYPE.getOrd(), enabledRow).getContents()), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.TYPE.getOrd(), multiEnabledRow).getContents()),
 				sheet.getCell(ExcelEntryEnum.ZIA_ID.getOrd(), metadataRow).getContents(), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.ZIA_ID.getOrd(), enabledRow).getContents()), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.ZIA_ID.getOrd(), multiEnabledRow).getContents()),
 				sheet.getCell(ExcelEntryEnum.GMD_NR.getOrd(), metadataRow).getContents(), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.GMD_NR.getOrd(), enabledRow).getContents()), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.GMD_NR.getOrd(), multiEnabledRow).getContents()),
@@ -84,6 +86,37 @@ public class ZuseExcelEntryHandler {
 				sheet.getCell(ExcelEntryEnum.PUBLISHED_BY.getOrd(), metadataRow).getContents(), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.PUBLISHED_BY.getOrd(), enabledRow).getContents()), Boolean.valueOf(sheet.getCell(ExcelEntryEnum.PUBLISHED_BY.getOrd(), multiEnabledRow).getContents()));		
 		
 		return metadataEntry;
+	}
+	
+	public static ArrayList<ExcelMetadataEntry> getMetadataFromExcelFile(String filePath) throws BiffException, IOException {
+		return ZuseExcelEntryHandler.getMetadataFromExcelFile(new File(filePath));
+	}
+	
+	public static ArrayList<ExcelMetadataEntry> getMetadataFromExcelFile(File file) throws BiffException, IOException {
+		WorkbookSettings ws = new WorkbookSettings();
+		ws.setEncoding(ENCODING);
+		
+		Workbook workbook = Workbook.getWorkbook(file,ws);
+		Sheet sheet = workbook.getSheet(0);		
+		ArrayList<ExcelMetadataEntry> metadataEntries = new ArrayList<ExcelMetadataEntry>(sheet.getRows()-1);
+		
+		for (int i = 1; i < sheet.getRows(); i++) {
+			ExcelMetadataEntry metadataEntry = new ExcelMetadataEntry(
+					sheet.getCell(ExcelZuseEntryEnum.POSITION.getOrd(), i).getContents(),
+					Boolean.parseBoolean(sheet.getCell(ExcelZuseEntryEnum.ACTIVE.getOrd(), i).getContents()),
+					sheet.getCell(ExcelZuseEntryEnum.ORIGINAL_TAG.getOrd(), i).getContents(),
+					sheet.getCell(ExcelZuseEntryEnum.NORMALIZED_TAG.getOrd(), i).getContents(),
+					sheet.getCell(ExcelZuseEntryEnum.METHOD_NAME.getOrd(), i).getContents(),
+					Boolean.parseBoolean(sheet.getCell(ExcelZuseEntryEnum.MULTIPLICITY.getOrd(), i).getContents()),
+					sheet.getCell(ExcelZuseEntryEnum.TYPE.getOrd(), i).getContents(),
+					sheet.getCell(ExcelZuseEntryEnum.LANGUAGE_DE.getOrd(), i).getContents(),
+					sheet.getCell(ExcelZuseEntryEnum.LANGUAGE_EN.getOrd(), i).getContents());
+			metadataEntries.add(metadataEntry);
+		}
+		
+		
+		
+		return metadataEntries;
 	}
 	
 }

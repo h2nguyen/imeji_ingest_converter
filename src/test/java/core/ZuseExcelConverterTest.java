@@ -15,6 +15,8 @@ import javax.xml.bind.JAXBException;
 import jxl.read.biff.BiffException;
 
 import module.zusearchive.converter.ZuseExcelConverter;
+import module.zusearchive.jaxb.JaxbZuseGenericObject;
+
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -25,27 +27,27 @@ import core.vo.imeji.MetadataProfile;
 
 public class ZuseExcelConverterTest {
 
-	@Test
+//	@Test
 	public void testGetMdProfile() throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException, JAXBException {
 		File file = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
 		ZuseExcelConverter zec = new ZuseExcelConverter();
-		MetadataProfile mdp = zec.getMdProfile(file, "PDF Metadata", "Description of the metadata for the pdf files");
-		JaxbUtil.toString(mdp);
+		MetadataProfile mdp = zec.getMdProfile4PDF(file, "PDF Metadata", "Description of the metadata for the pdf files");
+		new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).toString(mdp);
 	}
 
 	@Test
 	public void testGetItemsFile() throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException, IOException, URISyntaxException, JAXBException, SAXException {
 		File excelFile = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
-		File xmlFile = new File("src/test/resources/excelmd/online_mpd.xml");
+		File xmlFile = new File("src/test/resources/excelmd/mpd_online.xml");
 		OutputStream os = new FileOutputStream("src/test/resources/excelmd/items_offline.xml");
 
 		JaxbGenericObject<MetadataProfile> jzgo = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class);
 		MetadataProfile mdp = jzgo.unmarshal(xmlFile);
 		
 		ZuseExcelConverter zec = new ZuseExcelConverter();
-		Items items = zec.getItems(excelFile,mdp);
+		Items items = zec.getItems4PDF(excelFile,mdp);
 		
-		JaxbUtil.writeToOutputStream(items, os);
+		JaxbUtil.toString(mdp);
 	}
 
 	@Test

@@ -13,7 +13,7 @@ import jxl.Workbook;
 import jxl.read.biff.BiffException;
 
 import module.zusearchive.misc.CopyToZuseFolder;
-import module.zusearchive.vo.generated.ExcelEntry;
+import module.zusearchive.vo.generated.ExcelEntry4PDF;
 
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class MiscTest {
 	public void testAnyPropertyDescriptor() {
 		try {
 			for(PropertyDescriptor propertyDescriptor : 
-			    Introspector.getBeanInfo(ExcelEntry.class).getPropertyDescriptors()){
+			    Introspector.getBeanInfo(ExcelEntry4PDF.class).getPropertyDescriptors()){
 
 				if (propertyDescriptor.getReadMethod().getName().equalsIgnoreCase("getClass")) {
 					System.out.println("i have this getClass");

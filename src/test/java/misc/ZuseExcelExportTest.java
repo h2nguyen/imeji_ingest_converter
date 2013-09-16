@@ -34,7 +34,7 @@ public class ZuseExcelExportTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void createFolders() throws RowsExceededException, WriteException, IOException {
 		String filename = "C:/Users/hnguyen/Documents/My Dropbox/zuse_local/zuse_metadata_issue/xmls/_130823_xml_issues/ZusePM_wo_scannen.xml";
 		

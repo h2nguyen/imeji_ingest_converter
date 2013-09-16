@@ -1,6 +1,6 @@
 package module.zusearchive.vo.generated;
 
-public class ExcelEntry {
+public class ExcelEntry4PDF {
 	private String type;
 	private boolean typeEnabled = false;
 	private boolean typeMultiEnabled = false;
@@ -53,7 +53,7 @@ public class ExcelEntry {
 	private boolean publishedByEnabled = false;
 	private boolean publishedByMultiEnabled = false;
 
-	public ExcelEntry(
+	public ExcelEntry4PDF(
 			String type, boolean typeEnabled, boolean typeMultiEnabled,
 			String zia_id, boolean zia_idEnabled, boolean zia_idMultiEnabled,
 			String gmd_number, boolean gmd_numberEnabled, boolean gmd_numberMultiEnabled,

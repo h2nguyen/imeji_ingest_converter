@@ -4,11 +4,16 @@ import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.xml.bind.JAXBException;
 
+import jxl.read.biff.BiffException;
+
+import module.zusearchive.converter.ZuseExcelConverter;
 import module.zusearchive.converter.ZuseXMLConverter;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
 import module.zusearchive.misc.ZuseNormalizer;
@@ -187,12 +192,20 @@ public class ZuseTest {
 
 	
 	@Test
-	public void generateItemsTest() throws JAXBException, SAXException {
+	public void generateItemsTest() throws JAXBException, SAXException, BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException {
 		
 		String folder = "ingest_final";
 		String inputFilename = "src/test/resources/"+folder+"/ZusePMNormalized.xml";
-		ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class).unmarshal(inputFilename);
-		JaxbUtil.toString(oz);
+//		ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class).unmarshal(inputFilename);
+		
+		File excelMdpFile = new File("src/main/resources/zuse/zuse_md_mapping_item_ounterlagen.xls");
+		ZuseExcelConverter zec = new ZuseExcelConverter();
+		MetadataProfile mdp = zec.getMdProfile(excelMdpFile, "Metadata profile", "Description of the metadata profile files");
+				
+		String filenameMdpMerged = "src/test/resources/"+folder+"/excelGeneratedMdp.xml";
+				
+		FileOutputStream fos_mdp_merged = new FileOutputStream(new File(filenameMdpMerged));
+		JaxbGenericObject.writeToOutputStream(mdp, fos_mdp_merged);
 	}
 	//@Test
 	public void generateIngestFileProcessTest() throws FileNotFoundException,

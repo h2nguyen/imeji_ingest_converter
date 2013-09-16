@@ -168,15 +168,18 @@
 								not be copied into the build directories, Maven
 								does not copy them
 								automatically!!!
-								<copy file="src/main/java/de/mpg/j2j/misc/jaxb.index"
-									tofile="${project.build.directory}/classes/de/mpg/j2j/misc/jaxb.index" />
-								<copy file="src/main/java/de/mpg/imeji/logic/vo/jaxb.index"
-									tofile="${project.build.directory}/classes/de/mpg/imeji/logic/vo/jaxb.index" />
+								<copy file="src/main/java/core/j2j/misc/jaxb.index"
+									tofile="${project.build.directory}/classes/core/j2j/misc/jaxb.index" />
+								<copy file="src/main/java/core/vo/imeji/jaxb.index"
+									tofile="${project.build.directory}/classes/core/vo/imeji/jaxb.index" />
 								<copy file="src/main/java/de/mpg/imeji/logic/ingest/vo/jaxb.index"
 									tofile="${project.build.directory}/classes/de/mpg/imeji/logic/ingest/vo/jaxb.index" />
 								<copy
-									file="src/main/java/de/mpg/imeji/logic/vo/predefinedMetadata/jaxb.index"
-									tofile="${project.build.directory}/classes/de/mpg/imeji/logic/vo/predefinedMetadata/jaxb.index" />
+									file="src/main/java/core/vo/imeji/predefinedMetadata/jaxb.index"
+									tofile="${project.build.directory}/classes/core/vo/imeji/predefinedMetadata/jaxb.index" />
+								<copy
+									file="src/main/java/module/zusearchive/vo/generated/jaxb.index"
+									tofile="${project.build.directory}/classes/module/zusearchive/vo/generated/jaxb.index" />
 							</tasks>
 						</configuration>
 						<goals>
@@ -456,7 +459,7 @@
 					encoding Cp1252, i.e. build is platform dependent! -->
 				<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 				<!-- the jdk version to use -->
-				<jdk.version>1.5</jdk.version>
+				<jdk.version>1.7</jdk.version>
 			</properties>
 		</profile>
 	</profiles>
