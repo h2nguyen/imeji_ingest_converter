@@ -40,7 +40,6 @@ import javax.xml.bind.JAXBException;
 import org.xml.sax.SAXException;
 
 import core.jaxb.JaxbGenericObject;
-import core.jaxb.JaxbUtil;
 import core.mapper.ItemsMapperTask;
 import core.mapper.MdProfileMapperTask;
 import core.task.enums.Task;
@@ -53,7 +52,7 @@ import module.zusearchive.converter.ZuseXMLConverter;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
 import module.zusearchive.misc.ZuseNormalizer;
 import module.zusearchive.vo.generated.OUnterlagen;
-import module.zusearchive.vo.generated.OZuse;
+import module.zusearchive.vo.generated.ZUSE;
 import module.zusearchive.vo.generated.formats.enums.ZuseXMLMDEnumType;
 import javax.swing.JComboBox;
 
@@ -746,10 +745,10 @@ public class IngestFrame extends JFrame implements ActionListener,
 				this.notifyMessage("Generating metadata profile file...");
 
 				if (cbbFileType.getSelectedIndex() == 0) { // XML handling
-					OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class)
+					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
 							.unmarshal(filenameEntriesNormalizedOffline);
 					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
-					List<OUnterlagen> ouls = oz.getoUnterlagen();
+					List<OUnterlagen> ouls = oz.getOUnterlagen();
 					// generate an imeji meta data profile from the specific
 					// object
 					raw_gen_mdp = zmdpconv
@@ -916,10 +915,10 @@ public class IngestFrame extends JFrame implements ActionListener,
 				if (cbbFileType.getSelectedIndex() == 0) { // XML handling
 					// generate the imeji items from the specific object (Zuse
 					// object) with the provided final merged meta data profile
-					OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class)
+					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
 							.unmarshal(filenameEntriesNormalizedOffline);
 					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
-					List<OUnterlagen> ouls = oz.getoUnterlagen();
+					List<OUnterlagen> ouls = oz.getOUnterlagen();
 					items = zmdpconv.getItems(ouls,
 							ZuseXMLMDEnumType.getEnumList(), merged_mdp);
 				} else if (cbbFileType.getSelectedIndex() == 1) { // Excel handling

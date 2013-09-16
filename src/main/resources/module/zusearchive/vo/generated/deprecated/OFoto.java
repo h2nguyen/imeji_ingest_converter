@@ -6,7 +6,7 @@
 //
 
 
-package module.zusearchive.vo.generated;
+package module.zusearchive.vo.generated.deprecated;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -13,7 +13,7 @@ import module.zusearchive.converter.ZuseXMLConverter;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
 import module.zusearchive.misc.ZuseNormalizer;
 import module.zusearchive.vo.generated.OUnterlagen;
-import module.zusearchive.vo.generated.OZuse;
+import module.zusearchive.vo.generated.ZUSE;
 import module.zusearchive.vo.generated.formats.enums.ZuseXMLMDEnumType;
 
 import org.junit.Test;
@@ -34,7 +34,7 @@ import core.vo.imeji.MetadataProfile;
 
 public class ZuseTest {
 
-	@Test
+	//@Test
 	public void normalizeProcessTest() {
 		String inputFilename = "src/test/resources/normalize/_20_raw_entries.xml";
 		String outputFilename = "src/test/resources/normalize/_20_raw_entries_out.xml";
@@ -47,7 +47,7 @@ public class ZuseTest {
 			SAXException, IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
 
-		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
+		ZUSE zo = (new JaxbZuseGenericObject<ZUSE>(ZUSE.class))
 				.unmarshal(filenameUnmarshal);
 		JaxbUtil.toString(zo);
 
@@ -76,12 +76,12 @@ public class ZuseTest {
 			IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
 
-		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
+		ZUSE zo = (new JaxbZuseGenericObject<ZUSE>(ZUSE.class))
 				.unmarshal(filenameUnmarshal);
 
 		ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
 
-		OUnterlagen oul = zo.getoUnterlagen().get(0);
+		OUnterlagen oul = zo.getOUnterlagen().get(0);
 
 		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
 				"profile name offline", "profile description offline",
@@ -100,18 +100,18 @@ public class ZuseTest {
 			IntrospectionException, FileNotFoundException {
 		String filenameUnmarshal = "src/test/resources/_10_entries_out.xml";
 
-		OZuse zo = (new JaxbZuseGenericObject<OZuse>(OZuse.class))
+		ZUSE zo = (new JaxbZuseGenericObject<ZUSE>(ZUSE.class))
 				.unmarshal(filenameUnmarshal);
 
 		ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
 
-		OUnterlagen oul = zo.getoUnterlagen().get(0);
+		OUnterlagen oul = zo.getOUnterlagen().get(0);
 
 		MetadataProfile mdp = zmdpconv.getMdProfile(oul,
 				"profile name offline", "profile description offline",
 				ZuseXMLMDEnumType.getEnumList());		
 		
-		Items items = zmdpconv.getItems(zo.getoUnterlagen(), ZuseXMLMDEnumType.getEnumList(), mdp);
+		Items items = zmdpconv.getItems(zo.getOUnterlagen(), ZuseXMLMDEnumType.getEnumList(), mdp);
 		
 //		JaxbUtil.toString(mdp);
 //		JaxbUtil.toString(items);
@@ -185,6 +185,15 @@ public class ZuseTest {
 
 	}
 
+	
+	@Test
+	public void generateItemsTest() throws JAXBException, SAXException {
+		
+		String folder = "ingest_final";
+		String inputFilename = "src/test/resources/"+folder+"/ZusePMNormalized.xml";
+		ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class).unmarshal(inputFilename);
+		JaxbUtil.toString(oz);
+	}
 	//@Test
 	public void generateIngestFileProcessTest() throws FileNotFoundException,
 			JAXBException, SAXException, InterruptedException,
@@ -200,9 +209,9 @@ public class ZuseTest {
 		
 		// get specific metadata profile (here in our case the zuse object) java object from normalized file
 		String filenameEntriesNormalizedOffline = "src/test/resources/"+folder+"/raw_entries_normalized.xml";
-		OZuse oz = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline);
+		ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class).unmarshal(filenameEntriesNormalizedOffline);
 		ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
-		List<OUnterlagen> ouls = oz.getoUnterlagen();
+		List<OUnterlagen> ouls = oz.getOUnterlagen();
 		// generate an imeji meta data profile from the specific object
 		MetadataProfile raw_gen_mdp = zmdpconv.getMdProfile(
 				ouls.get(0),
@@ -229,9 +238,9 @@ public class ZuseTest {
 		String filenameMdpMerged2 = "src/test/resources/"+folder+"/mdp_merged.xml";
 		MetadataProfile merged_mdp = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).unmarshal(filenameMdpMerged2);
 		String filenameEntriesNormalizedOffline2 = "src/test/resources/"+folder+"/raw_entries_normalized.xml";
-		OZuse oz2 = new JaxbZuseGenericObject<OZuse>(OZuse.class).unmarshal(filenameEntriesNormalizedOffline2);
+		ZUSE oz2 = new JaxbZuseGenericObject<ZUSE>(ZUSE.class).unmarshal(filenameEntriesNormalizedOffline2);
 		ZuseXMLConverter zmdpconv2 = new ZuseXMLConverter();
-		List<OUnterlagen> ouls2 = oz2.getoUnterlagen();
+		List<OUnterlagen> ouls2 = oz2.getOUnterlagen();
 		Items items = zmdpconv2.getItems(ouls2, ZuseXMLMDEnumType.getEnumList(), merged_mdp);
 		String filenameItemsOffline = "src/test/resources/"+folder+"/items_offline.xml";
 		FileOutputStream fos_items = new FileOutputStream(new File(filenameItemsOffline));

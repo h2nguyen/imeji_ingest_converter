@@ -1,16 +1,18 @@
-package module.zusearchive.vo.generated;
+package module.zusearchive.vo.generated.deprecated;
 
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import module.zusearchive.vo.generated.OUnterlagen;
+
 @XmlRootElement(name="ZUSE")
-public class OZuse {
+public class OZuseDep {
 
 	private List<OUnterlagen> oFoto;
 	private List<OUnterlagen> oUnterlagen;
 	
-	public OZuse() {
+	public OZuseDep() {
 		// TODO Auto-generated constructor stub
 	}
 
