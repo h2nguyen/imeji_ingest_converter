@@ -19,7 +19,7 @@ import org.junit.Test;
 
 public class MiscTest {
 
-	
+	//@Test
 	public void testCopyToFolder() throws BiffException, IOException {
 		
 		Workbook workbook = Workbook.getWorkbook(new File("src/test/resources/export/test3.xls"));
@@ -33,7 +33,7 @@ public class MiscTest {
 		workbook.close();
 	}
 	
-	@Test
+	//@Test
 	public void testAnyPropertyDescriptor() {
 		try {
 			for(PropertyDescriptor propertyDescriptor : 
@@ -54,6 +54,14 @@ public class MiscTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testDigitParsing() {
+		
+		String str = "113 Bl. gedr., ms.12 1 u. hektogr. (1 Bd. Kopie)";
+        str = str.replaceAll("\\D+"," ");
+        System.out.println(str);
 	}
 
 }

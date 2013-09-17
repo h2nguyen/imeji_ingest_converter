@@ -115,8 +115,10 @@ public class IngestFrame extends JFrame implements ActionListener,
 	private JComboBox cbbFileType;
 	private JComboBox cbbFileTypItems;
 
-	private String cbbStringFileTyp[] = new String[] { "XML", "XLS" };
+	private String cbbStringFileTyp[] = new String[] { "XML", "XLS-PDF", "XLS" };
 	private JButton btnClearAll;
+	private JTextField txtMdProfileAsExcel;
+	private JButton btnChooseExcelMdProfile;
 
 	/**
 	 * Create the frame.
@@ -132,11 +134,11 @@ public class IngestFrame extends JFrame implements ActionListener,
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] { 0, 86, 61, 0, 167, 57, 0, 0,
 				0, 168, 56, 0, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 36, 0,
+		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0,
 				21, 0, 0, 0, 0, 0, 20, 0 };
 		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0,
-				1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 1.0, 0.0, 1.0, 0.0, 1.0,
+				1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 1.0, 0.0, 1.0, 0.0, 1.0, 1.0,
 				1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 				Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
@@ -213,12 +215,30 @@ public class IngestFrame extends JFrame implements ActionListener,
 
 		lblMetadataProfile = new JLabel("Metadata profile");
 		GridBagConstraints gbc_lblMetadataProfile = new GridBagConstraints();
-		gbc_lblMetadataProfile.gridheight = 3;
+		gbc_lblMetadataProfile.gridheight = 4;
 		gbc_lblMetadataProfile.gridwidth = 2;
 		gbc_lblMetadataProfile.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMetadataProfile.gridx = 1;
 		gbc_lblMetadataProfile.gridy = 4;
 		contentPane.add(lblMetadataProfile, gbc_lblMetadataProfile);
+		
+		txtMdProfileAsExcel = new JTextField();
+		GridBagConstraints gbc_txtMdProfileAsExcel = new GridBagConstraints();
+		gbc_txtMdProfileAsExcel.gridwidth = 5;
+		gbc_txtMdProfileAsExcel.insets = new Insets(0, 0, 5, 5);
+		gbc_txtMdProfileAsExcel.fill = GridBagConstraints.BOTH;
+		gbc_txtMdProfileAsExcel.gridx = 4;
+		gbc_txtMdProfileAsExcel.gridy = 4;
+		contentPane.add(txtMdProfileAsExcel, gbc_txtMdProfileAsExcel);
+		txtMdProfileAsExcel.setColumns(10);
+		
+		btnChooseExcelMdProfile = new JButton("...");
+		GridBagConstraints gbc_btnChooseExcelMdProfile = new GridBagConstraints();
+		gbc_btnChooseExcelMdProfile.fill = GridBagConstraints.BOTH;
+		gbc_btnChooseExcelMdProfile.insets = new Insets(0, 0, 5, 5);
+		gbc_btnChooseExcelMdProfile.gridx = 9;
+		gbc_btnChooseExcelMdProfile.gridy = 4;
+		contentPane.add(btnChooseExcelMdProfile, gbc_btnChooseExcelMdProfile);
 
 		txtMetadataProfileOnline = new JTextField();
 		GridBagConstraints gbc_txtMetadataProfileOnline = new GridBagConstraints();
@@ -226,7 +246,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_txtMetadataProfileOnline.gridwidth = 5;
 		gbc_txtMetadataProfileOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_txtMetadataProfileOnline.gridx = 4;
-		gbc_txtMetadataProfileOnline.gridy = 4;
+		gbc_txtMetadataProfileOnline.gridy = 5;
 		contentPane.add(txtMetadataProfileOnline, gbc_txtMetadataProfileOnline);
 		txtMetadataProfileOnline.setColumns(10);
 
@@ -235,7 +255,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnChooseMetadataProfileOnline.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseMetadataProfileOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseMetadataProfileOnline.gridx = 9;
-		gbc_btnChooseMetadataProfileOnline.gridy = 4;
+		gbc_btnChooseMetadataProfileOnline.gridy = 5;
 		contentPane.add(btnChooseMetadataProfileOnline,
 				gbc_btnChooseMetadataProfileOnline);
 
@@ -245,7 +265,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_txtGeneratedOfflineMetadataProfile.fill = GridBagConstraints.BOTH;
 		gbc_txtGeneratedOfflineMetadataProfile.insets = new Insets(0, 0, 5, 5);
 		gbc_txtGeneratedOfflineMetadataProfile.gridx = 4;
-		gbc_txtGeneratedOfflineMetadataProfile.gridy = 5;
+		gbc_txtGeneratedOfflineMetadataProfile.gridy = 6;
 		contentPane.add(txtGeneratedOfflineMetadataProfile,
 				gbc_txtGeneratedOfflineMetadataProfile);
 		txtGeneratedOfflineMetadataProfile.setColumns(10);
@@ -255,7 +275,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnChooseMetadataProfileOffline.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseMetadataProfileOffline.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseMetadataProfileOffline.gridx = 9;
-		gbc_btnChooseMetadataProfileOffline.gridy = 5;
+		gbc_btnChooseMetadataProfileOffline.gridy = 6;
 		contentPane.add(btnChooseMetadataProfileOffline,
 				gbc_btnChooseMetadataProfileOffline);
 
@@ -265,7 +285,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_txtMetadataProfileMerged.fill = GridBagConstraints.BOTH;
 		gbc_txtMetadataProfileMerged.insets = new Insets(0, 0, 5, 5);
 		gbc_txtMetadataProfileMerged.gridx = 4;
-		gbc_txtMetadataProfileMerged.gridy = 6;
+		gbc_txtMetadataProfileMerged.gridy = 7;
 		contentPane.add(txtMetadataProfileMerged, gbc_txtMetadataProfileMerged);
 		txtMetadataProfileMerged.setColumns(10);
 
@@ -274,7 +294,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnChooseMetadataProfileMerged.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseMetadataProfileMerged.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseMetadataProfileMerged.gridx = 9;
-		gbc_btnChooseMetadataProfileMerged.gridy = 6;
+		gbc_btnChooseMetadataProfileMerged.gridy = 7;
 		contentPane.add(btnChooseMetadataProfileMerged,
 				gbc_btnChooseMetadataProfileMerged);
 
@@ -284,7 +304,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_separator_1.gridwidth = 12;
 		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_1.gridx = 0;
-		gbc_separator_1.gridy = 7;
+		gbc_separator_1.gridy = 8;
 		contentPane.add(separator_1, gbc_separator_1);
 
 		lblGeneratedItems = new JLabel("Items");
@@ -293,7 +313,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_lblGeneratedItems.gridwidth = 2;
 		gbc_lblGeneratedItems.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGeneratedItems.gridx = 1;
-		gbc_lblGeneratedItems.gridy = 8;
+		gbc_lblGeneratedItems.gridy = 9;
 		contentPane.add(lblGeneratedItems, gbc_lblGeneratedItems);
 
 		txtItemOnline = new JTextField();
@@ -302,7 +322,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_txtItemOnline.gridwidth = 5;
 		gbc_txtItemOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_txtItemOnline.gridx = 4;
-		gbc_txtItemOnline.gridy = 8;
+		gbc_txtItemOnline.gridy = 9;
 		contentPane.add(txtItemOnline, gbc_txtItemOnline);
 		txtItemOnline.setColumns(10);
 
@@ -311,7 +331,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnChooseItemsOnline.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseItemsOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseItemsOnline.gridx = 9;
-		gbc_btnChooseItemsOnline.gridy = 8;
+		gbc_btnChooseItemsOnline.gridy = 9;
 		contentPane.add(btnChooseItemsOnline, gbc_btnChooseItemsOnline);
 
 		txtGeneratedItems = new JTextField();
@@ -320,7 +340,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_txtGeneratedItems.gridwidth = 5;
 		gbc_txtGeneratedItems.insets = new Insets(0, 0, 5, 5);
 		gbc_txtGeneratedItems.gridx = 4;
-		gbc_txtGeneratedItems.gridy = 9;
+		gbc_txtGeneratedItems.gridy = 10;
 		contentPane.add(txtGeneratedItems, gbc_txtGeneratedItems);
 		txtGeneratedItems.setColumns(10);
 
@@ -329,7 +349,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnChooseItems.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseItems.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseItems.gridx = 9;
-		gbc_btnChooseItems.gridy = 9;
+		gbc_btnChooseItems.gridy = 10;
 		contentPane.add(btnChooseItems, gbc_btnChooseItems);
 
 		txtItemsMerged = new JTextField();
@@ -338,7 +358,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_txtItemsMerged.gridwidth = 5;
 		gbc_txtItemsMerged.insets = new Insets(0, 0, 5, 5);
 		gbc_txtItemsMerged.gridx = 4;
-		gbc_txtItemsMerged.gridy = 10;
+		gbc_txtItemsMerged.gridy = 11;
 		contentPane.add(txtItemsMerged, gbc_txtItemsMerged);
 		txtItemsMerged.setColumns(10);
 
@@ -347,7 +367,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnChooseItemsMerged.fill = GridBagConstraints.BOTH;
 		gbc_btnChooseItemsMerged.insets = new Insets(0, 0, 5, 5);
 		gbc_btnChooseItemsMerged.gridx = 9;
-		gbc_btnChooseItemsMerged.gridy = 10;
+		gbc_btnChooseItemsMerged.gridy = 11;
 		contentPane.add(btnChooseItemsMerged, gbc_btnChooseItemsMerged);
 
 		separator_4 = new JSeparator();
@@ -356,14 +376,14 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_separator_4.fill = GridBagConstraints.BOTH;
 		gbc_separator_4.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_4.gridx = 0;
-		gbc_separator_4.gridy = 11;
+		gbc_separator_4.gridy = 12;
 		contentPane.add(separator_4, gbc_separator_4);
 
 		lblStep_1 = new JLabel("1. Step");
 		GridBagConstraints gbc_lblStep_1 = new GridBagConstraints();
 		gbc_lblStep_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_1.gridx = 1;
-		gbc_lblStep_1.gridy = 12;
+		gbc_lblStep_1.gridy = 13;
 		contentPane.add(lblStep_1, gbc_lblStep_1);
 		lblStep_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 
@@ -373,14 +393,14 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnNormalizeForImeji.gridwidth = 6;
 		gbc_btnNormalizeForImeji.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNormalizeForImeji.gridx = 4;
-		gbc_btnNormalizeForImeji.gridy = 12;
+		gbc_btnNormalizeForImeji.gridy = 13;
 		contentPane.add(btnNormalizeForImeji, gbc_btnNormalizeForImeji);
 
 		lblStep_2a = new JLabel("2a. Step");
 		GridBagConstraints gbc_lblStep_2a = new GridBagConstraints();
 		gbc_lblStep_2a.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_2a.gridx = 2;
-		gbc_lblStep_2a.gridy = 13;
+		gbc_lblStep_2a.gridy = 14;
 		contentPane.add(lblStep_2a, gbc_lblStep_2a);
 
 		lblStep_2 = new JLabel("2. Step");
@@ -388,7 +408,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_lblStep_2.gridheight = 3;
 		gbc_lblStep_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_2.gridx = 1;
-		gbc_lblStep_2.gridy = 13;
+		gbc_lblStep_2.gridy = 14;
 		contentPane.add(lblStep_2, gbc_lblStep_2);
 		lblStep_2.setFont(new Font("Tahoma", Font.BOLD, 16));
 
@@ -397,7 +417,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnGetMetadataProfileOnline.fill = GridBagConstraints.BOTH;
 		gbc_btnGetMetadataProfileOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGetMetadataProfileOnline.gridx = 4;
-		gbc_btnGetMetadataProfileOnline.gridy = 13;
+		gbc_btnGetMetadataProfileOnline.gridy = 14;
 		contentPane.add(btnGetMetadataProfileOnline,
 				gbc_btnGetMetadataProfileOnline);
 
@@ -405,7 +425,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		GridBagConstraints gbc_lblStep_3a = new GridBagConstraints();
 		gbc_lblStep_3a.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_3a.gridx = 8;
-		gbc_lblStep_3a.gridy = 13;
+		gbc_lblStep_3a.gridy = 14;
 		contentPane.add(lblStep_3a, gbc_lblStep_3a);
 
 		btnGetItemsOnline = new JButton("Get online items");
@@ -413,14 +433,14 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnGetItemsOnline.fill = GridBagConstraints.BOTH;
 		gbc_btnGetItemsOnline.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGetItemsOnline.gridx = 9;
-		gbc_btnGetItemsOnline.gridy = 13;
+		gbc_btnGetItemsOnline.gridy = 14;
 		contentPane.add(btnGetItemsOnline, gbc_btnGetItemsOnline);
 
 		lblStep_2b = new JLabel("2b. Step");
 		GridBagConstraints gbc_lblStep_2b = new GridBagConstraints();
 		gbc_lblStep_2b.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_2b.gridx = 2;
-		gbc_lblStep_2b.gridy = 14;
+		gbc_lblStep_2b.gridy = 15;
 		contentPane.add(lblStep_2b, gbc_lblStep_2b);
 
 		lblStep_3 = new JLabel("3. Step");
@@ -428,7 +448,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_lblStep_3.gridheight = 3;
 		gbc_lblStep_3.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_3.gridx = 7;
-		gbc_lblStep_3.gridy = 13;
+		gbc_lblStep_3.gridy = 14;
 		contentPane.add(lblStep_3, gbc_lblStep_3);
 		lblStep_3.setFont(new Font("Tahoma", Font.BOLD, 16));
 
@@ -437,7 +457,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnGenerateOfflineMetadataProfile.fill = GridBagConstraints.BOTH;
 		gbc_btnGenerateOfflineMetadataProfile.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGenerateOfflineMetadataProfile.gridx = 4;
-		gbc_btnGenerateOfflineMetadataProfile.gridy = 14;
+		gbc_btnGenerateOfflineMetadataProfile.gridy = 15;
 		contentPane.add(btnGenerateOfflineMetadataProfile,
 				gbc_btnGenerateOfflineMetadataProfile);
 
@@ -446,14 +466,14 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_cbbFileType.insets = new Insets(0, 0, 5, 5);
 		gbc_cbbFileType.fill = GridBagConstraints.BOTH;
 		gbc_cbbFileType.gridx = 5;
-		gbc_cbbFileType.gridy = 14;
+		gbc_cbbFileType.gridy = 15;
 		contentPane.add(cbbFileType, gbc_cbbFileType);
 
 		lblStep_3b = new JLabel("3b. Step");
 		GridBagConstraints gbc_lblStep_3b = new GridBagConstraints();
 		gbc_lblStep_3b.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_3b.gridx = 8;
-		gbc_lblStep_3b.gridy = 14;
+		gbc_lblStep_3b.gridy = 15;
 		contentPane.add(lblStep_3b, gbc_lblStep_3b);
 
 		btnGenerateItems = new JButton("Get items with merged profile");
@@ -461,7 +481,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnGenerateItems.fill = GridBagConstraints.BOTH;
 		gbc_btnGenerateItems.insets = new Insets(0, 0, 5, 5);
 		gbc_btnGenerateItems.gridx = 9;
-		gbc_btnGenerateItems.gridy = 14;
+		gbc_btnGenerateItems.gridy = 15;
 		contentPane.add(btnGenerateItems, gbc_btnGenerateItems);
 
 		cbbFileTypItems = new JComboBox(cbbStringFileTyp);
@@ -469,14 +489,14 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_cbbFileTypItems.insets = new Insets(0, 0, 5, 5);
 		gbc_cbbFileTypItems.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cbbFileTypItems.gridx = 10;
-		gbc_cbbFileTypItems.gridy = 14;
+		gbc_cbbFileTypItems.gridy = 15;
 		contentPane.add(cbbFileTypItems, gbc_cbbFileTypItems);
 
 		lblStep_2c = new JLabel("2c. Step");
 		GridBagConstraints gbc_lblStep_2c = new GridBagConstraints();
 		gbc_lblStep_2c.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_2c.gridx = 2;
-		gbc_lblStep_2c.gridy = 15;
+		gbc_lblStep_2c.gridy = 16;
 		contentPane.add(lblStep_2c, gbc_lblStep_2c);
 
 		btnMergeMetadataProfile = new JButton("Merge metadata profile");
@@ -484,14 +504,14 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnMergeMetadataProfile.fill = GridBagConstraints.BOTH;
 		gbc_btnMergeMetadataProfile.insets = new Insets(0, 0, 5, 5);
 		gbc_btnMergeMetadataProfile.gridx = 4;
-		gbc_btnMergeMetadataProfile.gridy = 15;
+		gbc_btnMergeMetadataProfile.gridy = 16;
 		contentPane.add(btnMergeMetadataProfile, gbc_btnMergeMetadataProfile);
 
 		lblStep_3c = new JLabel("3c. Step");
 		GridBagConstraints gbc_lblStep_3c = new GridBagConstraints();
 		gbc_lblStep_3c.insets = new Insets(0, 0, 5, 5);
 		gbc_lblStep_3c.gridx = 8;
-		gbc_lblStep_3c.gridy = 15;
+		gbc_lblStep_3c.gridy = 16;
 		contentPane.add(lblStep_3c, gbc_lblStep_3c);
 
 		btnMergeItems = new JButton("Merge items");
@@ -499,7 +519,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnMergeItems.fill = GridBagConstraints.BOTH;
 		gbc_btnMergeItems.insets = new Insets(0, 0, 5, 5);
 		gbc_btnMergeItems.gridx = 9;
-		gbc_btnMergeItems.gridy = 15;
+		gbc_btnMergeItems.gridy = 16;
 		contentPane.add(btnMergeItems, gbc_btnMergeItems);
 
 		lblNotification = new JLabel("Notification");
@@ -507,7 +527,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_lblNotification.gridwidth = 3;
 		gbc_lblNotification.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNotification.gridx = 1;
-		gbc_lblNotification.gridy = 16;
+		gbc_lblNotification.gridy = 17;
 		contentPane.add(lblNotification, gbc_lblNotification);
 		
 		btnClearAll = new JButton("Clear all");
@@ -519,7 +539,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnClearAll.fill = GridBagConstraints.BOTH;
 		gbc_btnClearAll.insets = new Insets(0, 0, 0, 5);
 		gbc_btnClearAll.gridx = 4;
-		gbc_btnClearAll.gridy = 16;
+		gbc_btnClearAll.gridy = 17;
 		contentPane.add(btnClearAll, gbc_btnClearAll);
 
 		btnCancel = new JButton();
@@ -528,7 +548,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnCancel.fill = GridBagConstraints.VERTICAL;
 		gbc_btnCancel.insets = new Insets(0, 0, 0, 5);
 		gbc_btnCancel.gridx = 7;
-		gbc_btnCancel.gridy = 16;
+		gbc_btnCancel.gridy = 17;
 		contentPane.add(btnCancel, gbc_btnCancel);
 		btnCancel.setEnabled(false);
 		btnCancel.setToolTipText("Click to cancel the process");
@@ -543,7 +563,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_progressBar.fill = GridBagConstraints.BOTH;
 		gbc_progressBar.insets = new Insets(0, 0, 0, 5);
 		gbc_progressBar.gridx = 8;
-		gbc_progressBar.gridy = 16;
+		gbc_progressBar.gridy = 17;
 		contentPane.add(progressBar, gbc_progressBar);
 
 		initOtherVariables();
@@ -577,11 +597,15 @@ public class IngestFrame extends JFrame implements ActionListener,
 
 		this.txtItemsMerged.setDragEnabled(true);
 		new DropTarget(txtItemsMerged, this);
+		
+		this.txtMdProfileAsExcel.setDragEnabled(true);
+		new DropTarget(txtMdProfileAsExcel, this);
 	}
 
 	private void initActionListener() {
 		this.btnChooseRawData.addActionListener(this);
 		this.btnChooseNormalizedData.addActionListener(this);
+		this.btnChooseExcelMdProfile.addActionListener(this);
 		this.btnChooseMetadataProfileOffline.addActionListener(this);
 		this.btnChooseMetadataProfileOnline.addActionListener(this);
 		this.btnChooseMetadataProfileMerged.addActionListener(this);
@@ -621,6 +645,16 @@ public class IngestFrame extends JFrame implements ActionListener,
 				this.txtNormalizedData.setText(this.chooserFile
 						.getSelectedFile().getAbsolutePath());
 				this.notifyMessage("A normalized data file was seleted!");
+			}
+		}
+		
+		if(e.getSource() == this.btnChooseExcelMdProfile) {
+			this.chooserFile.setDialogTitle("Open excel meta data profile file");
+			if (this.chooserFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				this.txtMdProfileAsExcel
+						.setText(this.chooserFile.getSelectedFile()
+								.getAbsolutePath());
+				this.notifyMessage("An excel meta data profile file was seleted!");
 			}
 		}
 
@@ -734,6 +768,15 @@ public class IngestFrame extends JFrame implements ActionListener,
 							.getSelectedFile().getAbsolutePath());
 				}
 			}
+			while (this.txtMdProfileAsExcel.getText().isEmpty()) {
+				this.chooserFile.setDialogTitle("Open excel meta data file");
+				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+					return;
+				} else {
+					this.txtMdProfileAsExcel.setText(this.chooserFile
+							.getSelectedFile().getAbsolutePath());
+				}
+			}
 
 			try {
 
@@ -762,6 +805,19 @@ public class IngestFrame extends JFrame implements ActionListener,
 					raw_gen_mdp = new ZuseExcelConverter().getMdProfile4PDF(
 							filenameEntriesNormalizedOffline, "Metadata file",
 							"Metadata file generated from an Excel file");
+				} else if (cbbFileType.getSelectedIndex() == 2) { // Excel handling
+					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
+							.unmarshal(filenameEntriesNormalizedOffline);
+					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
+					List<OUnterlagen> ouls = oz.getOUnterlagen();
+					// generate an imeji meta data profile from the specific
+					// object
+					raw_gen_mdp = zmdpconv
+							.getMdProfileExcel(
+									ouls.get(0),
+									"Generated metadata profile",
+									"The metadata profile is generated from the Zuse object",
+									new File(this.txtMdProfileAsExcel.getText()));
 				}
 				
 				String filenameMdpOffline = ZuseXMLConverter
@@ -903,6 +959,16 @@ public class IngestFrame extends JFrame implements ActionListener,
 							.getSelectedFile().getAbsolutePath());
 				}
 			}
+			
+			while (this.txtMdProfileAsExcel.getText().isEmpty()) {
+				this.chooserFile.setDialogTitle("Open excel meta data file");
+				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+					return;
+				} else {
+					this.txtMdProfileAsExcel.setText(this.chooserFile
+							.getSelectedFile().getAbsolutePath());
+				}
+			}
 
 			try {
 				
@@ -912,7 +978,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 				MetadataProfile merged_mdp = new JaxbGenericObject<MetadataProfile>(
 						MetadataProfile.class).unmarshal(filenameMdpMerged);
 				this.notifyMessage("Generating items...");
-				if (cbbFileType.getSelectedIndex() == 0) { // XML handling
+				if (cbbFileTypItems.getSelectedIndex() == 0) { // XML handling
 					// generate the imeji items from the specific object (Zuse
 					// object) with the provided final merged meta data profile
 					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
@@ -921,9 +987,17 @@ public class IngestFrame extends JFrame implements ActionListener,
 					List<OUnterlagen> ouls = oz.getOUnterlagen();
 					items = zmdpconv.getItems(ouls,
 							ZuseXMLMDEnumType.getEnumList(), merged_mdp);
-				} else if (cbbFileType.getSelectedIndex() == 1) { // Excel handling
+				} else if (cbbFileTypItems.getSelectedIndex() == 1) { // Excel handling
 					ZuseExcelConverter zec = new ZuseExcelConverter();
 					items = zec.getItems4PDF(filenameEntriesNormalizedOffline,merged_mdp);
+				} else if (cbbFileTypItems.getSelectedIndex() == 2) { // XML handling
+					// generate the imeji items from the specific object (Zuse
+					// object) with the provided final merged meta data profile
+					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
+							.unmarshal(filenameEntriesNormalizedOffline);
+					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
+					List<OUnterlagen> ouls = oz.getOUnterlagen();
+					items = zmdpconv.getItemsExcel(ouls,new File(this.txtMdProfileAsExcel.getText()), merged_mdp);
 				}
 				
 				String filenameItemsOffline = ZuseXMLConverter

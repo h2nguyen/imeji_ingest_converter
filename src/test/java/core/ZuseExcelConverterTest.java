@@ -32,7 +32,7 @@ public class ZuseExcelConverterTest {
 		File file = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
 		ZuseExcelConverter zec = new ZuseExcelConverter();
 		MetadataProfile mdp = zec.getMdProfile4PDF(file, "PDF Metadata", "Description of the metadata for the pdf files");
-		new JaxbGenericObject<MetadataProfile>(MetadataProfile.class).toString(mdp);
+		JaxbUtil.toString(mdp);
 	}
 
 	@Test
@@ -44,8 +44,8 @@ public class ZuseExcelConverterTest {
 		JaxbGenericObject<MetadataProfile> jzgo = new JaxbGenericObject<MetadataProfile>(MetadataProfile.class);
 		MetadataProfile mdp = jzgo.unmarshal(xmlFile);
 		
-		ZuseExcelConverter zec = new ZuseExcelConverter();
-		Items items = zec.getItems4PDF(excelFile,mdp);
+//		ZuseExcelConverter zec = new ZuseExcelConverter();
+//		Items items = zec.getItems4PDF(excelFile,mdp);
 		
 		JaxbUtil.toString(mdp);
 	}

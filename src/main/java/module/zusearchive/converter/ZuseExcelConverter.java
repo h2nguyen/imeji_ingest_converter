@@ -9,7 +9,6 @@ import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,7 +22,6 @@ import jxl.read.biff.BiffException;
 import module.zusearchive.tasks.ZuseExcelEntryHandler;
 import module.zusearchive.vo.generated.ExcelEntry4PDF;
 import module.zusearchive.vo.generated.ExcelMetadataEntry;
-import module.zusearchive.vo.generated.formats.enums.ExcelZuseEntryEnum;
 import core.j2j.misc.LocalizedString;
 import core.vo.imeji.Item;
 import core.vo.imeji.Items;
@@ -63,8 +61,6 @@ public class ZuseExcelConverter {
 			mdp.setTitle(title);
 
 			Collection<Statement> statements = new LinkedList<Statement>();
-			
-			
 			
 			for (ExcelMetadataEntry mdProfileExcelEntry : mdProfileExcelEntries) {
 				if(mdProfileExcelEntry.isActive()) {

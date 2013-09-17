@@ -3,6 +3,8 @@ package module.zusearchive.converter;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +13,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import jxl.read.biff.BiffException;
+
+import module.zusearchive.tasks.ZuseExcelEntryHandler;
+import module.zusearchive.vo.generated.ExcelMetadataEntry;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.formats.enums.ZuseXMLMDEnumType;
 
@@ -135,6 +141,107 @@ public class ZuseXMLConverter extends
 						default:
 							statements.add(statement);
 							methodeCounter = i+1;
+							break;
+						}
+						break;
+					}
+				}
+			}
+		} catch (IntrospectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		mdp.setStatements(statements);
+
+		return mdp;
+	}
+	
+	public MetadataProfile getMdProfileExcel(OUnterlagen tObject, String title,
+			String description,
+			File excelFile)
+			throws IntrospectionException, BiffException, IOException {
+
+		MetadataProfile mdp = new MetadataProfile();
+		mdp.setDescription(description);
+		mdp.setTitle(title);
+		
+		Collection<Statement> statements = new LinkedList<Statement>();
+		
+		ArrayList<ExcelMetadataEntry> mdProfileExcelEntries = ZuseExcelEntryHandler.getMetadataFromExcelFile(excelFile);	
+
+		try {
+			for (PropertyDescriptor propertyDescriptor : Introspector
+					.getBeanInfo(tObject.getClass()).getPropertyDescriptors()) {
+				if (propertyDescriptor.getReadMethod().getReturnType() != String.class)
+					continue;
+
+				for (int i = 0; i < mdProfileExcelEntries.size(); i++) {
+					String method = mdProfileExcelEntries.get(i).getMethod_name();
+
+					if (propertyDescriptor.getReadMethod().getName()
+							.contains(method)) {
+						String type = mdProfileExcelEntries.get(i).getType();
+						if (type.isEmpty()) {
+							continue;
+						}
+							
+
+						Statement statement = new Statement();
+						
+						String labelDE = mdProfileExcelEntries.get(i).getLanguage_de();
+						String labelEN = mdProfileExcelEntries.get(i).getLanguage_en();
+						statement.getLabels().add(
+								new LocalizedString(labelDE, "de"));
+						statement.getLabels().add(
+								new LocalizedString(labelEN, "en"));
+						statement.setPos(Integer.parseInt(mdProfileExcelEntries.get(i).getPosition()));
+
+						Metadata.Types aType = Enum.valueOf(Metadata.Types.class, type.toUpperCase());
+						switch (aType) {
+						case TEXT:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						case CONE_PERSON:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						case DATE:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						case GEOLOCATION:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						case LICENSE:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						case LINK:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						case NUMBER:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						case PUBLICATION:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
+							break;
+
+						default:
+							statements.add(statement);
+							mdProfileExcelEntries.remove(i);
 							break;
 						}
 						break;
@@ -312,8 +419,6 @@ public class ZuseXMLConverter extends
 		
 		mds.setProfile(mdProfile.getId());
 		
-		
-		
 		Collection<Metadata> mdl = new ArrayList<Metadata>();
 
 		List<?> z = enumList;
@@ -476,6 +581,193 @@ public class ZuseXMLConverter extends
 
 		return item;
 	}
+	
+	public Item getItemExcel(OUnterlagen tObject, ArrayList<ExcelMetadataEntry> mdProfileExcelEntries,
+			MetadataProfile mdProfile) throws IntrospectionException, BiffException, IOException {
+		
+		Item item = new Item();
+
+		item.setCreated(Calendar.getInstance());
+
+		String filename = "zuse_archive_";
+		String bestand = "";
+		String signatur = "";
+		String vorlagennummer = "";
+		String filenamePosfix = ".jpg";
+
+		List<MetadataSet> mdsl = new ArrayList<MetadataSet>();
+		MetadataSet mds = new MetadataSet();
+		
+		mds.setProfile(mdProfile.getId());
+		
+		Collection<Metadata> mdl = new ArrayList<Metadata>();
+
+		Iterator<Statement> it = mdProfile.getStatements().iterator();
+		Statement sts = null;
+		
+		for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(
+				tObject.getClass()).getPropertyDescriptors()) {
+			if (propertyDescriptor.getReadMethod().getReturnType() != String.class)
+				continue;
+
+			for (int i = 0; i < mdProfileExcelEntries.size() && it.hasNext(); i++) {
+				
+				String method = mdProfileExcelEntries.get(i).getMethod_name();
+				
+				if (propertyDescriptor.getReadMethod().getName().contains(method)) {
+
+					String type = mdProfileExcelEntries.get(i).getType();
+					
+					if (type.isEmpty()) {
+						continue;
+					}					
+					
+					Metadata.Types aType = Enum.valueOf(Metadata.Types.class, type.toUpperCase());
+					
+					sts = it.next();
+					
+					switch (aType) {
+						case TEXT:
+							
+							Text text = new Text();
+							
+							String tag = propertyDescriptor.getReadMethod().getName();
+							String value = (String) tObject.getValueFromMethod(tag);
+							text.setText(value);
+							
+							text.setStatement(sts.getId());
+							
+							text.setPos(sts.getPos());
+							mdl.add(text);
+	
+							// DMA_<bestand>_<signatur>.jpg
+							// getBestand, getSignatur
+	
+							if (tag.equalsIgnoreCase("getBestand")) {
+								bestand = value;
+							}
+	
+							if (tag.equalsIgnoreCase("getSignatur")) {
+								signatur = value;
+							}
+							
+							if (tag.equalsIgnoreCase("getVorlNr")) {
+								vorlagennummer = value;
+							}
+							break;
+	
+						case CONE_PERSON:
+							
+							//TODO: need implementation of merging this metadata
+							ConePerson conePerson = new ConePerson();
+							
+							conePerson.setStatement(sts.getId());
+							conePerson.setPos(sts.getPos());
+							
+							mdl.add(conePerson);
+							break;
+	
+						case DATE:
+							
+							//TODO: need implementation of merging this metadata
+							Date date = new Date();
+							
+							date.setStatement(sts.getId());
+							date.setPos(sts.getPos());
+							
+							mdl.add(date);
+							mdProfileExcelEntries.remove(i);
+							break;
+	
+						case GEOLOCATION:
+							
+							//TODO: need implementation of merging this metadata
+							Geolocation geolocation = new Geolocation();
+							
+							geolocation.setStatement(sts.getId());
+							geolocation.setPos(sts.getPos());
+							
+							mdl.add(geolocation);
+							break;
+	
+						case LICENSE:
+							
+							//TODO: need implementation of merging this metadata
+							License license = new License();
+							
+							license.setStatement(sts.getId());
+							license.setPos(sts.getPos());
+							
+							mdl.add(license);
+							break;
+	
+						case LINK:
+							
+							//TODO: need implementation of merging this metadata
+							Link link = new Link();
+							
+							link.setStatement(sts.getId());
+							link.setPos(sts.getPos());
+							
+							mdl.add(link);
+							break;
+	
+						case NUMBER:
+							
+							//TODO: need implementation of merging this metadata
+							Number number = new Number();
+							
+							number.setStatement(sts.getId());
+							number.setPos(sts.getPos());
+							
+							mdl.add(number);
+							break;
+	
+						case PUBLICATION:
+							
+							//TODO: need implementation of merging this metadata
+							Publication publication = new Publication();
+							
+							publication.setStatement(sts.getId());
+							publication.setPos(sts.getPos());
+							
+							mdl.add(publication);
+							break;
+	
+						default:
+							
+							//TODO: need implementation of merging this metadata
+							Text defaultTxt = new Text();
+							
+							defaultTxt.setStatement(sts.getId());
+							defaultTxt.setPos(sts.getPos());
+							
+							mdl.add(defaultTxt);
+							break;
+						}
+					break;
+				}
+			}
+		}
+
+		mds.setMetadata(mdl);
+		mdsl.add(mds);
+		item.setMetadataSets(mdsl);
+
+		// DMA_<bestand>_<signatur>.jpg
+//		bestand = bestand.replace(" ", "_").replace("/", "_");
+
+		if(!signatur.isEmpty()) {
+			signatur = signatur.replace("P ", "p").replace(" ", "_").replace("/", "_");
+			filename += signatur + filenamePosfix;
+		} else if(!vorlagennummer.isEmpty()) {
+			vorlagennummer = vorlagennummer.replace("/", "_").replace(" ", "");
+			filename += vorlagennummer + filenamePosfix;
+		}
+		item.setFilename(filename);
+
+		return item;
+	}
 
 	@Override
 	public Items getItems(List<OUnterlagen> tObject,
@@ -501,6 +793,37 @@ public class ZuseXMLConverter extends
 		
 		return new Items(itemColection);
 	}
+	
+	public Items getItemsExcel(List<OUnterlagen> tObject,
+			File excelFile, MetadataProfile mdProfile)
+			throws IntrospectionException, BiffException, IOException {
+		Collection<Item> itemColection = new ArrayList<Item>();
+		ArrayList<ExcelMetadataEntry> mdProfileExcelEntries = ZuseExcelEntryHandler.getMetadataFromExcelFile(excelFile);
+		for (OUnterlagen oul : tObject) {
+			String strNumbers = oul.getUmfang().replaceAll("\\D+"," ");
+			String[] strNums = strNumbers.split(" ");
+			int nums = 0;
+			for (int i = 0; i < strNums.length; i++) {
+				try {
+					nums += Integer.parseInt(strNums[i]);
+				} catch (NumberFormatException nfe)  {
+					break;
+				}
+			}
+			if(oul.getUmfang().isEmpty() || !oul.getSignatur().isEmpty() || strNumbers.isEmpty() || strNums.length < 1 || nums < 2) {
+				itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
+			} else {
+				String oldVorlnr = oul.getVorlNr(); 
+				for (int i = 1; i <= nums+20; i++) {
+					String zerosVorlNr = String.format("%03d", i);
+					oul.setVorlNr(oldVorlnr+"-"+zerosVorlNr);
+					itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
+				}
+			}
+		}
+		return new Items(itemColection);
+	}
+	
 
 	public static String getOfflineMDFilename(
 			String inputFilename, String suffix) {

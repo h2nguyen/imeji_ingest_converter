@@ -192,20 +192,35 @@ public class ZuseTest {
 
 	
 	@Test
-	public void generateItemsTest() throws JAXBException, SAXException, BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException {
+	public void generateItemsTest() throws JAXBException, SAXException, BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException, IntrospectionException {
 		
 		String folder = "ingest_final";
-		String inputFilename = "src/test/resources/"+folder+"/ZusePMNormalized.xml";
-//		ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class).unmarshal(inputFilename);
 		
 		File excelMdpFile = new File("src/main/resources/zuse/zuse_md_mapping_item_ounterlagen.xls");
-		ZuseExcelConverter zec = new ZuseExcelConverter();
-		MetadataProfile mdp = zec.getMdProfile(excelMdpFile, "Metadata profile", "Description of the metadata profile files");
+		
+		String inputFilename = "src/test/resources/"+folder+"/ZusePMNormalized.xml";
+		ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class).unmarshal(inputFilename);
+		
+//		ZuseExcelConverter zec = new ZuseExcelConverter();
+//		MetadataProfile mdp = zec.getMdProfile(excelMdpFile, "Metadata profile", "Description of the metadata profile files");
 				
-		String filenameMdpMerged = "src/test/resources/"+folder+"/excelGeneratedMdp.xml";
-				
-		FileOutputStream fos_mdp_merged = new FileOutputStream(new File(filenameMdpMerged));
-		JaxbGenericObject.writeToOutputStream(mdp, fos_mdp_merged);
+		ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
+		MetadataProfile mdp = zmdpconv.getMdProfileExcel(
+				oz.getOUnterlagen().get(0),
+				"Generated metadata profile",
+				"The metadata profile is generated from the Zuse object",
+				excelMdpFile);
+		
+//		JaxbUtil.toString(mdp);
+		
+		// generate the imeji items from the specific object (Zuse object) with the provided final merged meta data profile
+
+		ZuseXMLConverter zmdpconv2 = new ZuseXMLConverter();
+		List<OUnterlagen> ouls2 = oz.getOUnterlagen();
+		Items items = zmdpconv2.getItemsExcel(ouls2, excelMdpFile, mdp);
+		String filenameItemsOffline = "src/test/resources/"+folder+"/items_offline.xml";
+		FileOutputStream fos_items = new FileOutputStream(new File(filenameItemsOffline));
+		JaxbGenericObject.writeToOutputStream(items, fos_items);
 	}
 	//@Test
 	public void generateIngestFileProcessTest() throws FileNotFoundException,
