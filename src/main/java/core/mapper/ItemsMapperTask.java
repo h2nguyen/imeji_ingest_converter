@@ -124,6 +124,70 @@ public class ItemsMapperTask extends MapperTask<Items, Void> {
 		return this.getObjectMapped();
 	}
 
+	public Items doIt() throws CloneNotSupportedException {
+		this.setObjectMapped(this.getObjectOnline().clone());
+		this.getObjectMapped().getItem().clear();
+		
+		switch (this.getUpdateBy()) {
+			case UPDATE_BY_ID:
+				
+				for (Iterator<Item> itItOn = this.getObjectOnline().getItem().iterator(); itItOn.hasNext();) {
+					Item itemOn = itItOn.next();
+					for (Iterator<Item> itItOff = this.getObjectOffline().getItem().iterator(); itItOff.hasNext();) {
+						Item itemOff = itItOff.next();
+						if (itemOn.getId().compareTo(itemOff.getId()) == 0) {
+							this.getObjectMapped().getItem().add(this.mergeItem(itemOn,itemOff));
+							break;
+						}
+					}
+				}
+
+				break;
+			case UPDATE_BY_FILENAME:
+				
+				for (Iterator<Item> itItOn = this.getObjectOnline().getItem().iterator(); itItOn.hasNext();) {
+					Item itemOn = itItOn.next();
+					for (Iterator<Item> itItOff = this.getObjectOffline().getItem().iterator(); itItOff.hasNext();) {
+						Item itemOff = itItOff.next();
+						if (itemOn.getFilename().equals(itemOff.getFilename())) {
+							this.getObjectMapped().getItem().add(this.mergeItem(itemOn,itemOff));
+							break;
+						}
+					}
+				}
+				
+				break;
+			case UPDATE_BY_STORAGE_ID:
+				for (Iterator<Item> itItOn = this.getObjectOnline().getItem().iterator(); itItOn.hasNext();) {
+					Item itemOn = itItOn.next();
+					for (Iterator<Item> itItOff = this.getObjectOffline().getItem().iterator(); itItOff.hasNext();) {
+						Item itemOff = itItOff.next();
+						if (itemOn.getStorageId().equals(itemOff.getStorageId())) {
+							this.getObjectMapped().getItem().add(this.mergeItem(itemOn,itemOff));
+							break;
+						}
+					}
+				}
+				
+				break;
+			case UPDATE_BY_CHECKSUM:
+				for (Iterator<Item> itItOn = this.getObjectOnline().getItem().iterator(); itItOn.hasNext();) {
+					Item itemOn = itItOn.next();
+					for (Iterator<Item> itItOff = this.getObjectOffline().getItem().iterator(); itItOff.hasNext();) {
+						Item itemOff = itItOff.next();
+						if (itemOn.getChecksum().equals(itemOff.getChecksum())) {
+							this.getObjectMapped().getItem().add(this.mergeItem(itemOn,itemOff));
+							break;
+						}
+					}
+				}
+				break;
+			default:
+				break;
+		}
+
+		return this.getObjectMapped();
+	}
 	
 	protected Item mergeItem(Item objectOnline, Item objectOffline)
 			throws CloneNotSupportedException {

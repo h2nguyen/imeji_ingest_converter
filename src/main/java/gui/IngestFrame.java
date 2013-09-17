@@ -46,7 +46,6 @@ import core.task.enums.Task;
 import core.task.enums.Update;
 import core.vo.imeji.Items;
 import core.vo.imeji.MetadataProfile;
-
 import module.zusearchive.converter.ZuseExcelConverter;
 import module.zusearchive.converter.ZuseXMLConverter;
 import module.zusearchive.jaxb.JaxbZuseGenericObject;
@@ -54,6 +53,7 @@ import module.zusearchive.misc.ZuseNormalizer;
 import module.zusearchive.vo.generated.OUnterlagen;
 import module.zusearchive.vo.generated.ZUSE;
 import module.zusearchive.vo.generated.formats.enums.ZuseXMLMDEnumType;
+
 import javax.swing.JComboBox;
 
 import jxl.read.biff.BiffException;
@@ -1077,8 +1077,10 @@ public class IngestFrame extends JFrame implements ActionListener,
 				ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
 						filenameItemsWithMergedMD, Task.OVERWRITE,
 						Update.UPDATE_BY_FILENAME);
-				ismt.execute();
-				Items itemsMerged = ismt.get();
+				
+//				ismt.execute();				
+//				Items itemsMerged = ismt.get();
+				Items itemsMerged = ismt.doIt();
 				String mergedItemsFilename = ItemsMapperTask
 						.getMergedItemsFilename(filenameItemsWithMergedMD);
 				FileOutputStream fos_final_items_to_ingest = new FileOutputStream(
@@ -1088,12 +1090,6 @@ public class IngestFrame extends JFrame implements ActionListener,
 						fos_final_items_to_ingest);
 				this.notifyMessage("Done generating final items!");
 				this.txtItemsMerged.setText(mergedItemsFilename);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExecutionException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			} catch (JAXBException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -1101,6 +1097,9 @@ public class IngestFrame extends JFrame implements ActionListener,
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (CloneNotSupportedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
