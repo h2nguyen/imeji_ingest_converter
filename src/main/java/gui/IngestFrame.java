@@ -1209,6 +1209,12 @@ public class IngestFrame extends JFrame implements ActionListener,
 					this.txtItemsMerged.setText(((File) files.get(0))
 							.getAbsolutePath());
 				}
+				
+				if (dtde.getDropTargetContext().getComponent()
+						.equals(this.txtMdProfileAsExcel)) {
+					this.txtMdProfileAsExcel.setText(((File) files.get(0))
+							.getAbsolutePath());
+				}
 
 				dtde.getDropTargetContext().dropComplete(true);
 			} else {
