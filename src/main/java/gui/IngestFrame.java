@@ -1114,6 +1114,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 			this.txtMetadataProfileOnline.setText("");
 			this.txtNormalizedData.setText("");
 			this.txtRawData.setText("");
+			this.txtMdProfileAsExcel.setText("");
 		}
 		//
 		//
