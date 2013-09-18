@@ -66,6 +66,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="gkd_nr__koerperschaft" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="pnd_nr__zeichner_hersteller" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="zeichner_hersteller" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="verwahrungsort" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="license" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -114,7 +116,9 @@ import javax.xml.bind.annotation.XmlType;
     "koerperschaft",
     "gkdNrKoerperschaft",
     "pndNrZeichnerHersteller",
-    "zeichnerHersteller"
+    "zeichnerHersteller",
+    "verwahrungsort",
+    "license"
 })
 public class OUnterlagen {
 
@@ -172,7 +176,9 @@ public class OUnterlagen {
     protected String pndNrZeichnerHersteller;
     @XmlElement(name = "zeichner_hersteller")
     protected String zeichnerHersteller;
-
+    protected String verwahrungsort;
+    protected String license;
+    
     /**
      * Gets the value of the vorlNr property.
      * 
@@ -1108,7 +1114,56 @@ public class OUnterlagen {
     public void setZeichnerHersteller(String value) {
         this.zeichnerHersteller = value;
     }
+    
+    /**
+     * Gets the value of the verwahrungsort property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getVerwahrungsort() {
+        return verwahrungsort;
+    }
 
+    /**
+     * Sets the value of the verwahrungsort property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setVerwahrungsort(String value) {
+        this.verwahrungsort = value;
+    }
+
+    
+    /**
+     * Gets the value of the license property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getLicense() {
+        return license;
+    }
+
+    /**
+     * Sets the value of the license property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setLicense(String value) {
+        this.license = value;
+    }
+    
     public Object getValueFromMethod(String methodName) {
     	Method method;
     	

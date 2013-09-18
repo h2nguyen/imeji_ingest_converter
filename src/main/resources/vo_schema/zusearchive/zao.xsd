@@ -66,6 +66,10 @@
 				minOccurs="0" />
 			<xs:element name="zeichner_hersteller" type="xs:string"
 				minOccurs="0" />
+			<xs:element name="verwahrungsort" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="license" type="xs:string"
+				minOccurs="0" />	
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

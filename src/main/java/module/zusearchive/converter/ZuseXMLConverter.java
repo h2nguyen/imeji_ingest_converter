@@ -196,6 +196,8 @@ public class ZuseXMLConverter extends
 						statement.getLabels().add(
 								new LocalizedString(labelEN, "en"));
 						statement.setPos(Integer.parseInt(mdProfileExcelEntries.get(i).getPosition()));
+						statement.setDescription(mdProfileExcelEntries.get(i).isCaption());
+						statement.setPreview(mdProfileExcelEntries.get(i).isPreview());
 
 						Metadata.Types aType = Enum.valueOf(Metadata.Types.class, type.toUpperCase());
 						switch (aType) {
@@ -590,7 +592,6 @@ public class ZuseXMLConverter extends
 		item.setCreated(Calendar.getInstance());
 
 		String filename = "zuse_archive_";
-		String bestand = "";
 		String signatur = "";
 		String vorlagennummer = "";
 		String filenamePosfix = ".jpg";
@@ -642,10 +643,6 @@ public class ZuseXMLConverter extends
 	
 							// DMA_<bestand>_<signatur>.jpg
 							// getBestand, getSignatur
-	
-							if (tag.equalsIgnoreCase("getBestand")) {
-								bestand = value;
-							}
 	
 							if (tag.equalsIgnoreCase("getSignatur")) {
 								signatur = value;
@@ -755,10 +752,9 @@ public class ZuseXMLConverter extends
 		item.setMetadataSets(mdsl);
 
 		// DMA_<bestand>_<signatur>.jpg
-//		bestand = bestand.replace(" ", "_").replace("/", "_");
 
 		if(!signatur.isEmpty()) {
-			signatur = signatur.replace("P ", "p").replace(" ", "_").replace("/", "_");
+			signatur = signatur.replace("P ", "p").replace(" ", "_").replace("/", "_").replace(" DME","");
 			filename += signatur + filenamePosfix;
 		} else if(!vorlagennummer.isEmpty()) {
 			vorlagennummer = vorlagennummer.replace("/", "_").replace(" ", "");

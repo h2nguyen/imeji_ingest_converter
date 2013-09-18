@@ -11,9 +11,11 @@ public class ExcelMetadataEntry {
 	private String type;
 	private String language_de;
 	private String language_en;
+	private boolean caption;
+	private boolean preview;
 
 	public ExcelMetadataEntry(String position, boolean active, String original_tag, String normalized_tag, String method_name,
-			boolean multiplicity, String type, String language_de, String language_en) {
+			boolean multiplicity, String type, String language_de, String language_en, boolean caption, boolean preview) {
 		this.setPosition(position);
 		this.setActive(active);
 		this.setOriginal_tag(original_tag);
@@ -23,6 +25,8 @@ public class ExcelMetadataEntry {
 		this.setType(type);
 		this.setLanguage_de(language_de);
 		this.setLanguage_en(language_en);
+		this.setCaption(caption);
+		this.setPreview(preview);
 	}
 
 	/**
@@ -151,4 +155,31 @@ public class ExcelMetadataEntry {
 		this.language_en = language_en;
 	}
 
+	/**
+	 * @return the caption
+	 */
+	public boolean isCaption() {
+		return caption;
+	}
+
+	/**
+	 * @param caption the caption to set
+	 */
+	public void setCaption(boolean caption) {
+		this.caption = caption;
+	}
+	
+	/**
+	 * @return the preview
+	 */
+	public boolean isPreview() {
+		return preview;
+	}
+
+	/**
+	 * @param preview the preview to set
+	 */
+	public void setPreview(boolean preview) {
+		this.preview = preview;
+	}
 }

@@ -10,7 +10,9 @@ public enum ExcelZuseEntryEnum {
 	MULTIPLICITY("Multiplicity", 5),	
 	TYPE("Type", 6),
 	LANGUAGE_DE("Language DE", 7),
-	LANGUAGE_EN("Language EN", 8);
+	LANGUAGE_EN("Language EN", 8),
+	CAPTION("Caption", 9),
+	PREVIEW("Preview", 10);
 
 	private String type;
 	private int ord;

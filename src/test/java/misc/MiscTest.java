@@ -7,6 +7,13 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import jxl.Sheet;
 import jxl.Workbook;
@@ -56,12 +63,38 @@ public class MiscTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testDigitParsing() {
 		
 		String str = "113 Bl. gedr., ms.12 1 u. hektogr. (1 Bd. Kopie)";
         str = str.replaceAll("\\D+"," ");
         System.out.println(str);
+	}
+	
+//	@Test
+	public void addVerwarhtungsort() throws IOException {
+		
+		Path pathIn = Paths.get("src/test/resources/ingest_final/ZusePMNormalized.xml");
+		Path pathOut = Paths.get("src/test/resources/ingest_final/ZusePMNormalizedOut.xml");
+		
+		Charset charset = StandardCharsets.UTF_8;
+
+		String content = new String(Files.readAllBytes(pathIn), charset);
+		content = content.replaceAll("</oUnterlagen>", "<verwahrungsort>Deutsches Museum, Munich, Archives (DMA)</verwahrungsort>\n</oUnterlagen>");
+		Files.write(pathOut, content.getBytes(charset));
+	}
+	
+	@Test
+	public void addLicense() throws IOException {
+		
+		Path pathIn = Paths.get("src/test/resources/ingest_final/ZusePMNormalizedFinalWithOriLoc.xml");
+		Path pathOut = Paths.get("src/test/resources/ingest_final/ZusePMNormalizedFinalWithOriLocAndLisense.xml");
+		
+		Charset charset = StandardCharsets.UTF_8;
+
+		String content = new String(Files.readAllBytes(pathIn), charset);
+		content = content.replaceAll("</oUnterlagen>", "<license><![CDATA[<a href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\" target=\"_blank\">]]>CC BY-NC-SA<![CDATA[</a>]]></license>\n</oUnterlagen>");
+		Files.write(pathOut, content.getBytes(charset));
 	}
 
 }

@@ -110,7 +110,9 @@ public class ZuseExcelEntryHandler {
 					Boolean.parseBoolean(sheet.getCell(ExcelZuseEntryEnum.MULTIPLICITY.getOrd(), i).getContents()),
 					sheet.getCell(ExcelZuseEntryEnum.TYPE.getOrd(), i).getContents(),
 					sheet.getCell(ExcelZuseEntryEnum.LANGUAGE_DE.getOrd(), i).getContents(),
-					sheet.getCell(ExcelZuseEntryEnum.LANGUAGE_EN.getOrd(), i).getContents());
+					sheet.getCell(ExcelZuseEntryEnum.LANGUAGE_EN.getOrd(), i).getContents(),
+					Boolean.parseBoolean(sheet.getCell(ExcelZuseEntryEnum.CAPTION.getOrd(), i).getContents()),
+					Boolean.parseBoolean(sheet.getCell(ExcelZuseEntryEnum.PREVIEW.getOrd(), i).getContents()));
 			metadataEntries.add(metadataEntry);
 		}
 		
