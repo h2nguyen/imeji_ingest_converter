@@ -810,7 +810,7 @@ public class ZuseXMLConverter extends
 				itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
 			} else {
 				String oldVorlnr = oul.getVorlNr(); 
-				for (int i = 1; i <= nums+20; i++) {
+				for (int i = 1; i <= nums+100; i++) {
 					String zerosVorlNr = String.format("%03d", i);
 					oul.setVorlNr(oldVorlnr+"-"+zerosVorlNr);
 					itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
