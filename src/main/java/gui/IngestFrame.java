@@ -119,6 +119,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 	private JButton btnClearAll;
 	private JTextField txtMdProfileAsExcel;
 	private JButton btnChooseExcelMdProfile;
+	private DnDButton btnOneclick;
 
 	/**
 	 * Create the frame.
@@ -134,13 +135,13 @@ public class IngestFrame extends JFrame implements ActionListener,
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[] { 0, 86, 61, 0, 167, 57, 0, 0,
 				0, 168, 56, 0, 0 };
-		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 36, 0,
-				21, 0, 0, 0, 0, 0, 20, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 36,
+				0, 21, 0, 0, 0, 0, 0, 20, 0 };
 		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0,
 				1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 1.0, 0.0, 1.0, 0.0, 1.0, 1.0,
-				1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
-				Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 1.0, 0.0, 1.0, 0.0, 1.0,
+				1.0, 1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				1.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
 
 		lblRawData = new JLabel("Raw data");
@@ -221,7 +222,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_lblMetadataProfile.gridx = 1;
 		gbc_lblMetadataProfile.gridy = 4;
 		contentPane.add(lblMetadataProfile, gbc_lblMetadataProfile);
-		
+
 		txtMdProfileAsExcel = new JTextField();
 		GridBagConstraints gbc_txtMdProfileAsExcel = new GridBagConstraints();
 		gbc_txtMdProfileAsExcel.gridwidth = 5;
@@ -231,7 +232,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_txtMdProfileAsExcel.gridy = 4;
 		contentPane.add(txtMdProfileAsExcel, gbc_txtMdProfileAsExcel);
 		txtMdProfileAsExcel.setColumns(10);
-		
+
 		btnChooseExcelMdProfile = new JButton("...");
 		GridBagConstraints gbc_btnChooseExcelMdProfile = new GridBagConstraints();
 		gbc_btnChooseExcelMdProfile.fill = GridBagConstraints.BOTH;
@@ -529,7 +530,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_lblNotification.gridx = 1;
 		gbc_lblNotification.gridy = 17;
 		contentPane.add(lblNotification, gbc_lblNotification);
-		
+
 		btnClearAll = new JButton("Clear all");
 		btnClearAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -541,6 +542,15 @@ public class IngestFrame extends JFrame implements ActionListener,
 		gbc_btnClearAll.gridx = 4;
 		gbc_btnClearAll.gridy = 17;
 		contentPane.add(btnClearAll, gbc_btnClearAll);
+
+		btnOneclick = new DnDButton("OneClick");
+		GridBagConstraints gbc_btnOneclick = new GridBagConstraints();
+		gbc_btnOneclick.fill = GridBagConstraints.BOTH;
+		gbc_btnOneclick.gridwidth = 2;
+		gbc_btnOneclick.insets = new Insets(0, 0, 0, 5);
+		gbc_btnOneclick.gridx = 5;
+		gbc_btnOneclick.gridy = 17;
+		contentPane.add(btnOneclick, gbc_btnOneclick);
 
 		btnCancel = new JButton();
 		GridBagConstraints gbc_btnCancel = new GridBagConstraints();
@@ -597,9 +607,12 @@ public class IngestFrame extends JFrame implements ActionListener,
 
 		this.txtItemsMerged.setDragEnabled(true);
 		new DropTarget(txtItemsMerged, this);
-		
+
 		this.txtMdProfileAsExcel.setDragEnabled(true);
 		new DropTarget(txtMdProfileAsExcel, this);
+
+		// this.btnOneclick.setDragEnabled(true);
+		new DropTarget(btnOneclick, this);
 	}
 
 	private void initActionListener() {
@@ -625,6 +638,8 @@ public class IngestFrame extends JFrame implements ActionListener,
 
 		this.btnCancel.addActionListener(this);
 		this.btnClearAll.addActionListener(this);
+
+		this.btnOneclick.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -647,13 +662,13 @@ public class IngestFrame extends JFrame implements ActionListener,
 				this.notifyMessage("A normalized data file was seleted!");
 			}
 		}
-		
-		if(e.getSource() == this.btnChooseExcelMdProfile) {
-			this.chooserFile.setDialogTitle("Open excel meta data profile file");
+
+		if (e.getSource() == this.btnChooseExcelMdProfile) {
+			this.chooserFile
+					.setDialogTitle("Open excel meta data profile file");
 			if (this.chooserFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				this.txtMdProfileAsExcel
-						.setText(this.chooserFile.getSelectedFile()
-								.getAbsolutePath());
+				this.txtMdProfileAsExcel.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
 				this.notifyMessage("An excel meta data profile file was seleted!");
 			}
 		}
@@ -758,170 +773,12 @@ public class IngestFrame extends JFrame implements ActionListener,
 
 		// generate the meta data profile from the raw data
 		if (e.getSource() == this.btnGenerateOfflineMetadataProfile) {
-			while (this.txtNormalizedData.getText().isEmpty()) {
-				this.chooserFile
-						.setDialogTitle("Open normalized raw data file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtNormalizedData.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-			while (this.txtMdProfileAsExcel.getText().isEmpty()) {
-				this.chooserFile.setDialogTitle("Open excel meta data file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtMdProfileAsExcel.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-
-			try {
-
-				String filenameEntriesNormalizedOffline = this.txtNormalizedData
-						.getText();
-
-				MetadataProfile raw_gen_mdp = null;
-
-				this.notifyMessage("Generating metadata profile file...");
-
-				if (cbbFileType.getSelectedIndex() == 0) { // XML handling
-					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
-							.unmarshal(filenameEntriesNormalizedOffline);
-					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
-					List<OUnterlagen> ouls = oz.getOUnterlagen();
-					// generate an imeji meta data profile from the specific
-					// object
-					raw_gen_mdp = zmdpconv
-							.getMdProfile(
-									ouls.get(0),
-									"Generated metadata profile",
-									"The metadata profile is generated from the Zuse object",
-									ZuseXMLMDEnumType.getEnumList());
-
-				} else if (cbbFileType.getSelectedIndex() == 1) { // Excel handling
-					raw_gen_mdp = new ZuseExcelConverter().getMdProfile4PDF(
-							filenameEntriesNormalizedOffline, "Metadata file",
-							"Metadata file generated from an Excel file");
-				} else if (cbbFileType.getSelectedIndex() == 2) { // Excel handling
-					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
-							.unmarshal(filenameEntriesNormalizedOffline);
-					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
-					List<OUnterlagen> ouls = oz.getOUnterlagen();
-					// generate an imeji meta data profile from the specific
-					// object
-					raw_gen_mdp = zmdpconv
-							.getMdProfileExcel(
-									ouls.get(0),
-									"Generated metadata profile",
-									"The metadata profile is generated from the Zuse object",
-									new File(this.txtMdProfileAsExcel.getText()));
-				}
-				
-				String filenameMdpOffline = ZuseXMLConverter
-						.getOfflineMDFilename(filenameEntriesNormalizedOffline,"xml");
-
-				FileOutputStream fos_raw_gen_mdp = new FileOutputStream(
-						new File(filenameMdpOffline));
-
-				JaxbGenericObject.writeToOutputStream(raw_gen_mdp,
-						fos_raw_gen_mdp);
-				this.notifyMessage("Done generating metadata profile file!");
-
-				this.txtGeneratedOfflineMetadataProfile
-						.setText(filenameMdpOffline);
-
-			} catch (JAXBException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (SAXException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (IntrospectionException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (BiffException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IllegalAccessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IllegalArgumentException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (InvocationTargetException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			this.processGenerateOfflineMDP();
 		}
 
 		// merges the offline meta data profile with the online version
 		if (e.getSource() == this.btnMergeMetadataProfile) {
-			while (this.txtGeneratedOfflineMetadataProfile.getText().isEmpty()) {
-				this.chooserFile
-						.setDialogTitle("Open a generated meta data profile file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtGeneratedOfflineMetadataProfile
-							.setText(this.chooserFile.getSelectedFile()
-									.getAbsolutePath());
-				}
-			}
-
-			while (this.txtMetadataProfileOnline.getText().isEmpty()) {
-				this.chooserFile
-						.setDialogTitle("Open an online meta data profile file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtMetadataProfileOnline.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-
-			try {
-				String filenameMdpOnline = this.txtMetadataProfileOnline
-						.getText(); // download from the internet
-				String filenameMdpOffline = this.txtGeneratedOfflineMetadataProfile
-						.getText();
-				MdProfileMapperTask mdpmt = new MdProfileMapperTask(
-						filenameMdpOnline, filenameMdpOffline, Task.UPDATE);
-				this.notifyMessage("Generating merged metadata profile file...");
-				mdpmt.execute();
-				MetadataProfile mdpMerged = mdpmt.get();
-				String filenameMdpMerged = MdProfileMapperTask
-						.getOfflineMDFilename(filenameMdpOffline);
-				FileOutputStream fos_mdp_merged = new FileOutputStream(
-						new File(filenameMdpMerged));
-				JaxbGenericObject
-						.writeToOutputStream(mdpMerged, fos_mdp_merged);
-				this.notifyMessage("Done generating merged metadata profile file!");
-				this.txtMetadataProfileMerged.setText(filenameMdpMerged);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExecutionException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (JAXBException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (SAXException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			this.processMergeMDP();
 		}
 
 		// gets the items data from the online repository
@@ -939,170 +796,12 @@ public class IngestFrame extends JFrame implements ActionListener,
 
 		// generate the items from the normalized raw data file
 		if (e.getSource() == this.btnGenerateItems) {
-			while (this.txtNormalizedData.getText().isEmpty()) {
-				this.chooserFile.setDialogTitle("Open a normlized file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtNormalizedData.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-
-			while (this.txtMetadataProfileMerged.getText().isEmpty()) {
-				this.chooserFile
-						.setDialogTitle("Open a merged meta data profile file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtMetadataProfileMerged.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-			
-			while (this.txtMdProfileAsExcel.getText().isEmpty()) {
-				this.chooserFile.setDialogTitle("Open excel meta data file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtMdProfileAsExcel.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-
-			try {
-				
-				Items items = null;
-				String filenameEntriesNormalizedOffline = this.txtNormalizedData.getText();
-				String filenameMdpMerged = this.txtMetadataProfileMerged.getText();
-				MetadataProfile merged_mdp = new JaxbGenericObject<MetadataProfile>(
-						MetadataProfile.class).unmarshal(filenameMdpMerged);
-				this.notifyMessage("Generating items...");
-				if (cbbFileTypItems.getSelectedIndex() == 0) { // XML handling
-					// generate the imeji items from the specific object (Zuse
-					// object) with the provided final merged meta data profile
-					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
-							.unmarshal(filenameEntriesNormalizedOffline);
-					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
-					List<OUnterlagen> ouls = oz.getOUnterlagen();
-					items = zmdpconv.getItems(ouls,
-							ZuseXMLMDEnumType.getEnumList(), merged_mdp);
-				} else if (cbbFileTypItems.getSelectedIndex() == 1) { // Excel handling
-					ZuseExcelConverter zec = new ZuseExcelConverter();
-					items = zec.getItems4PDF(filenameEntriesNormalizedOffline,merged_mdp);
-				} else if (cbbFileTypItems.getSelectedIndex() == 2) { // XML handling
-					// generate the imeji items from the specific object (Zuse
-					// object) with the provided final merged meta data profile
-					ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
-							.unmarshal(filenameEntriesNormalizedOffline);
-					ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
-					List<OUnterlagen> ouls = oz.getOUnterlagen();
-					items = zmdpconv.getItemsExcel(ouls,new File(this.txtMdProfileAsExcel.getText()), merged_mdp);
-				}
-				
-				String filenameItemsOffline = ZuseXMLConverter
-						.getOfflineItemsFilename(filenameEntriesNormalizedOffline,"xml");
-				FileOutputStream fos_items = new FileOutputStream(new File(
-						filenameItemsOffline));
-				JaxbGenericObject.writeToOutputStream(items, fos_items);
-				this.notifyMessage("Done generating items!");
-				this.txtGeneratedItems.setText(filenameItemsOffline);
-				
-			} catch (JAXBException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (SAXException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			} catch (IntrospectionException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (BiffException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IllegalAccessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IllegalArgumentException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (InvocationTargetException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (URISyntaxException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+			this.processGenerateItems();
 		}
 
 		// merges the offline with the online items information
 		if (e.getSource() == this.btnMergeItems) {
-
-			while (this.txtGeneratedItems.getText().isEmpty()) {
-				this.chooserFile.setDialogTitle("Open an offline items file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtGeneratedItems.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-
-			while (this.txtItemOnline.getText().isEmpty()) {
-				this.chooserFile.setDialogTitle("Open an online items file");
-				if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-					return;
-				} else {
-					this.txtItemOnline.setText(this.chooserFile
-							.getSelectedFile().getAbsolutePath());
-				}
-			}
-
-			try {
-
-				// merge the online items with the offline generated items
-				String filenameItemsOnline = this.txtItemOnline.getText(); // download
-																			// from
-																			// the
-																			// internet
-				String filenameItemsWithMergedMD = this.txtGeneratedItems
-						.getText();
-				ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
-						filenameItemsWithMergedMD, Task.OVERWRITE,
-						Update.UPDATE_BY_FILENAME);
-				
-//				ismt.execute();				
-//				Items itemsMerged = ismt.get();
-				Items itemsMerged = ismt.doIt();
-				String mergedItemsFilename = ItemsMapperTask
-						.getMergedItemsFilename(filenameItemsWithMergedMD);
-				FileOutputStream fos_final_items_to_ingest = new FileOutputStream(
-						new File(mergedItemsFilename));
-
-				JaxbGenericObject.writeToOutputStream(itemsMerged,
-						fos_final_items_to_ingest);
-				this.notifyMessage("Done generating final items!");
-				this.txtItemsMerged.setText(mergedItemsFilename);
-			} catch (JAXBException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SAXException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (CloneNotSupportedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			this.processMergeItems();
 		}
 
 		if (e.getSource() == this.btnClearAll) {
@@ -1116,6 +815,19 @@ public class IngestFrame extends JFrame implements ActionListener,
 			this.txtRawData.setText("");
 			this.txtMdProfileAsExcel.setText("");
 		}
+		
+		if (e.getSource() == this.btnOneclick) {
+			if(!this.txtMetadataProfileOnline.getText().isEmpty() 
+					&& !this.txtItemOnline.getText().isEmpty() 
+					&& !this.txtNormalizedData.getText().isEmpty() 
+					&& !this.txtMdProfileAsExcel.getText().isEmpty()) {
+				this.processGenerateOfflineMDP();
+				this.processMergeMDP();
+				this.processGenerateItems();
+				this.processMergeItems();
+				
+			}
+		}
 		//
 		//
 		// if(e.getSource() == this.btnCancel) {
@@ -1127,6 +839,346 @@ public class IngestFrame extends JFrame implements ActionListener,
 		// this.it.stop();
 		// }
 		// }
+	}
+
+	private void processMergeItems() {
+		while (this.txtGeneratedItems.getText().isEmpty()) {
+			this.chooserFile.setDialogTitle("Open an offline items file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtGeneratedItems.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+
+		while (this.txtItemOnline.getText().isEmpty()) {
+			this.chooserFile.setDialogTitle("Open an online items file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtItemOnline.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+
+		try {
+
+			// merge the online items with the offline generated items
+			String filenameItemsOnline = this.txtItemOnline.getText(); // download
+																		// from
+																		// the
+																		// internet
+			String filenameItemsWithMergedMD = this.txtGeneratedItems
+					.getText();
+			ItemsMapperTask ismt = new ItemsMapperTask(filenameItemsOnline,
+					filenameItemsWithMergedMD, Task.OVERWRITE,
+					Update.UPDATE_BY_FILENAME);
+
+			// ismt.execute();
+			// Items itemsMerged = ismt.get();
+			Items itemsMerged = ismt.doIt();
+			String mergedItemsFilename = ItemsMapperTask
+					.getMergedItemsFilename(filenameItemsWithMergedMD);
+			FileOutputStream fos_final_items_to_ingest = new FileOutputStream(
+					new File(mergedItemsFilename));
+
+			JaxbGenericObject.writeToOutputStream(itemsMerged,
+					fos_final_items_to_ingest);
+			this.notifyMessage("Done generating final items!");
+			this.txtItemsMerged.setText(mergedItemsFilename);
+		} catch (JAXBException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SAXException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (CloneNotSupportedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	private void processGenerateItems() {
+		while (this.txtNormalizedData.getText().isEmpty()) {
+			this.chooserFile.setDialogTitle("Open a normlized file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtNormalizedData.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+
+		while (this.txtMetadataProfileMerged.getText().isEmpty()) {
+			this.chooserFile
+					.setDialogTitle("Open a merged meta data profile file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtMetadataProfileMerged.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+
+		while (this.txtMdProfileAsExcel.getText().isEmpty()) {
+			this.chooserFile.setDialogTitle("Open excel meta data file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtMdProfileAsExcel.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+
+		try {
+
+			Items items = null;
+			String filenameEntriesNormalizedOffline = this.txtNormalizedData
+					.getText();
+			String filenameMdpMerged = this.txtMetadataProfileMerged
+					.getText();
+			MetadataProfile merged_mdp = new JaxbGenericObject<MetadataProfile>(
+					MetadataProfile.class).unmarshal(filenameMdpMerged);
+			this.notifyMessage("Generating items...");
+			if (cbbFileTypItems.getSelectedIndex() == 0) { // XML handling
+				// generate the imeji items from the specific object (Zuse
+				// object) with the provided final merged meta data profile
+				ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
+						.unmarshal(filenameEntriesNormalizedOffline);
+				ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
+				List<OUnterlagen> ouls = oz.getOUnterlagen();
+				items = zmdpconv.getItems(ouls,
+						ZuseXMLMDEnumType.getEnumList(), merged_mdp);
+			} else if (cbbFileTypItems.getSelectedIndex() == 1) { // Excel
+																	// handling
+				ZuseExcelConverter zec = new ZuseExcelConverter();
+				items = zec.getItems4PDF(filenameEntriesNormalizedOffline,
+						merged_mdp);
+			} else if (cbbFileTypItems.getSelectedIndex() == 2) { // XML
+																	// handling
+				// generate the imeji items from the specific object (Zuse
+				// object) with the provided final merged meta data profile
+				ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
+						.unmarshal(filenameEntriesNormalizedOffline);
+				ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
+				List<OUnterlagen> ouls = oz.getOUnterlagen();
+				items = zmdpconv.getItemsExcel(ouls, new File(
+						this.txtMdProfileAsExcel.getText()), merged_mdp);
+			}
+
+			String filenameItemsOffline = ZuseXMLConverter
+					.getOfflineItemsFilename(
+							filenameEntriesNormalizedOffline, "xml");
+			FileOutputStream fos_items = new FileOutputStream(new File(
+					filenameItemsOffline));
+			JaxbGenericObject.writeToOutputStream(items, fos_items);
+			this.notifyMessage("Done generating items!");
+			this.txtGeneratedItems.setText(filenameItemsOffline);
+
+		} catch (JAXBException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (SAXException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IntrospectionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (BiffException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	private void processMergeMDP() {
+		while (this.txtGeneratedOfflineMetadataProfile.getText().isEmpty()) {
+			this.chooserFile
+					.setDialogTitle("Open a generated meta data profile file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtGeneratedOfflineMetadataProfile
+						.setText(this.chooserFile.getSelectedFile()
+								.getAbsolutePath());
+			}
+		}
+
+		while (this.txtMetadataProfileOnline.getText().isEmpty()) {
+			this.chooserFile
+					.setDialogTitle("Open an online meta data profile file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtMetadataProfileOnline.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+
+		try {
+			String filenameMdpOnline = this.txtMetadataProfileOnline
+					.getText(); // download from the internet
+			String filenameMdpOffline = this.txtGeneratedOfflineMetadataProfile
+					.getText();
+			MdProfileMapperTask mdpmt = new MdProfileMapperTask(
+					filenameMdpOnline, filenameMdpOffline, Task.UPDATE);
+			this.notifyMessage("Generating merged metadata profile file...");
+			mdpmt.execute();
+			MetadataProfile mdpMerged = mdpmt.get();
+			String filenameMdpMerged = MdProfileMapperTask
+					.getOfflineMDFilename(filenameMdpOffline);
+			FileOutputStream fos_mdp_merged = new FileOutputStream(
+					new File(filenameMdpMerged));
+			JaxbGenericObject
+					.writeToOutputStream(mdpMerged, fos_mdp_merged);
+			this.notifyMessage("Done generating merged metadata profile file!");
+			this.txtMetadataProfileMerged.setText(filenameMdpMerged);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JAXBException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (SAXException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	private void processGenerateOfflineMDP() {
+		while (this.txtNormalizedData.getText().isEmpty()) {
+			this.chooserFile
+					.setDialogTitle("Open normalized raw data file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtNormalizedData.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+		while (this.txtMdProfileAsExcel.getText().isEmpty()) {
+			this.chooserFile.setDialogTitle("Open excel meta data file");
+			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			} else {
+				this.txtMdProfileAsExcel.setText(this.chooserFile
+						.getSelectedFile().getAbsolutePath());
+			}
+		}
+
+		try {
+
+			String filenameEntriesNormalizedOffline = this.txtNormalizedData
+					.getText();
+
+			MetadataProfile raw_gen_mdp = null;
+
+			this.notifyMessage("Generating metadata profile file...");
+
+			if (cbbFileType.getSelectedIndex() == 0) { // XML handling
+				ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
+						.unmarshal(filenameEntriesNormalizedOffline);
+				ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
+				List<OUnterlagen> ouls = oz.getOUnterlagen();
+				// generate an imeji meta data profile from the specific
+				// object
+				raw_gen_mdp = zmdpconv
+						.getMdProfile(
+								ouls.get(0),
+								"Generated metadata profile",
+								"The metadata profile is generated from the Zuse object",
+								ZuseXMLMDEnumType.getEnumList());
+
+			} else if (cbbFileType.getSelectedIndex() == 1) { // Excel
+																// handling
+				raw_gen_mdp = new ZuseExcelConverter().getMdProfile4PDF(
+						filenameEntriesNormalizedOffline, "Metadata file",
+						"Metadata file generated from an Excel file");
+			} else if (cbbFileType.getSelectedIndex() == 2) { // Excel
+																// handling
+				ZUSE oz = new JaxbZuseGenericObject<ZUSE>(ZUSE.class)
+						.unmarshal(filenameEntriesNormalizedOffline);
+				ZuseXMLConverter zmdpconv = new ZuseXMLConverter();
+				List<OUnterlagen> ouls = oz.getOUnterlagen();
+				// generate an imeji meta data profile from the specific
+				// object
+				raw_gen_mdp = zmdpconv
+						.getMdProfileExcel(
+								ouls.get(0),
+								"Generated metadata profile",
+								"The metadata profile is generated from the Zuse object",
+								new File(this.txtMdProfileAsExcel.getText()));
+			}
+
+			String filenameMdpOffline = ZuseXMLConverter
+					.getOfflineMDFilename(filenameEntriesNormalizedOffline,
+							"xml");
+
+			FileOutputStream fos_raw_gen_mdp = new FileOutputStream(
+					new File(filenameMdpOffline));
+
+			JaxbGenericObject.writeToOutputStream(raw_gen_mdp,
+					fos_raw_gen_mdp);
+			this.notifyMessage("Done generating metadata profile file!");
+
+			this.txtGeneratedOfflineMetadataProfile
+					.setText(filenameMdpOffline);
+
+		} catch (JAXBException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (SAXException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IntrospectionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (BiffException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void notifyMessage(String message) {
@@ -1209,11 +1261,47 @@ public class IngestFrame extends JFrame implements ActionListener,
 					this.txtItemsMerged.setText(((File) files.get(0))
 							.getAbsolutePath());
 				}
-				
+
 				if (dtde.getDropTargetContext().getComponent()
 						.equals(this.txtMdProfileAsExcel)) {
 					this.txtMdProfileAsExcel.setText(((File) files.get(0))
 							.getAbsolutePath());
+				}
+
+				if (dtde.getDropTargetContext().getComponent()
+						.equals(this.btnOneclick)) {
+
+					for (Object object : files) {
+						File file = (File) object;
+						if (file.isDirectory()) {
+
+							for (final File fileEntry : file.listFiles()) {
+
+								if (fileEntry.getAbsolutePath().endsWith(
+										"mdp_online.xml")) {
+									this.txtMetadataProfileOnline
+											.setText(fileEntry
+													.getAbsolutePath());
+								} else if (fileEntry.getAbsolutePath()
+										.endsWith("items_online.xml")) {
+									this.txtItemOnline.setText(fileEntry
+											.getAbsolutePath());
+								} else if (fileEntry.getAbsolutePath()
+										.endsWith("zuse_md.xml")) {
+									this.txtNormalizedData.setText(fileEntry
+											.getAbsolutePath());
+								} else if (fileEntry.getAbsolutePath()
+										.endsWith("zuse_ol.xls")) {
+									this.txtMdProfileAsExcel.setText(fileEntry
+											.getAbsolutePath());
+								}
+
+							}
+
+						}
+
+					}
+
 				}
 
 				dtde.getDropTargetContext().dropComplete(true);
