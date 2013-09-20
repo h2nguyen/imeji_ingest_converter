@@ -812,7 +812,7 @@ public class ZuseXMLConverter extends
 			if(oul.getUmfang().isEmpty() || !oul.getSignatur().isEmpty() || strNumbers.isEmpty() || strNums.length < 1 || nums < 2) {
 				itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
 			} else {
-				String oldVorlnr = oul.getVorlNr(); 
+				String oldVorlnr = oul.getVorlNr();
 				for (int i = 1; i <= nums+addMoreFileNumber; i++) {
 					String zerosVorlNr = String.format("%03d", i);
 					oul.setVorlNr(oldVorlnr+"-"+zerosVorlNr);
