@@ -793,6 +793,9 @@ public class ZuseXMLConverter extends
 	public Items getItemsExcel(List<OUnterlagen> tObject,
 			File excelFile, MetadataProfile mdProfile)
 			throws IntrospectionException, BiffException, IOException {
+		
+		int addMoreFileNumber = 100;
+		
 		Collection<Item> itemColection = new ArrayList<Item>();
 		ArrayList<ExcelMetadataEntry> mdProfileExcelEntries = ZuseExcelEntryHandler.getMetadataFromExcelFile(excelFile);
 		for (OUnterlagen oul : tObject) {
@@ -810,7 +813,7 @@ public class ZuseXMLConverter extends
 				itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
 			} else {
 				String oldVorlnr = oul.getVorlNr(); 
-				for (int i = 1; i <= nums+20; i++) {
+				for (int i = 1; i <= nums+addMoreFileNumber; i++) {
 					String zerosVorlNr = String.format("%03d", i);
 					oul.setVorlNr(oldVorlnr+"-"+zerosVorlNr);
 					itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
