@@ -924,7 +924,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 			}
 		}
 
-		while (this.txtMdProfileAsExcel.getText().isEmpty()) {
+		while (this.txtMdProfileAsExcel.getText().isEmpty() && cbbFileTypItems.getSelectedIndex() != 1) {
 			this.chooserFile.setDialogTitle("Open excel meta data file");
 			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 				return;
@@ -1083,7 +1083,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 						.getSelectedFile().getAbsolutePath());
 			}
 		}
-		while (this.txtMdProfileAsExcel.getText().isEmpty()) {
+		while (this.txtMdProfileAsExcel.getText().isEmpty() && cbbFileType.getSelectedIndex() != 1) {
 			this.chooserFile.setDialogTitle("Open excel meta data file");
 			if (this.chooserFile.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 				return;

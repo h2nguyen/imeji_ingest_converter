@@ -27,15 +27,15 @@ import core.vo.imeji.MetadataProfile;
 
 public class ZuseExcelConverterTest {
 
-//	@Test
+	@Test
 	public void testGetMdProfile() throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IOException, JAXBException {
-		File file = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
+		File file = new File("G:/PDFs/new pdfs/zuse_pdf_list6.xls");
 		ZuseExcelConverter zec = new ZuseExcelConverter();
 		MetadataProfile mdp = zec.getMdProfile4PDF(file, "PDF Metadata", "Description of the metadata for the pdf files");
 		JaxbUtil.toString(mdp);
 	}
 
-	@Test
+	//@Test
 	public void testGetItemsFile() throws BiffException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException, IOException, URISyntaxException, JAXBException, SAXException {
 		File excelFile = new File("src/test/resources/excelmd/zuse_pdf_list.xls");
 		File xmlFile = new File("src/test/resources/excelmd/mpd_online.xml");

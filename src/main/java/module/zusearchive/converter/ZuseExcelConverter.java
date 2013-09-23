@@ -108,8 +108,6 @@ public class ZuseExcelConverter {
 
 			Collection<Statement> statements = new LinkedList<Statement>();
 			
-			int positionCounter = 0;
-			
 			Statement statementCached = null;
 			String cachedMethod = "";
 			boolean canBeAdded = false;
@@ -125,26 +123,36 @@ public class ZuseExcelConverter {
 					// starts to pair the issue
 					if (propertyDescriptor.getReadMethod().getReturnType() == boolean.class) {
 						if(propertyDescriptor.getName().contains(cachedMethod)) {
-							if(propertyDescriptor.getName().contains("Multi")) {
+							if(propertyDescriptor.getName().contains("Caption")) {
+								statementCached.setDescription(((Boolean) propertyDescriptor.getReadMethod().invoke(mdProfileExcel)).booleanValue());
+							} else if(propertyDescriptor.getName().contains("Preview")) {
+								statementCached.setDescription(((Boolean) propertyDescriptor.getReadMethod().invoke(mdProfileExcel)).booleanValue());
 								if(canBeAdded) {
-									statementCached.setPos(positionCounter++);
-									if(((Boolean) propertyDescriptor.getReadMethod().invoke(mdProfileExcel)).booleanValue())
-										statementCached.setMaxOccurs("unbounded");
 									statements.add(statementCached);
 									canBeAdded = false;
 								}
-									
-							} else if(((Boolean) propertyDescriptor.getReadMethod().invoke(mdProfileExcel)).booleanValue()) {
-								canBeAdded = true;
+							} else if(propertyDescriptor.getName().contains("Multi")) {
+								if(((Boolean) propertyDescriptor.getReadMethod().invoke(mdProfileExcel)).booleanValue())
+									statementCached.setMaxOccurs("unbounded");
+							} else if(propertyDescriptor.getName().contains("Active")) { 
+								if(((Boolean) propertyDescriptor.getReadMethod().invoke(mdProfileExcel)).booleanValue()) {
+									canBeAdded = true;
+								}
 							}
 						}
 						continue;
+					} else if (propertyDescriptor.getReadMethod().getReturnType() == int.class) {
+						if(propertyDescriptor.getName().contains("Position")) {
+							statementCached.setPos((Integer)propertyDescriptor.getReadMethod().invoke(mdProfileExcel));
+							continue;
+						}
 					}
 					
 					Statement statement = new Statement();
 					
 					String labelEN = (String) propertyDescriptor.getReadMethod().invoke(mdProfileExcel);
 					statement.getLabels().add(new LocalizedString(labelEN, "en"));
+					
 					statementCached = statement;
 					cachedMethod = propertyDescriptor.getName();
 					
@@ -244,6 +252,87 @@ public class ZuseExcelConverter {
 		return  new Items(itemList);
 	}
 	
+//	public Item getItem4PDF(ExcelEntry4PDF entry, MetadataProfile mdp)
+//			throws IntrospectionException, BiffException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+//		Item item = new Item();
+//
+//		item.setCreated(Calendar.getInstance());
+//
+//		List<MetadataSet> mdsl = new ArrayList<MetadataSet>();
+//		MetadataSet mds = new MetadataSet();
+//		mds.setProfile(mdp.getId());
+//		
+//		
+//		
+//		Collection<Metadata> mdl = new ArrayList<Metadata>();
+//
+//		Metadata md = null;
+//		String cachedMethod = "";
+//		boolean canBeAdded = false;
+//		
+//		Statement sts = null;
+//
+//		for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(
+//				entry.getClass()).getPropertyDescriptors()) {
+//			
+//			if (propertyDescriptor.getReadMethod().getName().equalsIgnoreCase("getClass")) {
+//				continue;
+//			}
+//			
+//			
+//				
+//				// starts to pair the issue
+//				if (propertyDescriptor.getReadMethod().getReturnType() == boolean.class) {
+//					if(propertyDescriptor.getName().contains(cachedMethod)) {
+//						if(propertyDescriptor.getName().contains("Multi")) {
+//							if(canBeAdded) {
+//								
+//								
+//								
+//								for (Iterator<Statement> it = mdp.getStatements().iterator(); it.hasNext();) {
+//									
+//									
+//									sts = it.next();
+//									boolean leave = false;
+//									for (Iterator<LocalizedString> itLab = sts.getLabels().iterator(); itLab.hasNext();) {
+//										if(propertyDescriptor.getName().contains(itLab.next().getValue().toLowerCase().replace(" ", "_"))) {
+//											md.setStatement(sts.getId());
+//											md.setPos(sts.getPos());
+//
+//											mdl.add(md);
+//											canBeAdded = false;
+//											leave = true;
+//											break;
+//										}
+//									}
+//
+//									if(leave) {
+//										break;
+//									}
+//								}
+//								
+//							}
+//								
+//						} else if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
+//							canBeAdded = true;
+//						}
+//					}
+//					continue;
+//				}
+//				
+//				Text text = new Text();
+//				text.setText((String) propertyDescriptor.getReadMethod().invoke(entry));
+//				md = text;
+//				cachedMethod = propertyDescriptor.getName();
+//		}
+//
+//		mds.setMetadata(mdl);
+//		mdsl.add(mds);
+//		item.setMetadataSets(mdsl);
+//		item.setFilename("zuse_archive_"+entry.getFile());
+//		return item;
+//	}
+	
 	public Item getItem4PDF(ExcelEntry4PDF entry, MetadataProfile mdp)
 			throws IntrospectionException, BiffException, IOException, URISyntaxException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Item item = new Item();
@@ -254,15 +343,8 @@ public class ZuseExcelConverter {
 		MetadataSet mds = new MetadataSet();
 		mds.setProfile(mdp.getId());
 		
-		
-		
 		Collection<Metadata> mdl = new ArrayList<Metadata>();
 
-		Metadata md = null;
-		String cachedMethod = "";
-		boolean canBeAdded = false;
-		
-		Statement sts = null;
 
 		for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(
 				entry.getClass()).getPropertyDescriptors()) {
@@ -271,94 +353,32 @@ public class ZuseExcelConverter {
 				continue;
 			}
 			
-			
-				
-				// starts to pair the issue
-				if (propertyDescriptor.getReadMethod().getReturnType() == boolean.class) {
-					if(propertyDescriptor.getName().contains(cachedMethod)) {
-						if(propertyDescriptor.getName().contains("Multi")) {
-							if(canBeAdded) {
-								
-								
-								
-								for (Iterator<Statement> it = mdp.getStatements().iterator(); it.hasNext();) {
-									// code for separating the multiple metadata set
-//									sts = it.next();
-//									boolean leave = false;
-//									for (Iterator<LocalizedString> itLab = sts.getLabels().iterator(); itLab.hasNext();) {
-//										if(propertyDescriptor.getName().contains(itLab.next().getValue().toLowerCase().replace(" ", "_"))) {
-//											md.setStatement(sts.getId());
-//											md.setPos(sts.getPos());
-//											
-//											ArrayList<Text> texts = new ArrayList<Text>();
-//											
-//											if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
-//												String content = ((Text)md).getText();
-//												String contents[] = content.split(";");
-//												
-//												for (int i = 0; i < contents.length; i++) {
-//													Text tmd = new Text();
-//													tmd.copy(md);
-//													tmd.setText(contents[i]);
-//													texts.add(tmd);
-//												}
-//											}
-//											
-//											if(texts.isEmpty()) {
-//												mdl.add(md);
-//											} else  {
-//												for (Text text : texts) {
-//													mdl.add(text);
-//												}
-//											}
-//											canBeAdded = false;
-//											leave = true;
-//											break;
-//										}
-//									}
-//									
-//									if(leave) {
-//										break;
-//									}
-									
-									sts = it.next();
-									boolean leave = false;
-									for (Iterator<LocalizedString> itLab = sts.getLabels().iterator(); itLab.hasNext();) {
-										if(propertyDescriptor.getName().contains(itLab.next().getValue().toLowerCase().replace(" ", "_"))) {
-											md.setStatement(sts.getId());
-											md.setPos(sts.getPos());
-
-											mdl.add(md);
-											canBeAdded = false;
-											leave = true;
-											break;
-										}
-									}
-
-									if(leave) {
-										break;
-									}
-								}
-								
-							}
-								
-						} else if(((Boolean) propertyDescriptor.getReadMethod().invoke(entry)).booleanValue()) {
-							canBeAdded = true;
-						}
-					}
-					continue;
-				}
-				
+			if (propertyDescriptor.getReadMethod().getReturnType() == String.class) {
 				Text text = new Text();
 				text.setText((String) propertyDescriptor.getReadMethod().invoke(entry));
-				md = text;
-				cachedMethod = propertyDescriptor.getName();
+				String label = propertyDescriptor.getName();
+								
+				for (Statement statement : mdp.getStatements()) {
+					boolean match = false;
+					for (LocalizedString localizedString : statement.getLabels()) {
+						if(localizedString.getValue().equalsIgnoreCase(label)) {
+							match = true;
+						}
+					}
+					if(match) {
+						text.setStatement(statement.getId());
+						text.setPos(statement.getPos());
+						mdl.add(text);
+					}
+				}
+				continue;
+			}	
 		}
 
 		mds.setMetadata(mdl);
 		mdsl.add(mds);
 		item.setMetadataSets(mdsl);
-		item.setFilename("zuse_archive_"+entry.getFile());
+		item.setFilename("zuse_archive-"+entry.getFile());
 		return item;
 	}
 	
