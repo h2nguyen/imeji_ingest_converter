@@ -355,20 +355,27 @@ public class ZuseExcelConverter {
 			
 			if (propertyDescriptor.getReadMethod().getReturnType() == String.class) {
 				Text text = new Text();
-				text.setText((String) propertyDescriptor.getReadMethod().invoke(entry));
+				String content = (String) propertyDescriptor.getReadMethod().invoke(entry);
+				if(content.equalsIgnoreCase("-"))
+					text.setText("");
+				else 
+					text.setText(content);
+				
 				String label = propertyDescriptor.getName();
 								
 				for (Statement statement : mdp.getStatements()) {
 					boolean match = false;
 					for (LocalizedString localizedString : statement.getLabels()) {
-						if(localizedString.getValue().equalsIgnoreCase(label)) {
+						if(localizedString.getValue().toLowerCase().replace(" ", "_").equalsIgnoreCase(label)) {
 							match = true;
+							break;
 						}
 					}
 					if(match) {
 						text.setStatement(statement.getId());
 						text.setPos(statement.getPos());
 						mdl.add(text);
+						break;
 					}
 				}
 				continue;

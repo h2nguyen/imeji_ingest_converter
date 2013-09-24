@@ -817,15 +817,25 @@ public class IngestFrame extends JFrame implements ActionListener,
 		}
 		
 		if (e.getSource() == this.btnOneclick) {
-			if(!this.txtMetadataProfileOnline.getText().isEmpty() 
+			if(cbbFileType.getSelectedIndex() == 1 && cbbFileTypItems.getSelectedIndex() == 1) {
+				if(!this.txtMetadataProfileOnline.getText().isEmpty() 
+						&& !this.txtItemOnline.getText().isEmpty() 
+						&& !this.txtNormalizedData.getText().isEmpty()) {
+					this.processGenerateOfflineMDP();
+					this.processMergeMDP();
+					this.processGenerateItems();
+					this.processMergeItems();
+				}
+			} else {
+				if(!this.txtMetadataProfileOnline.getText().isEmpty() 
 					&& !this.txtItemOnline.getText().isEmpty() 
 					&& !this.txtNormalizedData.getText().isEmpty() 
 					&& !this.txtMdProfileAsExcel.getText().isEmpty()) {
-				this.processGenerateOfflineMDP();
-				this.processMergeMDP();
-				this.processGenerateItems();
-				this.processMergeItems();
-				
+					this.processGenerateOfflineMDP();
+					this.processMergeMDP();
+					this.processGenerateItems();
+					this.processMergeItems();
+				}
 			}
 		}
 		//
@@ -1274,28 +1284,43 @@ public class IngestFrame extends JFrame implements ActionListener,
 					for (Object object : files) {
 						File file = (File) object;
 						if (file.isDirectory()) {
-
+							
 							for (final File fileEntry : file.listFiles()) {
-
-								if (fileEntry.getAbsolutePath().endsWith(
-										"mdp_online.xml")) {
-									this.txtMetadataProfileOnline
-											.setText(fileEntry
-													.getAbsolutePath());
-								} else if (fileEntry.getAbsolutePath()
-										.endsWith("items_online.xml")) {
-									this.txtItemOnline.setText(fileEntry
-											.getAbsolutePath());
-								} else if (fileEntry.getAbsolutePath()
-										.endsWith("zuse_md.xml")) {
-									this.txtNormalizedData.setText(fileEntry
-											.getAbsolutePath());
-								} else if (fileEntry.getAbsolutePath()
-										.endsWith("zuse_ol.xls")) {
-									this.txtMdProfileAsExcel.setText(fileEntry
-											.getAbsolutePath());
+								if(cbbFileType.getSelectedIndex() == 1 && cbbFileTypItems.getSelectedIndex() == 1) {
+									if (fileEntry.getAbsolutePath().endsWith(
+											"mdp_online.xml")) {
+										this.txtMetadataProfileOnline
+												.setText(fileEntry
+														.getAbsolutePath());
+									} else if (fileEntry.getAbsolutePath()
+											.endsWith("items_online.xml")) {
+										this.txtItemOnline.setText(fileEntry
+												.getAbsolutePath());
+									} else if (fileEntry.getName().startsWith("zuse_pdf_list") && 
+											fileEntry.getName().endsWith(".xls")) {
+										this.txtNormalizedData.setText(fileEntry
+												.getAbsolutePath());
+									}
+								} else {
+									if (fileEntry.getAbsolutePath().endsWith(
+											"mdp_online.xml")) {
+										this.txtMetadataProfileOnline
+												.setText(fileEntry
+														.getAbsolutePath());
+									} else if (fileEntry.getAbsolutePath()
+											.endsWith("items_online.xml")) {
+										this.txtItemOnline.setText(fileEntry
+												.getAbsolutePath());
+									} else if (fileEntry.getAbsolutePath()
+											.endsWith("zuse_md.xml")) {
+										this.txtNormalizedData.setText(fileEntry
+												.getAbsolutePath());
+									} else if (fileEntry.getAbsolutePath()
+											.endsWith("zuse_ol.xls")) {
+										this.txtMdProfileAsExcel.setText(fileEntry
+												.getAbsolutePath());
+									}
 								}
-
 							}
 
 						}
