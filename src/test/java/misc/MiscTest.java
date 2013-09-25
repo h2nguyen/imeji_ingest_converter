@@ -63,12 +63,14 @@ public class MiscTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void testDigitParsing() {
 		
-		String str = "113 Bl. gedr., ms.12 1 u. hektogr. (1 Bd. Kopie)";
+		String str = "1Bl";
         str = str.replaceAll("\\D+"," ");
-        System.out.println(str);
+        str = str.trim();
+        String[] strs = str.split(" ");
+        System.out.println(strs[0]);
 	}
 	
 //	@Test
@@ -84,7 +86,7 @@ public class MiscTest {
 		Files.write(pathOut, content.getBytes(charset));
 	}
 	
-	@Test
+//	@Test
 	public void addLicense() throws IOException {
 		
 		Path pathIn = Paths.get("src/test/resources/ingest_final/ZusePMNormalizedFinalWithOriLoc.xml");

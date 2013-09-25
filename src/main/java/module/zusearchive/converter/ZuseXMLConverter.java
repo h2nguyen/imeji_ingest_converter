@@ -809,11 +809,11 @@ public class ZuseXMLConverter extends
 					break;
 				}
 			}
-			if(oul.getUmfang().isEmpty() || !oul.getSignatur().isEmpty() || strNumbers.isEmpty() || strNums.length < 1 || nums < 2) {
+			if(oul.getUmfang().isEmpty() || !oul.getSignatur().isEmpty() || strNumbers.isEmpty() || strNums.length < 1 || nums < 1) {
 				itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
 			} else {
 				String oldVorlnr = oul.getVorlNr();
-				for (int i = 1; i <= nums+nums; i++) {
+				for (int i = 1; i <= nums+nums+3; i++) {
 					String zerosVorlNr = String.format("%03d", i);
 					oul.setVorlNr(oldVorlnr+"-"+zerosVorlNr);
 					itemColection.add(this.getItemExcel(oul, mdProfileExcelEntries, mdProfile));
