@@ -1296,8 +1296,7 @@ public class IngestFrame extends JFrame implements ActionListener,
 											.endsWith("items_online.xml")) {
 										this.txtItemOnline.setText(fileEntry
 												.getAbsolutePath());
-									} else if (fileEntry.getName().startsWith("zuse_pdf_list") && 
-											fileEntry.getName().endsWith(".xls")) {
+									} else if (fileEntry.getName().endsWith(".xls")) {
 										this.txtNormalizedData.setText(fileEntry
 												.getAbsolutePath());
 									}

@@ -228,7 +228,10 @@ public class ZuseExcelConverter {
 		mds.setMetadata(mdl);
 		mdsl.add(mds);
 		item.setMetadataSets(mdsl);
-		item.setFilename("zuse_archive_"+entry.getFile());
+		if(entry.getFile().contains("zuse_archive"))
+			item.setFilename(entry.getFile());
+		else
+			item.setFilename("zuse_archive_"+entry.getFile());
 
 		return item;
 	}
@@ -385,7 +388,10 @@ public class ZuseExcelConverter {
 		mds.setMetadata(mdl);
 		mdsl.add(mds);
 		item.setMetadataSets(mdsl);
-		item.setFilename("zuse_archive-"+entry.getFile());
+		if(entry.getFile().contains("zuse_archive"))
+			item.setFilename(entry.getFile());
+		else
+			item.setFilename("zuse_archive-"+entry.getFile());
 		return item;
 	}
 	
